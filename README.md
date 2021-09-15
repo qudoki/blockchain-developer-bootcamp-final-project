@@ -27,7 +27,9 @@ C. NFT owner owns the physical work, and work is physically destroyed by the cre
 3. They will mint an NFT with exchange that includes platform processing charge.
 4. Contract will execute if all terms are met.
 
-Below is under :construction:!
+
+
+## Below is under :construction:!
 
 ### Deployment & Repository
 :construction:
