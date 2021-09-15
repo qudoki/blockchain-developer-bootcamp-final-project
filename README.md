@@ -1,59 +1,33 @@
 # blockchain-developer-bootcamp-final-project
 
 ## Idea 1: Contract, Stakeholder & Information Management System for the AECO Industry
-The Architecture/Engineering/Construction/Owner industry is rife with lack of trust. Building projects in HCOL cities like NYC run on ambiguity and inefficiency. Stakeholders provide noncommittal or mercurial decisions to avoid traceability. Designers and architects often suffer from miscommunication, misunderstanding, or misrepresentation. Contractors point blame either upward (toward design and engineering teams) or downward (sub-contractors) to avoid liability. Normal practice is to now include third-party owner's representatives, who effectively serve as glorified babysitters for upwards of 1-2% of total project cost. 
-Blockchain type would depend on the project - government, private sector, education, etc.
-Could offer metadata of comparison to other projects.
+The Architecture/Engineering/Construction/Owner industry is rife with lack of trust. Building projects in HCOL cities like NYC run on ambiguity and inefficiency. Stakeholders provide noncommittal or mercurial decisions to avoid traceability. Designers and architects often suffer from miscommunication, misunderstanding, or misrepresentation. Contractors point blame either upward (toward design and engineering teams) or downward (sub-contractors) to avoid liability. Landlords do not intervene in a timely manner, therefore derailing whole project schedules. Normal practice is to now include third-party owner's representatives, who effectively serve as glorified babysitters for upwards of 1-2% of total project cost. Using the blockchain to codify decisions and contracts would greatly reduce inefficiency in overall industry. The blockchain type would depend on the project - government, private sector, education, etc, and metadata could be offered for metric comparison to other projects.
 #### Logic:
-
+1. Users agree on contract type and timeline. All parties must be represented. All users must acknowledge.
+2. At each decision, users are required to acknowledge and offer feedback.
+3. All users must acknowledge.
+4. At each milestone, the required users must engage and acknowledge submissions - i.e. engineering team submits drawings, owner must review in timely manner.
+5. Repeats until project completion.
 ## Idea 2: Gamified Practice of Sustainable Life
-Tracking of carbon point system, companies could buy in - establishing social participation on platform, exchange discounts for tokens.
+Sustainability initiatives in practice are missing incentive structures, from both an individual and enterprise perspective. Future calamity is not enough to convince all people and organizations around the world to be a part of a unified solution. This dApp aims to gamify the practice of Sustainable Living with the tracking of an impact point system, defined mathematically by one's environmental footprint in four categories - carbon, water, waste, and consumption (potentially evenutally tied to actual IoT readings). Tokens could be mined by consistent user interaction and low metrics performed by the individual (would need to de-incentivize overmining). At the enterprise level, companies could buy in, thereby establishing social presence and participation on the platform, and offer discounts to individuals that could be exchanged for tokens, effectively "buying" good behavior in exchange for social acceptance and engagement.
 #### Logic:
-## Idea 3: Gallery Buy-In to NFT Space
-
+1. Similar to a weight loss app functionality, users would log their footprint on a daily basis.
+2. Consistency and lower metrics are rewarded with tokens.
+3. Users could trade tokens for a discount or exclusive access to sale.
+4. The more tokens a company holds, users intuitively understand the higher commitment they have to sustainable practice.
+## Idea 3: Traditionalist Artist/Gallery Buy-In to NFT Space
+An education platform encouraging traditionalist artists that work with physical mediums and artforms to tie directly into NFT space, with no prerequesite understanding of the blockchain.
+Types of NFT Contracts:
+A. NFT owner owns the physical work, and work is then physically sent to them at point of sale.
+B. NFT owner owns the physical work, but work is held by the creator, either viewable exclusively or non-exclusively.
+C. NFT owner owns the physical work, and work is physically destroyed by the creator.
 #### Logic:
+1. Users will select type of contract.
+2. Users will create digitized version of physical object/artwork.
+3. They will mint an NFT with exchange that includes platform processing charge.
+4. Contract will execute if all terms are met.
 
-
-
-
-This exercise allows you to discuss an idea with others and think through some of the implications or program logic without having to code anything yet. Discussing your ideas with instructors, fellows and other colleagues will help you think through the process, identify exciting parts, perhaps surface more challenging areas. It will also help you start to draw a boundary around what you'd like your project to be.  
-
-Last, and more importantly: KEEP IT SUPER SIMPLE (KISS). This is one of the most important software development techniques. It's tempting to want to remake the world with the incredible power of blockchain. However, for this project, it's important to start big and dissolve the ideas down to their most simple, potent essence.
-
-To be sure, the project will be coded in all sorts of amazing languages using awesome blockchain developer tools, but, at this stage, you want to work through the basic problem space and what logic you'll be building. The thinking you do in this step will be a guide, to help keep you moving forward on the right track when things get more complicated. You will be grateful for it later, we promise!
-
-(Note: We'll mention more on this later but you absolutely do not need to write code for this exercise, this will all be written in plain language)
-
-Exercise Parts
-The exercise is divided into two parts:
-1. Brainstorm on Your Idea In the Discord, or during Office Hours or a study session, we want you to share ideas that you have for a final project. Here are a few things to keep in mind when thinking on and discussing your idea with others:
-
-Explain in a very simple way what you'd like your project to do. It's easy to get complicated with ideas, but the real mental exercise is to dissolve an idea down into its essence. When discussing your idea with people, try to find a few concepts underpinning your idea.
-
-Walk through a single workflow for the future user of your project. Once you have a general idea of what you'd like to do, isolate some of the actions a user will take. Write
-You can have a big idea and only work on part of it for your project. You'll be surprised how quickly a "simple" idea can get complicated when you're writing software! Once you have a general idea, isolate two or three essential things a user will do. Those will be a great starting point for your project. If you achieve them quickly, you can move on to the other aspects of your idea!
-Pseudocode is a great tool for this exercise When thinking through the actions your future users will take, it can help to write out the steps in plain language! Here's a basic example:
-Voting Contract Example Workflow
-
-1. Users will have to register themselves somehow on the contract
-
-2. They have to identify which campaign their voting on
-
-3. They'll have to submit a vote for that campaign.
-
-4. They can't vote twice for a single campaign 
-
-
-
-2. Upload it to Github Once you have a general sense of your project (Remember: it should be very simple and not complicated!), we'd like you to setup a Github repository for your project and submit your project idea in the repository's README.md file.
-
-
-
-
-
-
-
-
+Below is under :construction:!
 
 ### Deployment & Repository
 :construction:
@@ -99,10 +73,8 @@ Voting Contract Example Workflow
 - Please contact the owner.
 
 ## Questions:
-If you have any questions, please feel free to reach me via Github or email below.
-
 - [Github Profile](https://github.com/qudoki)
-- [Email Address](qdong327@gmail.com)
+- [Email Me](mailto:qdong327@gmail.com)
 
 ## License: 
 MIT
