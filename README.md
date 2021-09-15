@@ -1,25 +1,22 @@
 # blockchain-developer-bootcamp-final-project
 
 ## Idea 1: Contract, Stakeholder & Information Management System for the AECO Industry
-Industry that is defined by lack of trust and runs on ambiguity and noncommitance...
+The Architecture/Engineering/Construction/Owner industry is rife with lack of trust. Building projects in HCOL cities like NYC run on ambiguity and inefficiency. Stakeholders provide noncommittal or mercurial decisions to avoid traceability. Designers and architects often suffer from miscommunication, misunderstanding, or misrepresentation. Contractors point blame either upward (toward design and engineering teams) or downward (sub-contractors) to avoid liability. Normal practice is to now include third-party owner's representatives, who effectively serve as glorified babysitters for upwards of 1-2% of total project cost. 
 Blockchain type would depend on the project - government, private sector, education, etc.
 Could offer metadata of comparison to other projects.
-## Idea 2: 
+#### Logic:
 
-## Idea 3: 
+## Idea 2: Gamified Practice of Sustainable Life
+Tracking of carbon point system, companies could buy in - establishing social participation on platform, exchange discounts for tokens.
+#### Logic:
+## Idea 3: Gallery Buy-In to NFT Space
+
+#### Logic:
 
 
 
-
-The culmination of this course will be your final project, which will be a distributed application (or dapp) running on the Ethereum network (mainnet or testnet) with an interactive web-based frontend.
- 
-For this exercise, we'd like you to take all the general knowledge of blockchain and start to think about how you would apply it. After learning what you've learned so far, do you have any ideas for what you'd like your final project to be? If that feels too overwhelming, how about: What's something that you've been thinking about building a blockchain application for? 
-
-You should not feel pressure from us on this exercise. It is very low-stakes, considering you are very early in the course, but it is an important process and will set you up for success. While your final project will be graded, this exercise will not be graded. 
 
 This exercise allows you to discuss an idea with others and think through some of the implications or program logic without having to code anything yet. Discussing your ideas with instructors, fellows and other colleagues will help you think through the process, identify exciting parts, perhaps surface more challenging areas. It will also help you start to draw a boundary around what you'd like your project to be.  
-
-We're going to ask you to setup the Github repo for your final project and populate it with a single document, which will outline the brainstorming and ideas you're working on. This will help you get familiar with the sometimes-challenging Github and the Git workflow and set you up for success later.
 
 Last, and more importantly: KEEP IT SUPER SIMPLE (KISS). This is one of the most important software development techniques. It's tempting to want to remake the world with the incredible power of blockchain. However, for this project, it's important to start big and dissolve the ideas down to their most simple, potent essence.
 
@@ -48,9 +45,7 @@ Voting Contract Example Workflow
 
 
 
-2. Upload it to Github Once you have a general sense of your project (Remember: it should be very simple and not complicated!), we'd like you to setup a Github repository for your project and submit your project idea in the repository's README.md file. 
-
-Your Github repository and project should be titled blockchain-developer-bootcamp-final-project and, at this point, only has to contain a README.md with your project idea and any notes you'd like to include! (You don't have to stop there, by the way, but that's the minimum for this exercise)
+2. Upload it to Github Once you have a general sense of your project (Remember: it should be very simple and not complicated!), we'd like you to setup a Github repository for your project and submit your project idea in the repository's README.md file.
 
 
 
@@ -75,9 +70,6 @@ Your Github repository and project should be titled blockchain-developer-bootcam
 * Bootstrap
 * Various NPM packages
 * HTML5/CSS -->
-
-### API's
-:construction:
   
 ### Description: 
 :construction:
