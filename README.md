@@ -3,7 +3,7 @@
 ## Gamified Practice of Sustainable Life (FairCarbon, SustainFare, CarbonFare, Existenfare, etc.)
 Sustainability initiatives in practice are missing incentive structures, from both an individual and enterprise perspective. Future calamity is not enough to convince all people and organizations around the world to be a part of a unified solution. This dApp aims to gamify the practice of Sustainable Living with the tracking of an impact point system, defined mathematically by one's environmental footprint in three categories - carbon, water, and waste (potentially eventually tied to actual meter or IoT device readings). Tokens could be mined by consistent user interaction and low metrics performed by the individual (would need to de-incentivize overmining). At the enterprise level, companies could buy in, thereby establishing social presence and participation on the platform, and offer discounts to individuals that could be exchanged for tokens, effectively "buying" good behavior in exchange for social acceptance and engagement.
 #### Logic:
-1. Similar to a weight loss app functionality, users would log their footprint on a daily basis. Interactions can be off-chain until the end of a set time period (24 hours).
+1. Similar to a weight loss app functionality, users would log their footprint on a daily basis. Interactions can be off-chain until the end of a set time period (24 hours, potentially 30-day to avoid daily gas fees - hopefully nominal at the start as its only transacting data). Potentially would not see their rewards until nodes can validate the averages? What do miners receive? Could there be enterprise "sponsorships" for nodes?
 
 globalState would hold averages of all users, updated consistently, and potentially tied to global carbon emission averages.
 
@@ -21,7 +21,7 @@ function compareInput (carbon, water, waste) public {
     }
 }
 
-3. Users could trade tokens for a discount or exclusive access to sale. OR users could earn exclusivity to NFT.
+3. Users could trade tokens for a discount or exclusive access to sale. OR users could earn exclusivity to NFT. Achievement levels + front end rewards logging profile.
 
 function tradeTokens () {
     return someIPFSValue
