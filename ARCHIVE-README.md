@@ -1,5 +1,4 @@
-# blockchain-developer-bootcamp-final-project
-
+# Blockchain Developer Bootcamp Final Project
 ## Idea 1: Contract, Stakeholder & Information Management System for the AECO Industry
 The Architecture/Engineering/Construction/Owner industry is rife with lack of trust. Building projects in HCOL cities like NYC run on ambiguity and inefficiency. Stakeholders provide noncommittal or mercurial decisions to avoid traceability. Designers and architects often suffer from miscommunication, misunderstanding, or misrepresentation. Contractors point blame either upward (toward design and engineering teams) or downward (sub-contractors) to avoid liability. Landlords do not intervene in a timely manner, therefore derailing whole project schedules. Normal practice is to now include third-party owner's representatives, who effectively serve as glorified babysitters for upwards of 1-2% of total project cost. Using the blockchain to codify decisions and contracts would greatly reduce inefficiency in overall industry. The blockchain type would depend on the project - government, private sector, education, etc, and metadata could be offered for metric comparison to other projects.
 #### Logic:
@@ -16,6 +15,13 @@ Sustainability initiatives in practice are missing incentive structures, from bo
 3. Users could trade tokens for a discount or exclusive access to sale.
 4. The more tokens a company holds, users intuitively understand the higher commitment they have to sustainable practice.
 ## Idea 3: Traditionalist Artist/Gallery Buy-In to NFT Space
+
+"The user flow looks identical for NFT sites. Your website visitors should create an account by entering all necessary details. They’d better create a wallet for crypto coins or connect the existing one to keep their coins in one place. The next step is developing non-fungible tokens. Those who passed registration should submit digital assets that represent their work. They can build entire collections and sell those pieces at a specific price or set up a bidding system so that those who offer the highest price will get the desired item. Without being checked and confirmed, no goods will not show up on the website. Moderation is a must. Once the system permits non-fungible tokens, customers will see them available for sales/bidding. The auction begins. It is possible to pick the desired cryptocurrency for deals. Both sides obtain notifications once the goods are sold. Finally, the service controls all transactions and movements of items.
+
+That is how a user flow typically looks like. Keep this process in mind while taking part in NFT marketplace development."
+
+-From https://opengeekslab.com/blog/nft-marketplace-development/#User_Flow_on_NFT_Marketplace
+
 An education platform encouraging traditionalist artists that work with physical mediums and artforms to tie directly into NFT space, with no prerequesite understanding of the blockchain.
 Types of NFT Contracts:
 A. NFT owner owns the physical work, and work is then physically sent to them at point of sale.

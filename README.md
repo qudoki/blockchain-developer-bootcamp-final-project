@@ -1,5 +1,6 @@
 # Blockchain Developer Bootcamp Final Project
 
+### Certification to: qudoki.eth
 ## Gamified Practice of Sustainable Life (FairCarbon, SustainFare, CarbonFare, Existenfare, etc.)
 Sustainability initiatives in practice are missing incentive structures, from both an individual and enterprise perspective. Future calamity is not enough to convince all people and organizations around the world to be a part of a unified solution. This dApp aims to gamify the practice of Sustainable Living with the tracking of an impact point system, defined mathematically by one's environmental footprint in three categories - carbon, water, and waste (potentially eventually tied to actual meter or IoT device readings). Tokens could be mined by consistent user interaction and low metrics performed by the individual (would need to de-incentivize overmining). At the enterprise level, companies could buy in, thereby establishing social presence and participation on the platform, and offer discounts to individuals that could be exchanged for tokens, effectively "buying" good behavior in exchange for social acceptance and engagement.
 #### Logic:
