@@ -1,38 +1,13 @@
 # Blockchain Developer Bootcamp Final Project
 
 ### Certification to: qudoki.eth
-## Gamified Practice of Sustainable Life (FairCarbon, SustainFare, CarbonFare, Existenfare, etc.)
-Sustainability initiatives in practice are missing incentive structures, from both an individual and enterprise perspective. Future calamity is not enough to convince all people and organizations around the world to be a part of a unified solution. This dApp aims to gamify the practice of Sustainable Living with the tracking of an impact point system, defined mathematically by one's environmental footprint in three categories - carbon, water, and waste (potentially eventually tied to actual meter or IoT device readings). Tokens could be mined by consistent user interaction and low metrics performed by the individual (would need to de-incentivize overmining). At the enterprise level, companies could buy in, thereby establishing social presence and participation on the platform, and offer discounts to individuals that could be exchanged for tokens, effectively "buying" good behavior in exchange for social acceptance and engagement.
+## NFT Gallery
+
+A gamified education platform allowing users to move around a single-player perspective space, connect to their Metamask wallets, and purchase NFT's in a visual front-end gallery setting. This encourages traditionalist artists that work with physical mediums and artforms to tie directly into NFT space, with no prerequesite understanding of the blockchain.
 #### Logic:
-1. Similar to a weight loss app functionality, users would log their footprint on a daily basis. Interactions can be off-chain until the end of a set time period (24 hours, potentially 30-day to avoid daily gas fees - hopefully nominal at the start as its only transacting data). Potentially would not see their rewards until nodes can validate the averages? What do miners receive? Could there be enterprise "sponsorships" for nodes?
-
-globalState would hold averages of all users, updated consistently, and potentially tied to global carbon emission averages.
-
-function userCommitData (carbon, water, waste) public {
-
-}
-
-Think of how to disincentivize false data, ensure accurate reporting, avoid overmining (who is mining? can you distinguish between mined coins and earned coins?)
-
-2. Consistency and lower metrics compared to the average activity per person are rewarded with tokens.
-
-function compareInput (carbon, water, waste) public {
-    if userCommitData < averageUserData {
-        reward msg.sender;
-    }
-}
-
-3. Users could trade tokens for a discount or exclusive access to sale. OR users could earn exclusivity to NFT. Achievement levels + front end rewards logging profile.
-
-function tradeTokens () {
-    return someIPFSValue
-    or
-    discountCode
-}
-
-4. The more tokens a company holds, users intuitively understand the higher commitment they have to sustainable practice.
-
-If enterprise involvement, display back company commitments by comparison.
+1. User will move around gallery space (arrow keys) and select artwork by pressing space bar.
+2. User will connect Metamask wallet.
+3. User will show confirmed ownership of NFT.
 
 ## Below is under :construction:!
 

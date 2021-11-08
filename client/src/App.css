@@ -1,5 +1,22 @@
+:root {
+  --pixel-size: 2px;
+  --grid-cell: calc( var(--pixel-size) * 16);
+}
+@media( min-width: 700px ) {
+  :root {
+    --pixel-size: 3px;
+  }
+}
+@media( min-width: 900px ) {
+  :root {
+    --pixel-size: 4px;
+  }
+}
+
+
 .App {
   text-align: center;
+  /* background-color: grey; */
 }
 
 .App-logo {
@@ -19,4 +36,33 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.background-img {
+  /* width: 50%; */
+  image-rendering: pixelated;
+}
+
+.player-img {
+  width: calc( var(--grid-cell) *2 );
+  height: calc( var(--grid-cell) *2 );
+  position: absolute;
+  overflow: hidden;
+}
+
+.camera {
+  width: calc(var(--pixel-size) * 144);
+  height: calc(var(--pixel-size) * 144);
+  overflow: hidden;
+  background: #282c34;
+  position: relative;
+}
+
+.map {
+  image-rendering: pixelated;
+  background-image: url(Gallery-Base.png);
+  background-size: 100%;
+  width: calc(10 * var(--grid-cell));
+  height: calc(10 * var(--grid-cell));
+  position: relative;
 }
