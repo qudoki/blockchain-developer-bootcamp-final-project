@@ -1,5 +1,4 @@
 # Blockchain Developer Bootcamp Final Project
-
 ### Certification to: qudoki.eth
 ## NFT Gallery
 
