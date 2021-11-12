@@ -7,86 +7,67 @@
 	text-align: center;
 }
 
-.App-logo {
-	height: 40vmin;
-}
-
-.App-header {
-	background-color: #282c34;
-	min-height: 100vh;
+body {
+	background: var(--bg);
 	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	color: white;
-}
-
-.App-link {
-	color: #09d3ac;
-}
-
-.background-img {
-	align-self: inherit;
-	image-rendering: pixelated;
-}
-
-.player-img {
-	width: calc(var(--grid-cell) * 2);
-	height: calc(var(--grid-cell) * 2);
-	position: absolute;
-	overflow: hidden;
-}
-
-.camera {
-	width: calc(var(--pixel-size) * 200);
-	height: calc(var(--pixel-size) * 200);
-	padding-left: 25%;
-	overflow: hidden;
-	background: #282c34;
-	position: absolute;
-}
-
-.map {
-	/* image-rendering: pixelated; */
-	background-image: url(Gallery-Base.png);
-	background-size: 100%;
-	width: calc(10 * var(--grid-cell));
-	height: calc(10 * var(--grid-cell));
-	position: fixed;
-	background-repeat: no-repeat;
 }
 
 .pixelart {
 	image-rendering: pixelated;
 }
 
+.camera {
+	/* padding-top: 8px; */
+	/* padding-bottom: 8px; */
+	width: calc(var(--pixel-size) * 125);
+	height: calc(var(--pixel-size) * 100);
+	padding-left: 10px;
+	overflow: hidden;
+	background: #282c34;
+	position: relative;
+}
+
+.map {
+	image-rendering: pixelated;
+	background-image: url(Gallery-Base.png);
+	background-size: 100%;
+	width: calc(15 * var(--grid-cell));
+	height: calc(15 * var(--grid-cell));
+	position: relative;
+	background-repeat: no-repeat;
+}
+
 .Character {
-	margin-left: 45.3%;
-	margin-top: 25%;
+	margin-left: -45px;
 	width: calc(12 * var(--pixel-size));
 	height: calc(12 * var(--pixel-size));
 	overflow: hidden;
 	position: absolute;
-	z-index: 100;
+	z-index: 200;
 	/* border: red 1px solid; */
 }
 
 .Character_spritesheet {
 	animation: moveSpritesheet 1s steps(4) infinite;
 	width: calc(128px * var(--pixel-size));
+	position: relative;
+	background-size: 100%;
 }
 
-.face-right {
-	top: calc(-32px * var(--pixel-size));
+.Character[facing="right"] .Character_spritesheet {
+	background-position-y: calc(var(--pixel-size) * 32);
 }
-
-.face-up {
-	top: calc(-64px * var(--pixel-size));
+.Character[facing="up"] .Character_spritesheet {
+	background-position-y: calc(var(--pixel-size) * -64);
 }
-
-.face-left {
-	top: calc(-96px * var(--pixel-size));
+.Character[facing="left"] .Character_spritesheet {
+	background-position-y: calc(var(--pixel-size) * -96);
+	animation: walkAnimation 1s steps(4) infinite;
+}
+.Character[walking="true"] .Character_spritesheet {
+	animation: walkAnimation 1s steps(4) infinite;
 }
 
 @keyframes moveSpritesheet {
@@ -96,4 +77,32 @@
 	to {
 		transform: translate3d(-100%, 0, 0);
 	}
+}
+
+.corner_topleft,
+.corner_topright,
+.corner_bottomleft,
+.corner_bottomright {
+	position: absolute;
+	width: var(--pixel-size);
+	height: var(--pixel-size);
+	background: var(--bg);
+	z-index: 2;
+}
+
+.corner_topleft {
+	top: calc(var(--pixel-size) * -1);
+	left: calc(var(--pixel-size) * -1);
+}
+.corner_topright {
+	top: calc(var(--pixel-size) * -1);
+	right: calc(var(--pixel-size) * -1);
+}
+.corner_bottomleft {
+	bottom: calc(var(--pixel-size) * -1);
+	left: calc(var(--pixel-size) * -1);
+}
+.corner_bottomright {
+	bottom: calc(var(--pixel-size) * -1);
+	right: calc(var(--pixel-size) * -1);
 }
