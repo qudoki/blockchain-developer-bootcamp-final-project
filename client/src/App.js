@@ -14,8 +14,8 @@ require("dotenv").config();
 // const APIKey = process.env.API_KEY;
 
 // // player movement logic
-// var player = document.querySelector(".player-img");
-// // var map = document.querySelector(".map");
+var player = document.querySelector(".player-img");
+var map = document.querySelector(".map");
 // // state of player
 // var x = 0;
 // var y = 0;
@@ -96,7 +96,7 @@ class App extends Component {
 			web3: null,
 			accounts: null,
 			contract: null,
-			balance: null
+			balance: null,
 		};
 	}
 
@@ -107,7 +107,9 @@ class App extends Component {
 
 			// Use web3 to get the user's accounts.
 			const accounts = await web3.eth.getAccounts();
-			const balance = await web3.eth.getBalance(accounts[0]).then(result => web3.utils.fromWei(result, "ether"));
+			const balance = await web3.eth
+				.getBalance(accounts[0])
+				.then((result) => web3.utils.fromWei(result, "ether"));
 
 			// Get the contract instance.
 			const networkId = await web3.eth.net.getId();
@@ -119,7 +121,10 @@ class App extends Component {
 
 			// Set web3, accounts, and contract to the state, and then proceed with an
 			// example of interacting with the contract's methods.
-			this.setState({ web3, accounts, balance, contract: instance }, this.runExample);
+			this.setState(
+				{ web3, accounts, balance, contract: instance },
+				this.runExample
+			);
 		} catch (error) {
 			// Catch any errors for any of the above operations.
 			alert(
@@ -149,19 +154,31 @@ class App extends Component {
 		return (
 			<div className="App">
 				<h1>NFT Gallery</h1>
-				<p>Your Truffle Box is installed and ready.</p>
 				<h2>Smart Contract Example</h2>
 				<p>
 					If your contracts compiled and migrated successfully, below will show
-					a stored value of 20 (by default).
-				</p>
-				<p>
-					Try changing the value stored on <strong>line 95</strong> of App.js.
+					a stored value of 20 (by default). Try changing the value stored on{" "}
+					<strong>line 95</strong> of App.js.
 				</p>
 				<div>The stored value is: {this.state.storageValue}</div>
-				
+
 				<div>The account address is: {this.state.accounts}</div>
 				<div>The account balance is: Ξ {this.state.balance}</div>
+				<div class="Character">
+					<img class="Character_spritesheet pixelart face-up" src="../../assets/Sprite-BG.png" />
+				</div>
+				{/* <div
+					class="player-img"
+					alt="player"
+					src="../../assets/Player.png"
+				></div> */}
+				<div class="camera">
+					<div
+						class="map background-img"
+						alt=""
+						src="../../assets/Gallery-Base.png"
+					></div>
+				</div>
 			</div>
 		);
 	}
