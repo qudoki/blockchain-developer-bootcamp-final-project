@@ -2,11 +2,12 @@
 ### Certification to: qudoki.eth
 ## NFT Gallery
 
-A gamified education platform allowing users to move around a single-player perspective space, connect to their Metamask wallets, and purchase NFT's in a visual front-end gallery setting. This encourages traditionalist artists that work with physical mediums and artforms to tie directly into NFT space, with no prerequesite understanding of the blockchain.
+A gamified education platform allowing users to move around a single-player perspective space, connect to their Metamask wallets, and purchase NFT's in a visual front-end gallery setting through an ERC-721 token. This encourages traditionalist artists that work with physical mediums and artforms to tie directly into NFT space, with no prerequesite understanding of the blockchain.
 #### Logic:
 1. User will move around gallery space (arrow keys) and select artwork by pressing space bar.
-2. User will connect Metamask wallet.
-3. User will show confirmed ownership of NFT.
+2. User will view artwork and elect to purchase an NFT.
+3. User will connect Metamask wallet.
+4. User will show confirmed ownership of NFT.
 
 ## Below is under :construction:!
 

@@ -1,30 +1,28 @@
-// const SimpleStorage = artifacts.require("SimpleStorage");
+const assert = require("assert");
+const NFTGallery = artifacts.require("NFTGallery");
 
-// /*
-//  * uncomment accounts to access the test accounts made available by the
-//  * Ethereum client
-//  * See docs: https://www.trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript
-//  */
-// contract("SimpleStorage", function (/* accounts */) {
-//   it("should assert true", async function () {
-//     await SimpleStorage.deployed();
-//     return assert.isTrue(true);
-//   });
-// });
+import "truffle/Assert.sol";
+import "truffle/DeployedAddresses.sol";
+import "../contracts/NFTGallery.sol";
 
+let address;
+let owner;
+let purchasePrice;
+let currentOwner;
+let sold;
+let listIdPricing;
+let stopped;
 
-const SimpleStorage = artifacts.require("SimpleStorage");
-
-contract("SimpleStorage", function (accounts) {
+contract("NFTGallery", function (accounts) {
   describe("Initial deployment", async () => {
     it("should assert true", async function () {
-      await SimpleStorage.deployed();
+      await NFTGallery.deployed();
       assert.isTrue(true);
     });
 
     it("was deployed and has an initial value of 0", async () => {
       // get subject
-      const ssInstance = await SimpleStorage.deployed();
+      const ssInstance = await NFTGallery.deployed();
       // verify that it starts with zero
       const storedData = await ssInstance.getStoredData.call();
       assert.equal(storedData, 0, `Initial state should be zero`);
@@ -33,7 +31,7 @@ contract("SimpleStorage", function (accounts) {
   describe("Functionality", () => {
     it("should store a new value 42", async () => {
       // get subject
-      const ssInstance = await SimpleStorage.deployed();
+      const ssInstance = await NFTGallery.deployed();
       // change the number
       await ssInstance.setStoredData(42, { from: accounts[0] });
       // verify we changed the subject
@@ -44,7 +42,7 @@ contract("SimpleStorage", function (accounts) {
   it("should not let someone else change the variable", async () => {
     // grab instance
     const [owner, badJoe] = accounts;
-    const ssInstance = await SimpleStorage.new(42);
+    const ssInstance = await NFTGallery.new(42);
     try {
       await ssInstance.setStoredData(22, { from: badJoe })
     } catch(err) { }
@@ -59,9 +57,7 @@ contract("SimpleStorage", function (accounts) {
 // from previous test simple storage:
 // pragma solidity >=0.4.21 <0.7.0;
 
-// import "truffle/Assert.sol";
-// import "truffle/DeployedAddresses.sol";
-// import "../contracts/SimpleStorage.sol";
+
 
 // contract TestSimpleStorage {
 
