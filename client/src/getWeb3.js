@@ -17,9 +17,9 @@ const getWeb3 = () =>
         }
       }
       // Legacy dapp browsers...
-      else if (window.web3) {
+      else if (window.ethereum) {
         // Use Mist/MetaMask's provider.
-        const web3 = window.web3;
+        const web3 = window.ethereum;
         console.log("Injected web3 detected.");
         resolve(web3);
       }

@@ -38,10 +38,14 @@ contract NFTGallery is ERC721 {
         _;
     }
 
+function getBalance(uint256) public {
+    
+}
+
     //test from simple storage
-    function set(uint256 x) public {
-        storedData = x;
-    }
+    // function set(uint256 x) public {
+    //     storedData = x;
+    // }
 
     function emergency() public onlyOwner {
         if (stopped == false) {
