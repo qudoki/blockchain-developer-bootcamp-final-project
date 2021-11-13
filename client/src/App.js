@@ -67,6 +67,7 @@ class App extends Component {
 						"--pixel-size"
 					)
 				);
+
 				const heldDirection = heldDirections[0];
 				if (heldDirection) {
 					if (heldDirection === directions.right) {
@@ -87,9 +88,9 @@ class App extends Component {
 
 				// wall boundaries
 				var leftLimit = 35;
-				var rightLimit = 16 * 11 + 8;
-				var topLimit = -8 + 32;
-				var bottomLimit = 16 * 7 + 25;
+				var rightLimit = 16 * 9 + 2;
+				var topLimit = -8 + 35;
+				var bottomLimit = 16 * 7 + 24;
 				if (x < leftLimit) {
 					x = leftLimit;
 				}
@@ -103,8 +104,8 @@ class App extends Component {
 					y = bottomLimit;
 				}
 
-				var camera_left = pixelSize * 66;
-				var camera_top = pixelSize * 42;
+				var camera_left = pixelSize * 75;
+				var camera_top = pixelSize * 41;
 
 				map.style.transform = `translate3d( ${
 					-x * pixelSize + camera_left
@@ -179,7 +180,7 @@ class App extends Component {
 		}
 		return (
 			<div className="App">
-				<h1>NFT Gallery</h1>
+				<h1 className="Header">NFT Gallery</h1>
 				{/* <h2>Smart Contract Example</h2> */}
 				{/* <p>
 					If your contracts compiled and migrated successfully, below will show
