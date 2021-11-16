@@ -15,7 +15,7 @@ require("dotenv").config();
 // const APIKey = process.env.API_KEY;
 
 function App() {
-	const [storageValue, setStorageValue] = useState(undefined);
+	const [storageValue, setStorageValue] = useState(20);
 	const [web3, setWeb3] = useState(undefined);
 	const [contract, setContract] = useState([]);
 	const [accounts, setAccounts] = useState([]);
@@ -131,7 +131,9 @@ function App() {
 					} else if (x >= 125 && x <= 135 && y >= 127 && y <= 136) {
 						console.log("Modal opened for NFT 3");
 					} else {
-						console.log("Please try occupying a non-empty NFT location.");
+						alert(
+							`Try landing on a green dot for art!`
+						);
 						return;
 					}
 				};
@@ -211,12 +213,6 @@ function App() {
 	return (
 		<div className="App">
 			<h1 className="Header">NFT GALLERY</h1>
-			{/* <h2>Smart Contract Example</h2> */}
-			{/* <p>
-				If your contracts compiled and migrated successfully, below will show
-				a stored value of 20 (by default). Try changing the value stored on{" "}
-				<strong>line 95</strong> of App.js.
-			</p> */}
 			<p>The stored value is: {storageValue}</p>
 
 			<div>The account address is: {accounts}</div>
@@ -242,27 +238,5 @@ function App() {
 		</div>
 	);
 }
-// class App extends Component {
-// 	constructor(props) {
-// 		super(props);
-// 		this.state = {
-// 			storageValue: 20,
-// 			web3: null,
-// 			accounts: null,
-// 			contract: null,
-// 			balance: null,
-// 			// NFT piece state below
-// 			artName: [],
-// 			modalShow: false,
-// 			artPrice: [],
-// 		};
-// 	}
-
-// 	render() {
-// 		if (!this.state.web3) {
-// 		}
-
-// 	}
-// }
 
 export default App;
