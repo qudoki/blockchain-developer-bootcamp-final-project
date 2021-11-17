@@ -1,3 +1,5 @@
 {
-    "solidity.defaultCompiler": "localNodeModule"
+    "solidity.defaultCompiler": "localNodeModule",
+    "solidity.compileUsingRemoteVersion": "latest",
+    "solidity.compileUsingLocalVersion": "/Users/qiandong/blockchain-dev/blockchain-developer-bootcamp-final-project/soljson-v0.8.3+commit.8d00100c.js"
 }
