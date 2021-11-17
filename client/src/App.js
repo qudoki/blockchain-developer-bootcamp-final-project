@@ -20,9 +20,12 @@ function App() {
 	const [contract, setContract] = useState([]);
 	const [accounts, setAccounts] = useState([]);
 	const [balance, setBalance] = useState(undefined);
+	// const handleShow = () => setShow(true);
 	// const [artName, setArtName] = useState([]);
 	// const [artPrice, setArtPrice] = useState([]);
-    const [show, setShow] = useState(true);
+	const [show, setShow] = useState(false);
+	const handleShow = () => setShow(true);
+	const handleClose = () => setShow(false);
 
 	useEffect(() => {
 		const init = async () => {
@@ -122,18 +125,19 @@ function App() {
 				step();
 
 				// open modal on space bar
-				const openModal = (props) => {
+				const openModal = () => {
 					// console.log(x, y);
 					if (x >= 34 && x <= 42 && y >= 50 && y <= 60) {
 						console.log("Modal opened for NFT 1");
+						handleShow();
 					} else if (x >= 85 && x <= 95 && y >= 72 && y <= 82) {
+						handleShow();
 						console.log("Modal opened for NFT 2");
 					} else if (x >= 125 && x <= 135 && y >= 127 && y <= 136) {
+						handleShow();
 						console.log("Modal opened for NFT 3");
 					} else {
-						alert(
-							`Try landing on a green dot for art!`
-						);
+						alert(`Try landing on a green dot for art!`);
 						return;
 					}
 				};
@@ -191,10 +195,8 @@ function App() {
 		const load = async () => {
 			// // Stores a given value, 5 by default.
 			// await contract.methods.set(5).send({ from: accounts[0] });
-
 			// // Get the value from the contract to prove it worked.
 			// const response = await contract.methods.get().call();
-
 			// // Update state with the result.
 			// setStorageValue(response);
 		};
@@ -232,7 +234,13 @@ function App() {
 				</div>
 			</div>
 			<div className="popWrap">
-				<Popup contract={contract} accounts={accounts} balance={balance} show={show} />
+				<Popup
+					onClose={handleClose}
+					contract={contract}
+					accounts={accounts}
+					balance={balance}
+					show={show}
+				/>
 			</div>
 		</div>
 	);

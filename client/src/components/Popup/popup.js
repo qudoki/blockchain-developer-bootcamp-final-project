@@ -3,21 +3,20 @@ import { Modal } from "react-bootstrap";
 import "./popup.css";
 
 const Popup = (props) => {
-	const [show, setShow] = useState(true);
-	// const handleShow = () => setShow(true);
-	const handleClose = () => setShow(false);
+	const { show, onClose } = props;
+
 	return (
 		<Modal
+            show={show}
+            onHide={onClose}
 			animation={true}
-			show={show}
 			className="modal"
-			onHide={handleClose}
 			backdrop="static"
 			size="lg"
 			balance={props.balance}
 			accounts={props.accounts}
 		>
-			<Modal.Header closeButton></Modal.Header>
+			<Modal.Header closeButton onClick={onClose}></Modal.Header>
 			<Modal.Body className="modalBody">
 				<div className="art">Art?</div>
 				<div>
