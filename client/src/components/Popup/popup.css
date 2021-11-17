@@ -1,4 +1,51 @@
+:root {
+	--pixel-size: 5px;
+	--grid-cell: calc(var(--pixel-size) * 12);
+}
+
 .modal {
-    background-color: blue;
-    z-index: 500;
+	margin-top: 75px;
+    position: fixed;
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    opacity: 88%;
+    border: rgb(103, 103, 103) 1px solid;
+    border-radius: 4%;
+    z-index: 200;
+	height: calc(var(--pixel-size) * 90);
+	width: calc(var(--pixel-size) * 100);
+}
+
+.popWrap {
+    position: absolute;
+}
+
+.art {
+    height: 180px;
+    border: rgb(102, 184, 146) 1px dashed;
+    margin: 8%;
+}
+
+.balance {
+    font-size: 11px;
+}
+
+.address {
+    font-size: 11px;
+}
+
+button {
+    height: 15px;
+    align-self: flex-end;
+}
+
+.mainBtn {
+    padding: 5px;
+    width: 98%;
+    margin: 1%;
+    height: 30px;
+}
+
+.header {
+    font-family: Arial, Helvetica, sans-serif;
 }

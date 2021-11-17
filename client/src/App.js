@@ -15,14 +15,14 @@ require("dotenv").config();
 // const APIKey = process.env.API_KEY;
 
 function App() {
-	const [storageValue, setStorageValue] = useState(20);
+	// const [storageValue, setStorageValue] = useState(20);
 	const [web3, setWeb3] = useState(undefined);
 	const [contract, setContract] = useState([]);
 	const [accounts, setAccounts] = useState([]);
 	const [balance, setBalance] = useState(undefined);
 	// const [artName, setArtName] = useState([]);
 	// const [artPrice, setArtPrice] = useState([]);
-	// const [modalShow, setModal] = useState(false);
+    const [show, setShow] = useState(true);
 
 	useEffect(() => {
 		const init = async () => {
@@ -186,7 +186,7 @@ function App() {
 		init();
 	}, []);
 
-	// this is where you should connect to contracts?
+	// this is where you should connect to contracts and get response back to state
 	useEffect(() => {
 		const load = async () => {
 			// // Stores a given value, 5 by default.
@@ -213,10 +213,9 @@ function App() {
 	return (
 		<div className="App">
 			<h1 className="Header">NFT GALLERY</h1>
-			<p>The stored value is: {storageValue}</p>
-
+			{/* <p>The stored value is: {storageValue}</p> // stored value can be "which art?"
 			<div>The account address is: {accounts}</div>
-			<div>The account balance is: Ξ {balance}</div>
+			<div>The account balance is: Ξ {balance}</div> */}
 			<div className="camera">
 				<div
 					className="map background-img"
@@ -232,9 +231,9 @@ function App() {
 					</div>
 				</div>
 			</div>
-			{/* <div>
-				<Popup />
-			</div> */}
+			<div className="popWrap">
+				<Popup contract={contract} accounts={accounts} balance={balance} show={show} />
+			</div>
 		</div>
 	);
 }
