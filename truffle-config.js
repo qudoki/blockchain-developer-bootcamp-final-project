@@ -19,7 +19,7 @@ module.exports = {
       provider: function () {
         return new HDWalletProvider(
           mnemonic,
-          "https://rinkeby.infura.io/v3/" + tokenKey
+          "https://rinkeby.infura.io/v3/" + tokenKey, 0, 1
         );
       },
       gas: 5000000,

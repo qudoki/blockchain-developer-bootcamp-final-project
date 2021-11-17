@@ -7,58 +7,78 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract NFTGallery is ERC721 {
     using SafeMath for uint256;
-
+    uint public nextTokenId;
     address public owner;
-    uint256 public purchasePrice;
-    // address public currentOwner;
-    mapping(uint256 => bool) public sold;
-    mapping(uint256 => uint256) public listIdPricing;
-    event Purchase(
-        address owner,
-        uint256 listIdPricing,
-        uint256 id,
-        string uri
-    );
-    bool public stopped = false;
 
-    //only owner access
-    modifier onlyOwner() {
-        require(msg.sender == owner);
-        _;
+    constructor() ERC721('NFT Gallery', 'Artwork') {
+        owner = msg.sender;
     }
 
-    //stopping others during purchase
-    modifier stopInCaseOfEmergency() {
-        require(!stopped);
-        _;
+    function mint(address to) external {
+        require(msg.sender == owner, 'Only the owner is allowed.');
+        _safeMint(to, nextTokenId);
+        nextTokenId++;
     }
 
-    modifier onlyInCaseOfEmergency() {
-        require(stopped);
-        _;
-    }
+    // function _baseURI() internal view override returns (string memory) {
+    //     return ''; //insert backend image hosted on heroku (always slash at the end)
+    // }
 
-function getBalance(uint256) public {
+
+// start of example
+
+//     uint256 public purchasePrice;
+//     // address public currentOwner;
+//     mapping(uint256 => bool) public sold;
+//     mapping(uint256 => uint256) public listIdPricing;
+//     event Purchase(
+//         address owner,
+//         uint256 listIdPricing,
+//         uint256 id,
+//         string uri
+//     );
+//     bool public stopped = false;
+
+//     //only owner access
+//     modifier onlyOwner() {
+//         require(msg.sender == owner);
+//         _;
+//     }
+
+//     //stopping others during purchase
+//     modifier stopInCaseOfEmergency() {
+//         require(!stopped);
+//         _;
+//     }
+
+//     modifier onlyInCaseOfEmergency() {
+//         require(stopped);
+//         _;
+//     }
+
+// function getBalance(uint256) public {
     
-}
+// }
 
     //test from simple storage
     // function set(uint256 x) public {
     //     storedData = x;
     // }
 
-    function emergency() public onlyOwner {
-        if (stopped == false) {
-            stopped = true;
-        } else {
-            stopped = false;
-        }
-    }
+    // function emergency() public onlyOwner {
+    //     if (stopped == false) {
+    //         stopped = true;
+    //     } else {
+    //         stopped = false;
+    //     }
+    // }
 
-    //sets contract owner as currentOwner
-    constructor() public ERC721("NFT Gallery Pieces", "Artwork") {
-        owner = msg.sender;
-    }
+    // //sets contract owner as currentOwner
+    // constructor() public ERC721("NFT Gallery Pieces", "Artwork") {
+    //     owner = msg.sender;
+    // }
+
+// end of example
 
     // function mint(string memory _tokenURI, uint256 _price)
     //     public
