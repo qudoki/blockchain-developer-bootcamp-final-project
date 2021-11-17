@@ -28,7 +28,7 @@ body {
 	/* padding-top: 8px; */
 	/* padding-bottom: 8px; */
 	width: calc(var(--pixel-size) * 150);
-	height: calc(var(--pixel-size) * 90);
+	height: calc(var(--pixel-size) * 100);
 	padding-left: 10px;
 	overflow: hidden;
 	background: #2b2b2b;
@@ -116,4 +116,8 @@ body {
 .corner_bottomright {
 	bottom: calc(var(--pixel-size) * -1);
 	right: calc(var(--pixel-size) * -1);
+}
+
+.directions {
+	font-size: 10px;
 }

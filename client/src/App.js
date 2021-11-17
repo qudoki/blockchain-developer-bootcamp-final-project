@@ -20,7 +20,6 @@ function App() {
 	const [contract, setContract] = useState([]);
 	const [accounts, setAccounts] = useState([]);
 	const [balance, setBalance] = useState(undefined);
-	// const handleShow = () => setShow(true);
 	// const [artName, setArtName] = useState([]);
 	// const [artPrice, setArtPrice] = useState([]);
 	const [show, setShow] = useState(false);
@@ -215,9 +214,8 @@ function App() {
 	return (
 		<div className="App">
 			<h1 className="Header">NFT GALLERY</h1>
-			{/* <p>The stored value is: {storageValue}</p> // stored value can be "which art?"
-			<div>The account address is: {accounts}</div>
-			<div>The account balance is: Ξ {balance}</div> */}
+			{/* <p>The stored value is: {storageValue}</p> // stored value can be "which art?" */}
+			<p className="directions">Use the arrow keys to move and the space bar to select a piece.</p>
 			<div className="camera">
 				<div
 					className="map background-img"
