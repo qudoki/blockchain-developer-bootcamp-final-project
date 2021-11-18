@@ -3,8 +3,9 @@
     "@truffle/hdwallet-provider": "^1.6.0",
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
-    "ethers": "^5.5.1",
     "ganache-cli": "^6.12.2",
+    "ipfs-http-client": "^50.1.2",
+    "node": "^17.1.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.2",
     "solc": "^0.8.10",
@@ -14,6 +15,8 @@
     "webpack": "4.41.0"
   },
   "devDependencies": {
-    "@openzeppelin/contracts": "^4.3.3"
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@openzeppelin/contracts": "^4.3.3",
+    "ethers": "^5.5.1"
   }
 }

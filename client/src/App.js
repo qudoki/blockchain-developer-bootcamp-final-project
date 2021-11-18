@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NFTGalleryContract from "./contracts/NFTGallery.json";
+import NFTMarketContract from "./contracts/NFTMarket.json";
 import getWeb3 from "./getWeb3";
 import Popup from "./components/Popup/popup.js";
 
@@ -16,6 +17,7 @@ require("dotenv").config();
 
 function App() {
 	// const [storageValue, setStorageValue] = useState(20);
+	const [nfts, setNfts] = useState([]);
 	const [web3, setWeb3] = useState(undefined);
 	const [contract, setContract] = useState([]);
 	const [accounts, setAccounts] = useState([]);
@@ -198,6 +200,8 @@ function App() {
 			// const response = await contract.methods.get().call();
 			// // Update state with the result.
 			// setStorageValue(response);
+
+			// from nd tutorial
 		};
 		if (
 			typeof web3 !== "undefined" &&

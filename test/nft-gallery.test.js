@@ -1,58 +1,65 @@
 const assert = require("assert");
-const NFTGallery = artifacts.require('./NFTGallery.sol');
-const NFTMarket = artifacts.require('./NFTMarket.sol');
-
-// import { ENGINE_METHOD_CIPHERS } from "constants";
-// import "truffle/Assert.sol";
-// import "truffle/DeployedAddresses.sol";
-// import "../contracts/NFTGallery.sol";
-// import "../contracts/NFTMarket.sol";
-
-// let address;
-// let owner;
-// let purchasePrice;
-// let currentOwner;
-// let sold;
-// let listIdPricing;
-// let stopped;
+// const ethers = require('ethers');
+const NFTGallery = artifacts.require('NFTGallery.sol');
+const NFTMarket = artifacts.require('NFTMarket.sol');
 
 contract("NFTMarket", function () {
 	describe("Should create and execute market sales", async () => {
 		it("should assert true", async function () {
-			const Market = await NFTMarket.deployed();
-			const marketAddress = Market.address;
-			const NFT = await NFTGallery.deployed();
-			const nftContractAddress = NFT.address;
 
-			let listingPrice = await Market.getListingPrice();
+			const market = await NFTMarket.new();
+			const marketAddress = market.address;
+			const gallery = await NFTGallery.new(marketAddress);
+			const nftContractAddress = gallery.address;
+
+			// const Market = await ethers.getContractFactory("NFTMarket");
+			// const market = await Market.deploy();
+			// await market.deployed();
+			// const marketAddress = market.address;
+
+			// const NFT = await ethers.getContractFactory("NFTGallery");
+			// const nft = await NFT.deploy(marketAddress);
+			// await nft.deployed();
+			// const nftContractAddress = nft.address;
+
+			let listingPrice = await market.getListingPrice();
 			listingPrice = listingPrice.toString();
 
-			//ignoring getting auction price
-			const auctionPrice = ethers.utils.parseUnits("100", "ether");
+			// const auctionPrice = ethers.utils.parseUnits("1", "ether");
 
-			await NFTGallery.createToken("tokenurl1");
-			await NFTGallery.createToken("tokenurl2");
+			await gallery.createToken("https://www.tokenurl1.com");
+			await gallery.createToken("https://www.tokenurl2.com");
 
-			await NFTMarket.createMarketItem(nftContractAddress, 1, auctionPrice, {
+			// await market.createMarketItem(nftContractAddress, 1, auctionPrice, {
+			// 	value: listingPrice,
+			// });
+
+			// await market.createMarketItem(nftContractAddress, 2, auctionPrice, {
+			// 	value: listingPrice,
+			// });
+
+			await market.createMarketItem(nftContractAddress, 1, {
 				value: listingPrice,
 			});
-			await NFTMarket.createMarketItem(nftContractAddress, 2, auctionPrice, {
+
+			await market.createMarketItem(nftContractAddress, 2, {
 				value: listingPrice,
 			});
 
-			const [_, buyerAddress] = await ethers.getSigners();
+			// const buyerAddress = "0x9B1a3b1B56595e55172b9345CcfC6535Ee4C0c44";
+			// const [_, buyerAddress] = await ethers.getSigners();
 
-			await Market.connect(buyerAddress).createMarketSale(
+			await market.connect(buyerAddress).createMarketSale(
 				nftContractAddress,
 				1,
-				{ value: auctionPrice }
+				{ value: listingPrice }
 			);
 
-			const items = await Market.fetchMarketItems();
+			const items = await market.fetchMarketItems();
 
 			console.log("items: ", items);
 
-			assert.isTrue(true);
+			// assert.isTrue(true);
 		});
 	});
 });

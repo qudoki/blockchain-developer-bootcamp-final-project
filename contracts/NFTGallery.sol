@@ -16,7 +16,7 @@ contract NFTGallery is ERC721URIStorage {
 
     // address public owner;
 
-    constructor(address mktAddress) ERC721("NFT Gallery", "Artwork") {
+    constructor(address mktAddress) ERC721("NFTGallery", "Artwork") {
         contractAddress = mktAddress;
     }
 
