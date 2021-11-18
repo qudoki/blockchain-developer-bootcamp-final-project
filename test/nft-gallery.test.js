@@ -2,10 +2,11 @@ const assert = require("assert");
 const NFTGallery = artifacts.require("NFTGallery");
 const NFTMarket = artifacts.require("NFTMarket");
 
-import { ENGINE_METHOD_CIPHERS } from "constants";
+// import { ENGINE_METHOD_CIPHERS } from "constants";
 import "truffle/Assert.sol";
 import "truffle/DeployedAddresses.sol";
 import "../contracts/NFTGallery.sol";
+import "../contracts/NFTMarket.sol";
 
 // let address;
 // let owner;
