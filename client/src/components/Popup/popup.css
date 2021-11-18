@@ -21,7 +21,7 @@
 }
 
 .art {
-    height: 180px;
+    height: 200px;
     border: rgb(102, 184, 146) 1px dashed;
     margin: 8%;
 }
@@ -31,6 +31,14 @@
 }
 
 .address {
+    font-size: 11px;
+}
+
+.artist {
+    font-size: 11px;
+}
+
+.title {
     font-size: 11px;
 }
 

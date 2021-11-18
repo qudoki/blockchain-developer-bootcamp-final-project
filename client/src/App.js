@@ -23,7 +23,7 @@ function App() {
 	const [accounts, setAccounts] = useState([]);
 	const [balance, setBalance] = useState(undefined);
 	// const [artName, setArtName] = useState([]);
-	// const [artPrice, setArtPrice] = useState([]);
+	const [artPrice, setArtPrice] = useState([]);
 	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
