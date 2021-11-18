@@ -16,11 +16,11 @@ contract NFTGallery is ERC721URIStorage {
 
     // address public owner;
 
-    constructor(address galleryAddress) ERC721("NFT Gallery", "Artwork") {
-        contractAddress = galleryAddress;
+    constructor(address mktAddress) ERC721("NFT Gallery", "Artwork") {
+        contractAddress = mktAddress;
     }
 
-    function mint(string memory tokenURI) public returns (uint256) {
+    function createToken(string memory tokenURI) public returns (uint) {
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
 

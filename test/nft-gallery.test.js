@@ -1,12 +1,12 @@
 const assert = require("assert");
-const NFTGallery = artifacts.require("NFTGallery");
-const NFTMarket = artifacts.require("NFTMarket");
+const NFTGallery = artifacts.require('./NFTGallery.sol');
+const NFTMarket = artifacts.require('./NFTMarket.sol');
 
 // import { ENGINE_METHOD_CIPHERS } from "constants";
-import "truffle/Assert.sol";
-import "truffle/DeployedAddresses.sol";
-import "../contracts/NFTGallery.sol";
-import "../contracts/NFTMarket.sol";
+// import "truffle/Assert.sol";
+// import "truffle/DeployedAddresses.sol";
+// import "../contracts/NFTGallery.sol";
+// import "../contracts/NFTMarket.sol";
 
 // let address;
 // let owner;
@@ -16,7 +16,7 @@ import "../contracts/NFTMarket.sol";
 // let listIdPricing;
 // let stopped;
 
-contract("NFTGallery", function () {
+contract("NFTMarket", function () {
 	describe("Should create and execute market sales", async () => {
 		it("should assert true", async function () {
 			const Market = await NFTMarket.deployed();
