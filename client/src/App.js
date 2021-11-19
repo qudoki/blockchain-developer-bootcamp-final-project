@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NFTGalleryContract from "./contracts/NFTGallery.json";
-import NFTMarketContract from "./contracts/NFTMarket.json";
+import NFT from "./contracts/NFT.json";
 import getWeb3 from "./getWeb3";
 import Popup from "./components/Popup/popup.js";
 
@@ -41,9 +40,9 @@ function App() {
 
 				// Get the contract instance.
 				const networkId = await web3.eth.net.getId();
-				const deployedNetwork = NFTGalleryContract.networks[networkId];
+				const deployedNetwork = NFT.networks[networkId];
 				const contract = new web3.eth.Contract(
-					NFTGalleryContract.abi,
+					NFT.abi,
 					deployedNetwork && deployedNetwork.address
 				);
 				// Set web3, accounts, and contract to the state, and then proceed with an
@@ -137,6 +136,18 @@ function App() {
 					} else if (x >= 125 && x <= 135 && y >= 127 && y <= 136) {
 						handleShow();
 						console.log("Modal opened for NFT 3");
+					} else if (x >= 141 && x <= 151 && y >= 89 && y <= 99) {
+						handleShow();
+						console.log("Modal opened for NFT 4");
+					} else if (x >= 30 && x <= 40 && y >= 100 && y <= 110) {
+						handleShow();
+						console.log("Modal opened for NFT 5");
+					} else if (x >= 85 && x <= 95 && y >= 22 && y <= 32) {
+						handleShow();
+						console.log("Modal opened for NFT 6");
+					} else if (x >= 87 && x <= 92 && y >= 132 && y <= 136) {
+						alert(`Please don't go!`);
+						return;
 					} else {
 						alert(`Try landing on a green dot for art!`);
 						return;
