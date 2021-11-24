@@ -133,18 +133,15 @@ function App() {
 					} else if (x >= 85 && x <= 95 && y >= 72 && y <= 82) {
 						handleShow();
 						console.log("Modal opened for NFT 2");
-					} else if (x >= 125 && x <= 135 && y >= 127 && y <= 136) {
-						handleShow();
-						console.log("Modal opened for NFT 3");
 					} else if (x >= 141 && x <= 151 && y >= 89 && y <= 99) {
 						handleShow();
-						console.log("Modal opened for NFT 4");
+						console.log("Modal opened for NFT 3");
 					} else if (x >= 30 && x <= 40 && y >= 100 && y <= 110) {
 						handleShow();
-						console.log("Modal opened for NFT 5");
+						console.log("Modal opened for NFT 4");
 					} else if (x >= 85 && x <= 95 && y >= 22 && y <= 32) {
 						handleShow();
-						console.log("Modal opened for NFT 6");
+						console.log("Modal opened for NFT 5");
 					} else if (x >= 87 && x <= 92 && y >= 132 && y <= 136) {
 						alert(`Please don't go!`);
 						return;
