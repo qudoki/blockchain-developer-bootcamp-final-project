@@ -1,5 +1,13 @@
+let BN = web3.utils.BN;
 const assert = require("assert");
 const NFT = artifacts.require("../contracts/NFT.sol");
+let { catchRevert } = require("./exceptionsHelpers.js");
+const {
+	items: ItemStruct,
+	isDefined,
+	isPayable,
+	isType,
+} = require("./ast-helper");
 
 contract("NFT", function (accounts) {
 	const [_owner, alice, bob] = accounts;
@@ -17,14 +25,28 @@ contract("NFT", function (accounts) {
 	});
 
 	describe("Variables", () => {
+		// it("Contract should have an owner", async () => {
+		// 	instance.owner().then(function (result) {
+		// 		assert.equal(typeof result, "address");
+		// 	});
+
 		it("Contract should have an owner", async () => {
-			instance.owner().then(function (result) {
-				assert.equal(typeof result, "address");
-			});
-			
+			assert.equal(
+				typeof instance.owner,
+				"function",
+				"the contract has no owner"
+			);
 			// instance = NFT.new(emptyAddress);
 			// console.log(instance.owner());
 			// assert.equal(typeof instance.owner(), "address");
+		});
+
+		it("Contract should have an token count", async () => {
+			assert.equal(
+				typeof instance.tokenCounter,
+				"function",
+				"the contract has no token count"
+			);
 		});
 
 		// let artPiece;
@@ -78,5 +100,101 @@ contract("NFT", function (accounts) {
 		// 	);
 		// 	assert(isPayable(artPiece)("buyer"), "`buyer` should be payable");
 		// });
+	});
+
+	describe("Enum State", () => {
+		let enumState;
+		before(() => {
+			enumState = NFT.enums.State;
+			assert(enumState, "The contract should define an Enum called State");
+		});
+
+		it("should define `ForSale`", () => {
+			assert(
+				enumState.hasOwnProperty("ForSale"),
+				"The enum does not have a `ForSale` value"
+			);
+		});
+
+		it("should define `NotForSale`", () => {
+			assert(
+				enumState.hasOwnProperty("NotForSale"),
+				"The enum does not have a `NotForSale` value"
+			);
+		});
+	});
+
+	describe("Art Piece Struct", () => {
+		let artPieceStruct;
+		before(() => {
+			artPieceStruct = ItemStruct(NFT);
+			assert(
+				artPieceStruct !== null,
+				"The contract should define an `Art Piece Struct`"
+			);
+		});
+
+		it("Art piece should have a `title`", () => {
+			assert(
+				isDefined(artPieceStruct)("title"),
+				"The art piece should have a `title`"
+			);
+			assert(
+				isType(artPieceStruct)("title")("string"),
+				"`title` should be of type `string`"
+			);
+		});
+
+		it("Art piece should have an `artist`", () => {
+			assert(
+				isDefined(artPieceStruct)("artist"),
+				"The art piece should have an `artist`"
+			);
+			assert(
+				isType(artPieceStruct)("artist")("string"),
+				"`artist` should be of type `string`"
+			);
+		});
+
+		it("Art piece should have a `price`", () => {
+			assert(
+				isDefined(artPieceStruct)("price"),
+				"The art piece should have a `price`"
+			);
+		});
+
+		it("Art piece should have a `tokenURI`", () => {
+			assert(
+				isDefined(artPieceStruct)("tokenURI"),
+				"The art piece should have a `tokenURI`"
+			);
+		});
+
+		it("should have a `currentOwner`", () => {
+			assert(
+				isDefined(artPieceStruct)("currentOwner"),
+				"Struct Item should have a `currentOwner`"
+			);
+			assert(
+				isType(artPieceStruct)("currentOwner")("address"),
+				"`seller` should be of type `address`"
+			);
+			assert(
+				isPayable(artPieceStruct)("currentOwner"),
+				"`seller` should be payable"
+			);
+		});
+
+		it("should have a `buyer`", () => {
+			assert(
+				isDefined(artPieceStruct)("buyer"),
+				"Struct Item should have a `buyer`"
+			);
+			assert(
+				isType(artPieceStruct)("buyer")("address"),
+				"`buyer` should be of type `address`"
+			);
+			assert(isPayable(artPieceStruct)("buyer"), "`buyer` should be payable");
+		});
 	});
 });

@@ -8,9 +8,11 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract NFT is ERC721URIStorage, Ownable {
-    address _owner;
+    // has owner
+    address _owner = msg.sender;
     mapping(uint256 => bool) public sold;
     mapping(uint256 => uint256) public price;
+    // has tokenCounter
     uint public tokenCounter;
 
     event Purchase(address owner, uint256 price, uint256 id, string uri);
@@ -21,19 +23,24 @@ contract NFT is ERC721URIStorage, Ownable {
         tokenCounter = 0;
     }
 
-    struct ArtPiece {
+    // <enum State: ForSale, Sold>
+    enum State {
+        ForSale,
+        NotForSale
+    }
+    struct Item {
         uint256 tokenId;
         string title;
         string artist;
         string tokenURI;
         address payable mintedBy;
         address payable currentOwner;
+        address payable buyer;
         uint256 price;
         uint256 numberOfTransfers;
-        bool forSale;
     }
 
-    mapping(uint256 => ArtPiece) public collection;
+    mapping(uint256 => Item) public collection;
 
         modifier isOwner() {
         require(msg.sender == _owner, "Not the owner!");
