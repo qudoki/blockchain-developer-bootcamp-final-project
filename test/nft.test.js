@@ -25,20 +25,12 @@ contract("NFT", function (accounts) {
 	});
 
 	describe("Variables", () => {
-		// it("Contract should have an owner", async () => {
-		// 	instance.owner().then(function (result) {
-		// 		assert.equal(typeof result, "address");
-		// 	});
-
 		it("Contract should have an owner", async () => {
 			assert.equal(
 				typeof instance.owner,
 				"function",
 				"the contract has no owner"
 			);
-			// instance = NFT.new(emptyAddress);
-			// console.log(instance.owner());
-			// assert.equal(typeof instance.owner(), "address");
 		});
 
 		it("Contract should have an token count", async () => {
@@ -48,58 +40,6 @@ contract("NFT", function (accounts) {
 				"the contract has no token count"
 			);
 		});
-
-		// let artPiece;
-		// before(() => {
-		// 	artPiece = ArtPieceStruct(NFT);
-		// 	assert(artPiece !== null, "The contract should define an `Art Piece`");
-		// });
-
-		// it("should have a `title`", () => {
-		// 	assert(
-		// 		isDefined(artPiece)("title"),
-		// 		"ArtPieceStruct should have a `title`"
-		// 	);
-		// 	assert(
-		// 		isType(artPiece)("artist")("string"),
-		// 		"`artist` should be of type `string`"
-		// 	);
-		// });
-
-		// it("should have a `price`", () => {
-		// 	assert(
-		// 		isDefined(artPiece)("price"),
-		// 		"ArtPieceStruct should have a `price`"
-		// 	);
-		// 	assert(
-		// 		isType(artPiece)("price")("uint"),
-		// 		"`price` should be of type `uint`"
-		// 	);
-		// });
-
-		// it("should have a `seller`", () => {
-		// 	assert(
-		// 		isDefined(artPiece)("seller"),
-		// 		"ArtPieceStruct should have a `seller`"
-		// 	);
-		// 	assert(
-		// 		isType(artPiece)("seller")("address"),
-		// 		"`seller` should be of type `address`"
-		// 	);
-		// 	assert(isPayable(artPiece)("seller"), "`seller` should be payable");
-		// });
-
-		// it("should have a `buyer`", () => {
-		// 	assert(
-		// 		isDefined(artPiece)("buyer"),
-		// 		"ArtPieceStruct should have a `buyer`"
-		// 	);
-		// 	assert(
-		// 		isType(artPiece)("buyer")("address"),
-		// 		"`buyer` should be of type `address`"
-		// 	);
-		// 	assert(isPayable(artPiece)("buyer"), "`buyer` should be payable");
-		// });
 	});
 
 	describe("Enum State", () => {
@@ -195,6 +135,118 @@ contract("NFT", function (accounts) {
 				"`buyer` should be of type `address`"
 			);
 			assert(isPayable(artPieceStruct)("buyer"), "`buyer` should be payable");
+		});
+	});
+
+	describe("Use Cases", () => {
+		// not done - should add all items
+		it("should add an item with the provided name and price", async () => {
+			await instance.addItem(name, price, { from: alice });
+
+			const result = await instance.fetchItem.call(0);
+
+			assert.equal(
+				result[0],
+				name,
+				"the name of the last added item does not match the expected value"
+			);
+			assert.equal(
+				result[2].toString(10),
+				price,
+				"the price of the last added item does not match the expected value"
+			);
+			assert.equal(
+				result[3].toString(10),
+				NFT.State.ForSale,
+				'the state of the item should be "For Sale"'
+			);
+			assert.equal(
+				result[4],
+				alice,
+				"the address adding the item should be listed as the seller"
+			);
+			assert.equal(
+				result[5],
+				emptyAddress,
+				"the buyer address should be set to 0 when an item is added"
+			);
+		});
+
+		// not done - should add all items as for sale
+		it("should emit a LogForSale event when an item is added", async () => {
+			let eventEmitted = false;
+			const tx = await instance.addItem(name, price, { from: alice });
+
+			if (tx.logs[0].event == "LogForSale") {
+				eventEmitted = true;
+			}
+
+			assert.equal(
+				eventEmitted,
+				true,
+				"adding an item should emit a For Sale event"
+			);
+		});
+
+		// not done - purchase and transfer
+		it("should allow someone to purchase an item and update state accordingly", async () => {
+			await instance.addItem(name, price, { from: alice });
+			var aliceBalanceBefore = await web3.eth.getBalance(alice);
+			var bobBalanceBefore = await web3.eth.getBalance(bob);
+
+			await instance.buyItem(0, { from: bob, value: excessAmount });
+
+			var aliceBalanceAfter = await web3.eth.getBalance(alice);
+			var bobBalanceAfter = await web3.eth.getBalance(bob);
+
+			const result = await instance.fetchItem.call(0);
+
+			assert.equal(
+				result[3].toString(10),
+				NFT.State.Sold,
+				'the state of the item should be "Sold"'
+			);
+
+			assert.equal(
+				result[5],
+				bob,
+				"the buyer address should be set bob when he purchases an item"
+			);
+
+			assert.equal(
+				new BN(aliceBalanceAfter).toString(),
+				new BN(aliceBalanceBefore).add(new BN(price)).toString(),
+				"alice's balance should be increased by the price of the item"
+			);
+
+			assert.isBelow(
+				Number(bobBalanceAfter),
+				Number(new BN(bobBalanceBefore).sub(new BN(price))),
+				"bob's balance should be reduced by more than the price of the item (including gas costs)"
+			);
+		});
+
+		// not done - error when not enough
+		it("should error when not enough value is sent when purchasing an item", async () => {
+			await instance.addItem(name, price, { from: alice });
+			await catchRevert(instance.buyItem(0, { from: bob, value: 1 }));
+		});
+		// not done - should emit sold event
+		it("should emit LogSold event when and item is purchased", async () => {
+			var eventEmitted = false;
+
+			await instance.addItem(name, price, { from: alice });
+			const tx = await instance.buyItem(0, { from: bob, value: excessAmount });
+
+			if (tx.logs[0].event == "LogSold") {
+				eventEmitted = true;
+			}
+
+			assert.equal(
+				eventEmitted,
+				true,
+				"adding an item should emit a Sold event"
+			);
 		});
 	});
 });

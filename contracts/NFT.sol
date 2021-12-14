@@ -13,12 +13,12 @@ contract NFT is ERC721URIStorage, Ownable {
     mapping(uint256 => bool) public sold;
     mapping(uint256 => uint256) public price;
     // has tokenCounter
-    uint public tokenCounter;
+    uint256 public tokenCounter;
 
     event Purchase(address owner, uint256 price, uint256 id, string uri);
 
     // initialize contract while deployment with contract's collection name and token
-    constructor(address gallery) ERC721("NFT Gallery", "NFT") {
+    constructor(address payable gallery) ERC721("NFT Gallery", "NFT") {
         _owner = gallery;
         tokenCounter = 0;
     }
@@ -26,7 +26,7 @@ contract NFT is ERC721URIStorage, Ownable {
     // <enum State: ForSale, Sold>
     enum State {
         ForSale,
-        NotForSale
+        Sold
     }
     struct Item {
         uint256 tokenId;
@@ -38,58 +38,47 @@ contract NFT is ERC721URIStorage, Ownable {
         address payable buyer;
         uint256 price;
         uint256 numberOfTransfers;
+        bool sold;
     }
 
     mapping(uint256 => Item) public collection;
 
-        modifier isOwner() {
+    modifier isOwner() {
         require(msg.sender == _owner, "Not the owner!");
         _;
     }
 
-//NFT Factory
-    function createNft(string memory tokenURI) public returns (uint256) {
+    //Mint all preloaded IPFS files upon connection
+    function mintAll(string memory tokenURI, uint256 _price)
+        public
+        returns (uint256)
+    {
+        require(msg.sender != address(0));
         uint256 newItemId = tokenCounter;
         _safeMint(msg.sender, newItemId);
         _setTokenURI(newItemId, tokenURI);
-        tokenCounter ++;
+        tokenCounter++;
+        price[newItemId] = _price;
         return newItemId;
+        //     return true; ??
     }
 
+    function buy(uint256 _id) public payable {
+        _validate(_id);
+        _trade(_id);
+
+        emit Purchase(msg.sender, price[_id], _id, tokenURI(_id));
+    }
+
+    //If for sale and balance is enough
+    function _validate(uint256 _id) internal {
+        require(_exists(_id), "Error, wrong Token id");
+        require(!sold[_id], "Error, Token is not for sale");
+        require(msg.value >= price[_id], "Error, Token costs more");
+    }
+
+    function _trade(uint256 _id) internal {
+        safeTransferFrom(address(this), msg.sender, _id);
+        sold[_id] = true;
+    }
 }
-
-// minting a new piece
-// function mint(string memory _name, string memory _tokenURI, uint256 _price) external {
-//     require(msg.sender != address(0));
-// }
-//     public
-//     onlyOwner
-//     returns (bool)
-// {
-//     uint256 _tokenId = totalSupply() + 1;
-//     price[_tokenId] = _price;
-
-//     _mint(address(this), _tokenId);
-//     _setTokenURI(_tokenId, _tokenURI);
-
-//     return true;
-// }
-
-// function buy(uint256 _id) external payable {
-//     _validate(_id);
-//     _trade(_id);
-
-//     emit Purchase(msg.sender, price[_id], _id, tokenURI(_id));
-// }
-
-// function _validate(uint256 _id) internal {
-//     require(_exists(_id), "Error, wrong Token id");
-//     require(!sold[_id], "Error, Token is sold");
-//     require(msg.value >= price[_id], "Error, Token costs more");
-// }
-
-// function _trade(uint256 _id) internal {
-//     _transfer(address(this), msg.sender, _id);
-//     _owner.transfer(msg.value);
-//     sold[_id] = true;
-// }

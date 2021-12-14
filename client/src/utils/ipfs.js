@@ -37,6 +37,6 @@ export const uploadFileToIPFS = async (file) => {
 			imageHashCID: url?.path,
 		};
 	} catch (e) {
-		console.log("error uplaoding to IPFS", e);
+		console.log("error uploading to IPFS", e);
 	}
 };
