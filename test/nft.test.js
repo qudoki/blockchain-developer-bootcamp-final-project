@@ -12,7 +12,7 @@ const {
 contract("NFT", function (accounts) {
 	const [_owner, alice, bob] = accounts;
 	// currently gallery is address at 0
-	const gallery = "0x832aC1902dfe4AFe1E4018d8441126e230a75CFb";
+	const gallery = "0x9AB2179A85e6F7c2AdF3584f8167a84C84D528ef";
 	const price = 1;
 	const name = "nft";
 	const artist = "john doe";
@@ -147,31 +147,24 @@ contract("NFT", function (accounts) {
 			expect(minterRole).to.equal(false);
 		});
 		// gallery should be made into minter role
-		it("gallery should have minterRole, piece should be minted with the provided uri", async () => {
+		it("gallery should have minterRole", async () => {
 			await instance.addMinter(gallery);
 			const minterRole = await instance.getMinterRole(gallery);
 			expect(minterRole).to.equal(true);
-			// console.log(addGallery);
-			const mintStatus = await instance.mint(gallery, uri);
-			// const result = await instance.fetchItem.call(0);
-			console.log(mintStatus);
-
-			// assert.equal(
-			// 	result[1].toString(10),
-			// 	uri,
-			// 	"the uri of the last added item does not match the expected value"
-			// );
-			// assert.equal(
-			// 	result[1].toString(10),
-			// 	NFT.State.ForSale,
-			// 	'the state of the item should be "For Sale"'
-			// );
-			// assert.equal(
-			// 	result[0],
-			// 	alice,
-			// 	"the address adding the item should be listed as the gallery"
-			// );
 		});
+
+		it("piece should be minted with provided uri", async () => {
+			// const mintStatus = await instance.mint(gallery, uri);
+			// console.log(mintStatus);
+			const uri = "https://ipfs.io/ipfs/bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm";
+			await instance.addMinter(accounts[0]);
+			await instance.mint(accounts[0], uri);
+			const tokenUri = await instance.tokenURI(0);
+			const balanceOfOwner = await instance.balanceOf(accounts[0]);
+			assert.equal(tokenUri, uri);
+			assert.equal(balanceOfOwner, 1);
+			// console.log(tokenUri);
+		})
 
 		// // not done - purchase and transfer
 		// it("should allow someone to purchase an item and update state accordingly", async () => {

@@ -20,12 +20,15 @@ const Popup = (props) => {
 			<Modal.Body className="modalBody">
 			<p className="title">Title: </p>
 			<p className="artist">Artist: </p>
-				<div className="art">Art?</div>
+			{/* currently hardcoded - fix when info back from BC */}
+				<div className="art">
+					<img className="image" src="https://ipfs.io/ipfs/bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm" />
+					</div>
 				{/* <div>
 					<button className="mainBtn">Mint (TBD)</button>
 				</div> */}
 				<div>
-					<button className="mainBtn">Purchase for {props.artPrice}</button>
+					<button className="mainBtn">Purchase for {props.artPrice} ether</button>
 				</div>
 				<div>
 					<h5 className="header">Your Account</h5>

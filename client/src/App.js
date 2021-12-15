@@ -20,6 +20,7 @@ function App() {
 	const [web3, setWeb3] = useState(undefined);
 	const [contract, setContract] = useState([]);
 	const [accounts, setAccounts] = useState([]);
+	const [tokenURI, setTokenURI] = useState([]);
 	const [balance, setBalance] = useState(undefined);
 	// const [artName, setArtName] = useState([]);
 	const [artPrice, setArtPrice] = useState([]);
@@ -45,11 +46,12 @@ function App() {
 					NFT.abi,
 					deployedNetwork && deployedNetwork.address
 				);
-				// Set web3, accounts, and contract to the state, and then proceed with an
+				// Set web3, accounts, and contract to the state
 				setWeb3(web3);
 				setAccounts(accounts);
 				setContract(contract);
 				setBalance(balance);
+				setTokenURI(tokenURI);
 
 				// character movement logic
 				var character = document.querySelector(".Character");
