@@ -13,6 +13,7 @@
     "solc": "^0.8.10",
     "truffle": "^5.4.19",
     "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^1.6.1",
     "web3-react": "^5.0.5",
     "webpack": "4.41.0"
   },
