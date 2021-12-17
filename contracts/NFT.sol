@@ -60,9 +60,9 @@ contract NFT is ERC721URIStorage, Ownable {
     }
 
     //Setting NFT info to collection
-    function _setNft(uint256 _tokenId, string memory _title, string memory _artist, string memory _tokenURI, address payable _gallery, address payable _currentOwner, address payable _buyer, uint256 _price) public {
+    function _setNft(string memory _title, string memory _artist, string memory _tokenURI, address payable _gallery, address payable _currentOwner, address payable _buyer, uint256 _price) public returns (string memory) {
         Item memory item;
-        item.tokenId = _tokenId;
+        item.tokenId = totalSupply();
         item.artist = _artist;
         item.tokenURI = _tokenURI;
         item.gallery = _gallery;
@@ -72,42 +72,36 @@ contract NFT is ERC721URIStorage, Ownable {
         item.title = _title;
         item.forSale = true;
         collection.push(item);
-        // mint(_gallery, _price, _tokenURI);
-        // return Item;
+        return (collection[0].tokenURI);
     }
 
     //Getting the collection data
-    function getNft(uint _index) public view returns (uint256 _tokenId, bool _forSale) {
+    function checkNft(uint _index) public view returns (uint256 _tokenId, string memory _artist, string memory _title, bool _forSale, string memory _tokenURI) {
         Item storage item = collection[_index];
-        return (item.tokenId, item.forSale);
+        require(item.forSale, "true");
+        return (item.tokenId, item.artist, item.title, item.forSale, item.tokenURI);
     }
 
     event Mint(address owner, uint256 price, uint256 id, string uri);
 
     //Mint all - how to get preloaded IPFS files upon connection -- only one right now
-    function mint(uint256 _tokenId, string memory _title, string memory _artist, string memory _tokenURI, address payable _gallery, address payable _currentOwner, address payable _buyer, uint256 _price) public returns (uint256) {
+    function mint(string memory _title, string memory _artist, string memory _tokenURI, address payable _gallery, address payable _currentOwner, address payable _buyer, uint256 _price) public returns (uint256) {
         require(galleryOnlyMinter[_gallery], "Only the gallery can mint!");
         uint256 tokenId = _tokenCounter.current();
         _tokenCounter.increment();
         _safeMint(_gallery, tokenId);
         _setTokenURI(tokenId, _tokenURI);
-        _setNft(_tokenId, _title, _artist, _tokenURI, _gallery, _currentOwner, _buyer, _price);
+        _setNft(_title, _artist, _tokenURI, _gallery, _currentOwner, _buyer, _price);
         emit Mint(_gallery, _price, tokenId, _tokenURI);
         return tokenId;
     }
-
-
-
-
-
-
-
 
     modifier isOwner() {
         require(msg.sender == _owner, "Not the owner!");
         _;
     }
 
+// questioning if all of these are needed
     mapping(uint256 => string) _tokenURIs;
     mapping(uint256 => bool) public forSale;
     mapping(uint256 => uint256) public price;
@@ -116,12 +110,6 @@ contract NFT is ERC721URIStorage, Ownable {
     // Mapping owner address to token count
     mapping(address => uint256) private _balances;
 
-
-
-    // Figure out how to return token Id
-    // function getTokenId(uint256 tokenId, address owner) public view returns (uint, uint) {
-
-    // }
 
     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
         internal

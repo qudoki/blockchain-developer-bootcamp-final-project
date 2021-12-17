@@ -18,7 +18,9 @@ module.exports = {
 			host: "127.0.0.1",
 			port: 8545,
 			network_id: "*",
-			websockets: true
+			websockets: true,
+			// gasPrice: 0x1,
+			// gas: 0x1fffffffffffff
 		},
 		rinkeby: {
 			provider: function () {
@@ -39,6 +41,8 @@ module.exports = {
 		host: "127.0.0.1",
 		port: 8545,
 		network_id: "*",
+		// gasPrice: 0x1,
+		// gas: 0x1fffffffffffff
 	},
 	compilers: {
 		solc: {
