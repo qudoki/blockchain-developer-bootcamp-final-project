@@ -150,17 +150,17 @@ contract NFT is ERC721URIStorage, Ownable {
     function buy(uint256 _id) external payable {
         _validate(_id);
         _trade(_id);
-        emit Purchase(msg.sender, price[_id], _id, tokenURI(_id));
+        emit Purchase(msg.sender, collection[_id].price, _id, collection[_id].tokenURI);
     }
 
     function _validate(uint256 _id) internal {
-        require(_exists(_id), "Error, wrong Token id");
-        require(msg.value >= price[_id], "Error, Token costs more");
+        require(_exists(collection[_id].tokenId), "Error, wrong Token id");
+        require(msg.value >= collection[_id].price, "Error, Token costs more");
     }
 
     function _trade(uint256 _id) internal {
-        _transfer(address(this), msg.sender, _id);
+        _transfer(address(this), msg.sender, collection[_id].tokenId);
         _owner.transfer(msg.value);
-        forSale[_id] = true;
+        collection[_id].forSale = true;
     }
 }

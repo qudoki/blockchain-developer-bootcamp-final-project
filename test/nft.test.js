@@ -13,7 +13,7 @@ const { providers } = require("ethers");
 contract("NFT", function (accounts) {
 	const [_owner, alice, bob] = accounts;
 	// currently gallery is address at 0
-	const gallery = "0x6c5E931b606ee5c640A8879E0fE00FaD50f16795";
+	const gallery = "0xE535F187b199aBDEdb7441d2390eD92E32Ba0d43";
 	const price = 1;
 	const artist = "john doe";
 	const title = "best nft ever";
@@ -182,63 +182,56 @@ contract("NFT", function (accounts) {
 
 		// not done - purchase and transfer
 
-		// it("should allow someone to purchase an item and update state accordingly", async () => {
-		// 	await instance.addMinter(accounts[0]);
-		// 	await instance.mint(
-		// 		title,
-		// 		artist,
-		// 		uri,
-		// 		accounts[0],
-		// 		accounts[0],
-		// 		accounts[2],
-		// 		price
-		// 	);
-		// 	const index = await instance.totalSupply();
-		// 	console.log(index);
-		// 	var galleryBalanceBefore = await web3.eth.getBalance(accounts[0]);
-		// 	var bobBalanceBefore = await web3.eth.getBalance(bob);
-		// 	console.log(galleryBalanceBefore);
-		// 	console.log(bobBalanceBefore);
-		// 	// await instance.buy(tokenId);
-		// 	// var galleryBalanceAfter = await web3.eth.getBalance(accounts[0]);
-		// 	// var bobBalanceAfter = await web3.eth.getBalance(bob);
-		// 	// console.log(galleryBalanceAfter);
-		// 	// console.log(bobBalanceAfter);
-		// 	const result = await instance.checkNft(0);
-		// 	console.log(result._forSale);
-		// 	// assert.equal(
-		// 	// 	result[3]._forSale,
-		// 	// 	true,
-		// 	// 	"the item should be for sale"
-		// 	// );
+		it("should allow someone to purchase an item", async () => {
+			await instance.addMinter(accounts[0]);
+			await instance.mint(
+				title,
+				artist,
+				uri,
+				accounts[0],
+				accounts[0],
+				accounts[2],
+				price
+			);
+			// const index = await instance.totalSupply();
+			var galleryBalanceBefore = await web3.eth.getBalance(accounts[0]);
+			var buyerBalanceBefore = await web3.eth.getBalance(accounts[2]);
+			console.log(galleryBalanceBefore);
+			console.log(buyerBalanceBefore);
+			
+			await instance.buy(tokenId);
+			// var galleryBalanceAfter = await web3.eth.getBalance(accounts[0]);
+			// var buyerBalanceAfter = await web3.eth.getBalance(accounts[2]);
+			// console.log(galleryBalanceAfter);
+			// console.log(buyerBalanceAfter);
 
-		// 	// assert.equal(
-		// 	// 	new BN(galleryBalanceAfter).toString(),
-		// 	// 	new BN(galleryBalanceBefore).add(new BN(price)).toString(),
-		// 	// 	"gallery's balance should be increased by the price of the item"
-		// 	// );
+			assert.equal(
+				new BN(galleryBalanceAfter).toString(),
+				new BN(galleryBalanceBefore).add(new BN(price)).toString(),
+				"gallery's balance should be increased by the price of the item"
+			);
 
-		// 	// assert.isBelow(
-		// 	// 	Number(bobBalanceAfter),
-		// 	// 	Number(new BN(bobBalanceBefore).sub(new BN(price))),
-		// 	// 	"bob's balance should be reduced by more than the price of the item (including gas costs)"
-		// 	// );
-		// 	// });
+			assert.isBelow(
+				Number(buyerBalanceAfter),
+				Number(new BN(buyerBalanceBefore).sub(new BN(price))),
+				"buyer's balance should be reduced by more than the price of the item (including gas costs)"
+			);
+		});
 
-		// 	// not done - should emit sold event
-		// 	// it("should emit LogSold event when and item is purchased", async () => {
-		// 	// 	var eventEmitted = false;
-		// 	// 	await instance.addMinter(accounts[0]);
-		// 	// 	await instance.mint(accounts[0], uri);
-		// 	// 	const tx = await instance.buy(0, { from: bob, value: excessAmount });
-		// 	// 	if (tx.logs[0].event == "LogSold") {
-		// 	// 		eventEmitted = true;
-		// 	// 	}
-		// 	// 	assert.equal(
-		// 	// 		eventEmitted,
-		// 	// 		true,
-		// 	// 		"adding an item should emit a Sold event"
-		// 	// 	);
+			// not done - should emit purchase event
+		// 	it("should emit Purchase event when item is purchased", async () => {
+		// 		var eventEmitted = false;
+		// 		await instance.addMinter(accounts[0]);
+		// 		await instance.mint(accounts[0], uri);
+		// 		const tx = await instance.buy(0, { from: bob, value: excessAmount });
+		// 		if (tx.logs[0].event == "Purchased") {
+		// 			eventEmitted = true;
+		// 		}
+		// 		assert.equal(
+		// 			eventEmitted,
+		// 			true,
+		// 			"adding an item should emit a Sold event"
+		// 		);
 		// });
 
 
