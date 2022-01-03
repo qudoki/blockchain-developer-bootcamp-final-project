@@ -57,6 +57,7 @@ contract NFT is ERC721URIStorage, Ownable {
         // _owner = msg.sender;
         // _setBaseURI("ipfs://");
         // tokenCounter = 0;
+        // _mint(msg.sender, 1);
     }
 
     //Setting NFT info to collection
@@ -76,10 +77,10 @@ contract NFT is ERC721URIStorage, Ownable {
     }
 
     //Getting the collection data
-    function checkNft(uint _index) public view returns (uint256 _tokenId, string memory _artist, string memory _title, bool _forSale, string memory _tokenURI) {
+    function checkNft(uint _index) public view returns (uint256 _tokenId, string memory _artist, string memory _title, bool _forSale, string memory _tokenURI, address _currentOwner) {
         Item storage item = collection[_index];
         require(item.forSale, "true");
-        return (item.tokenId, item.artist, item.title, item.forSale, item.tokenURI);
+        return (item.tokenId, item.artist, item.title, item.forSale, item.tokenURI, item.currentOwner);
     }
 
     event Mint(address owner, uint256 price, uint256 id, string uri);
@@ -101,14 +102,15 @@ contract NFT is ERC721URIStorage, Ownable {
         _;
     }
 
-// questioning if all of these are needed
+// questioning if all of these are needed?
     mapping(uint256 => string) _tokenURIs;
     mapping(uint256 => bool) public forSale;
-    mapping(uint256 => uint256) public price;
     // Mapping from token ID to owner address
     mapping(uint256 => address) private _owners;
     // Mapping owner address to token count
     mapping(address => uint256) private _balances;
+    // Approvals for sale
+    mapping (uint256 => uint256) public tokenIdToPrice;
 
 
     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
@@ -145,22 +147,52 @@ contract NFT is ERC721URIStorage, Ownable {
     //     emit Transfer(from, to, tokenId);
     // }
 
-    event Purchase(address owner, uint256 price, uint256 id, string uri);
+    event Purchase(address _seller, address _buyer, uint256 _price);
 
-    function buy(uint256 _id) external payable {
-        _validate(_id);
-        _trade(_id);
-        emit Purchase(msg.sender, collection[_id].price, _id, collection[_id].tokenURI);
+// Below is from : https://stackoverflow.com/questions/67317392/how-to-transfer-a-nft-from-one-account-to-another-using-erc721
+//How to simulate the sale:
+
+// The contract deployer (msg.sender) gets token ID 1.
+// Execute allowBuy(1, 2) that will allow anyone to buy token ID 1 for 2 wei.
+// From a second address, execute buy(1) sending along 2 wei, to buy the token ID 1.
+// Call (the parent ERC721) function ownerOf(1) to validate that the owner is now the second address.
+    function allow(uint256 _tokenId, uint256 _price) external {
+        require(msg.sender == ownerOf(_tokenId), "Not the owner of this token!");
+        require(_price > 0, "Price is zero!");
+        tokenIdToPrice[_tokenId] = _price;
     }
 
-    function _validate(uint256 _id) internal {
-        require(_exists(collection[_id].tokenId), "Error, wrong Token id");
-        require(msg.value >= collection[_id].price, "Error, Token costs more");
+    function disallow(uint256 _tokenId) external {
+        require(msg.sender == ownerOf(_tokenId), "Not the owner of this token!");
+        tokenIdToPrice[_tokenId] = 0;
     }
 
-    function _trade(uint256 _id) internal {
-        _transfer(address(this), msg.sender, collection[_id].tokenId);
-        _owner.transfer(msg.value);
-        collection[_id].forSale = true;
+    function buy(uint256 _tokenId, address payable buyer) external payable {
+        uint256 price = tokenIdToPrice[_tokenId];
+        require(price > 0, "This token is not for sale!");
+        require(msg.value == price, "Incorrect value!");
+        // buyer = msg.sender;
+        address seller = collection[_tokenId].currentOwner;
+        _transfer(seller, buyer, _tokenId);
+        tokenIdToPrice[_tokenId] = 0; // no longer for sale
+        payable(seller).transfer(msg.value); // send to the seller
+        emit Purchase(seller, buyer, msg.value);
     }
+    
+    // function buy(uint256 _id) external payable {
+    //     _validate(_id);
+    //     _trade(_id);
+    //     emit Purchase(msg.sender, collection[_id].price, _id, collection[_id].tokenURI);
+    // }
+
+    // function _validate(uint256 _id) internal {
+    //     require(_exists(collection[_id].tokenId), "Error, wrong Token id");
+    //     require(msg.value >= collection[_id].price, "Error, Token costs more");
+    // }
+
+    // function _trade(uint256 _id) internal {
+    //     _transfer(address(this), msg.sender, collection[_id].tokenId);
+    //     _owner.transfer(msg.value);
+    //     collection[_id].forSale = true;
+    // }
 }
