@@ -11,21 +11,24 @@ const {
 const { providers } = require("ethers");
 
 contract("NFT", function (accounts) {
-	const [_owner, alice, bob] = accounts;
+	// const [gall, neutral, buy] = accounts;
 	// currently gallery is address at 0
-	const gallery = "0xdBCb1631C25d2a13675046EA6986c1969bB90De5";
+	const gallery = "0x0E418f11756905C3544a4D632306E20a5DeC5c61";
+	const buyer = "0x07AE5fCC202205AdB0E199c283b00cF08b9e5e9E";
 	const price = 1;
+	const fakePrice = 100;
 	const artist = "john doe";
 	const title = "best nft ever";
-	const buyer = "buyerperson";
-	const currentOwner = "ownerperson";
 	const index = 0;
 	const uri =
 		"https://ipfs.io/ipfs/bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm";
 	let instance;
+	let buyerInstance;
 
 	beforeEach(async () => {
 		instance = await NFT.new(gallery);
+		// separate contract initiation (buyer)
+		buyerInstance = await NFT.new(buyer);
 	});
 
 	describe("Variables", () => {
@@ -154,9 +157,8 @@ contract("NFT", function (accounts) {
 				accounts[2],
 				price
 			);
-			await catchRevert(instance.buy(index, accounts[2]));
+			await catchRevert(buyerInstance.buy(index, { value: fakePrice }));
 		});
-
 
 		// check if item is for sale
 		it("It should allow someone to check if item is for sale", async () => {
@@ -171,13 +173,8 @@ contract("NFT", function (accounts) {
 				price
 			);
 			const result = await instance.checkNft(index);
-			assert.equal(
-				result._forSale,
-				true,
-				"the item should be for sale"
-			);
+			assert.equal(result._forSale, true, "the item should be for sale");
 		});
-
 
 		// not done - purchase and transfer
 
@@ -194,12 +191,12 @@ contract("NFT", function (accounts) {
 				accounts[2],
 				price
 			);
-			// const index = await instance.totalSupply();
-			// console.log(index);
-			const result = await instance.checkNft(index);
+			// const result = await instance.checkNft(index);
 			// console.log(result);
-			const tokenId = result._tokenId.toNumber();
-			console.log(tokenId);
+			// const tokenId = result._tokenId.toNumber();
+			// console.log("Token ID: " + tokenId);
+
+			await instance.checkNft(index);
 
 			//before
 			var galleryBalanceBefore = await web3.eth.getBalance(accounts[0]);
@@ -207,14 +204,23 @@ contract("NFT", function (accounts) {
 			console.log("Gallery Balance Before Purchase " + galleryBalanceBefore);
 			console.log("Buyer Balance Before Purchase: " + buyerBalanceBefore);
 
-			await instance.allow(tokenId-1, price);
-			await instance.buy(tokenId-1, accounts[2], {value: price}); // will "index" return wrong token Id?
-			
+			//during
+			await instance.allow(index, buyer);
+			await buyerInstance.buy(index, { value: price }); // will "index" return wrong token Id?
+
 			//after
 			var galleryBalanceAfter = await web3.eth.getBalance(accounts[0]);
-			var buyerBalanceAfter = await web3.eth.getBalance(accounts[2]);
+			var buyerBalanceAfter = await web3.eth.getBalance(buyer);
 			console.log("Gallery Balance After Purchase: " + galleryBalanceAfter);
 			console.log("Buyer Balance After Purchase: " + buyerBalanceAfter);
+
+			const after = await buyerInstance.checkNft(index);
+			console.log(after._currentOwner);
+			// assert.equal(
+			// 	after._currentOwner,
+			// 	address[2],
+			// 	"the piece should now be owned by the buyer"
+			// );
 
 			// assert.equal(
 			// 	Number(galleryBalanceAfter),
@@ -228,6 +234,5 @@ contract("NFT", function (accounts) {
 			// 	"buyer's balance should be reduced by more than the price of the item (including gas costs)"
 			// );
 		});
-
 	});
 });

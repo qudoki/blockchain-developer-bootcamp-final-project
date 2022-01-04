@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.5.16 <0.9.0;
+pragma abicoder v2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -8,7 +9,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 // contract NFT is ERC721, Ownable {
-contract NFT is ERC721URIStorage, Ownable {
+contract NFT is ERC721, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenCounter;
     struct Item {
@@ -73,13 +74,12 @@ contract NFT is ERC721URIStorage, Ownable {
         item.title = _title;
         item.forSale = true;
         collection.push(item);
-        return (collection[0].tokenURI);
+        return (collection[item.tokenId - 1].tokenURI);
     }
 
     //Getting the collection data
     function checkNft(uint _index) public view returns (uint256 _tokenId, string memory _artist, string memory _title, bool _forSale, string memory _tokenURI, address _currentOwner) {
         Item storage item = collection[_index];
-        require(item.forSale, "true");
         return (item.tokenId, item.artist, item.title, item.forSale, item.tokenURI, item.currentOwner);
     }
 
@@ -97,25 +97,16 @@ contract NFT is ERC721URIStorage, Ownable {
         return tokenId;
     }
 
-    modifier isOwner() {
-        require(msg.sender == _owner, "Not the owner!");
-        _;
-    }
+    // modifier isOwner() {
+    //     require(msg.sender == _owner, "Not the owner!");
+    //     _;
+    // }
 
-// questioning if all of these are needed?
+// Mapping for tokenURIs
     mapping(uint256 => string) _tokenURIs;
-    mapping(uint256 => bool) public forSale;
-    // Mapping from token ID to owner address
-    mapping(uint256 => address) private _owners;
-    // Mapping owner address to token count
-    mapping(address => uint256) private _balances;
-    // Approvals for sale
-    mapping (uint256 => uint256) public tokenIdToPrice;
-
 
     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
         internal
-        override
     {
         _tokenURIs[tokenId] = _tokenURI;
     }
@@ -132,51 +123,35 @@ contract NFT is ERC721URIStorage, Ownable {
         return _tokenURI;
     }
 
-
-
-    //From Open Zepp for reference
-    // function _transfer(address from, address to, uint256 tokenId) internal override virtual {
-    //     require(ERC721.ownerOf(tokenId) == from, "ERC721: transfer from incorrect owner");
-    //     require(to != address(0), "ERC721: transfer to the zero address not allowed");
-    //     _beforeTokenTransfer(from, to, tokenId);
-    //     //Clear approvals from the previous owner
-    //     _approve(address(0), tokenId);
-    //     _balances[from] -= 1;
-    //     _balances[to] += 1;
-    //     _owners[tokenId] = to;
-    //     emit Transfer(from, to, tokenId);
-    // }
-
     event Purchase(address _seller, address _buyer, uint256 _price);
 
-// Below is from : https://stackoverflow.com/questions/67317392/how-to-transfer-a-nft-from-one-account-to-another-using-erc721
+// Reference: https://stackoverflow.com/questions/67317392/how-to-transfer-a-nft-from-one-account-to-another-using-erc721
 //How to simulate the sale:
 
 // The contract deployer (msg.sender) gets token ID 1.
 // Execute allowBuy(1, 2) that will allow anyone to buy token ID 1 for 2 wei.
 // From a second address, execute buy(1) sending along 2 wei, to buy the token ID 1.
 // Call (the parent ERC721) function ownerOf(1) to validate that the owner is now the second address.
-    function allow(uint256 _tokenId, uint256 _price) external {
+    function allow(uint256 _tokenId, address payable buyer) external {
         require(msg.sender == ownerOf(_tokenId), "Not the owner of this token!");
-        require(_price > 0, "Price is zero!");
-        tokenIdToPrice[_tokenId] = _price;
+        approve(buyer, _tokenId);
+        collection[_tokenId].forSale == true;
     }
 
-    function disallow(uint256 _tokenId) external {
+    function disallow(uint256 _tokenId) external view {
         require(msg.sender == ownerOf(_tokenId), "Not the owner of this token!");
-        tokenIdToPrice[_tokenId] = 0;
+        collection[_tokenId].forSale == false;
     }
 
-    function buy(uint256 _tokenId, address payable buyer) external payable {
-        uint256 price = tokenIdToPrice[_tokenId];
-        require(price > 0, "This token is not for sale!");
-        require(msg.value == price, "Incorrect value!");
-        // buyer = msg.sender;
+    function buy(uint256 _tokenId) external payable {
+        require(msg.sender != address(0));
+        require(collection[_tokenId].forSale == true, "This token is not for sale!");
+        require(msg.value >= collection[_tokenId].price, "Incorrect value!");
         address seller = collection[_tokenId].currentOwner;
-        _transfer(seller, buyer, _tokenId);
-        tokenIdToPrice[_tokenId] = 0; // no longer for sale
         payable(seller).transfer(msg.value); // send to the seller
-        emit Purchase(seller, buyer, msg.value);
+        collection[_tokenId].forSale == false;
+        collection[_tokenId].currentOwner == msg.sender;
+        emit Purchase(seller, msg.sender, msg.value);
     }
     
     // function buy(uint256 _id) external payable {
