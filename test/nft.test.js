@@ -20,6 +20,7 @@ contract("NFT", async (accounts) => {
 
 	// currently gallery is address at 0
 	const gallery = "0x09c74b9D99cce82CEaDaA60a90Ec8453A5d12450";
+	// currently buyer is address at 2
 	const buyer = "0x5150CC17aeab7426faaac01A834b4bA85B2Ea49f";
 	const price = 1;
 	const fakePrice = 100;
@@ -257,9 +258,12 @@ contract("NFT", async (accounts) => {
 			priorTokenOwnerBalance = await web3.eth.getBalance(accounts[0]);
 			// Below makes priorTokenOwnerBalance a weird BN alphanumeric
 			// priorTokenOwnerBalance = new web3.utils.BN(priorTokenOwnerBalance);
-			console.log("Prior Token Owner Balance Before Transaction: " + priorTokenOwnerBalance);
+			console.log(
+				"Prior Token Owner Balance Before Transaction: " +
+					web3.utils.fromWei(priorTokenOwnerBalance, "ether")
+			);
 
-			// Check prior seller token count
+			// Check prior seller token count before transaction
 			let priorTotalTokensOfSeller;
 			priorTotalTokensOfSeller =
 				await nftCollection.getTotalNumberOfTokensOwnedByAnAddress(accounts[0]);
@@ -275,7 +279,10 @@ contract("NFT", async (accounts) => {
 			// Check prospective token buyer balance
 			let priorBuyerBalance;
 			priorBuyerBalance = await web3.eth.getBalance(accounts[2]);
-			console.log("Buyer Balance Before Transaction: " + priorBuyerBalance);
+			console.log(
+				"Buyer Balance Before Transaction: " +
+					web3.utils.fromWei(priorBuyerBalance, "ether")
+			);
 
 			// Purchase token
 			result = await nftCollection.buy(1, {
@@ -286,113 +293,68 @@ contract("NFT", async (accounts) => {
 			// Check prior token owner's balance after transaction
 			let priorTokenOwnerBalanceAfterTx;
 			priorTokenOwnerBalanceAfterTx = await web3.eth.getBalance(accounts[0]);
-			console.log("Prior Token Owner Balance After Transaction: " + priorTokenOwnerBalanceAfterTx);
+			console.log(
+				"Prior Token Owner Balance After Transaction: " +
+					web3.utils.fromWei(priorTokenOwnerBalanceAfterTx, "ether")
+			);
 
 			// Check new token owner
-			const newTokenOwner = await nftCollection.getTokenOwner(1);
+			const newTokenOwner = await nftCollection.getTokenOwner(1, {
+				from: accounts[0],
+			});
 			assert.equal(newTokenOwner, accounts[2]);
 
 			// Check new token owner's balance after transaction
 			let newTokenOwnerBalance;
 			newTokenOwnerBalance = await web3.eth.getBalance(accounts[2]);
-			console.log("Buyer Balance After Transaction: " + newTokenOwnerBalance);
+			console.log(
+				"Buyer Balance After Transaction: " +
+					web3.utils.fromWei(newTokenOwnerBalance, "ether")
+			);
 
+			// Check new seller token count after transaction
+			let newTotalTokensOfSeller;
+			newTotalTokensOfSeller =
+				await nftCollection.getTotalNumberOfTokensOwnedByAnAddress(accounts[0]);
+			assert.equal(newTotalTokensOfSeller.toNumber(), 4);
 
-
-
-
-
-
+			// Check that one transfer has been made thus far
+			artPiece = await nftCollection.collection(1, {
+				from: accounts[0],
+			});
+			assert.equal(artPiece.numberOfTransfers.toNumber(), 1);
 		});
 
 		// 	// error when not enough
 		// 	it("It should error when not enough value is sent when purchasing an item", async () => {
-		// 		await nftCollection.addMinter(accounts[0]);
-		// 		await nftCollection.mint(
-		// 			title,
-		// 			artist,
-		// 			uri,
-		// 			accounts[0],
-		// 			accounts[0],
-		// 			accounts[2],
-		// 			price
-		// 		);
+
 		// 		await catchRevert(buyerInstance.buy(index, { value: fakePrice }));
 		// 	});
 
-		// 	// check if item is for sale
-		// 	it("It should allow someone to check if item is for sale", async () => {
-		// 		await nftCollection.addMinter(accounts[0]);
-		// 		await nftCollection.mint(
-		// 			title,
-		// 			artist,
-		// 			uri,
-		// 			accounts[0],
-		// 			accounts[0],
-		// 			accounts[2],
-		// 			price
-		// 		);
-		// 		const result = await nftCollection.checkNft(index);
-		// 		assert.equal(result._forSale, true, "the item should be for sale");
-		// 	});
+		it("Allows token owners to toggle forSale setting", async () => {
+			let artPiece;
+			// piece 1 is currently for sale
+			artPiece = await nftCollection.collection(1, {
+				from: accounts[0],
+			});
+			assert.equal(artPiece.forSale, true);
 
-		// 	// not done - purchase and transfer
+			// Check token owner
+			const newTokenOwner = await nftCollection.getTokenOwner(1, {
+				from: accounts[0],
+			});
+			// new token owner is accounts[2]
+			console.log(newTokenOwner);
 
-		// 	it("It should allow someone to purchase an item", async () => {
-		// 		var initialGalleryBalance = await web3.eth.getBalance(accounts[0]);
-		// 		console.log("Gallery Balance Before Minting: " + initialGalleryBalance);
-		// 		await nftCollection.addMinter(accounts[0]);
-		// 		await nftCollection.mint(
-		// 			title,
-		// 			artist,
-		// 			uri,
-		// 			accounts[0],
-		// 			accounts[0],
-		// 			accounts[2],
-		// 			price
-		// 		);
-		// 		// const result = await instance.checkNft(index);
-		// 		// console.log(result);
-		// 		// const tokenId = result._tokenId.toNumber();
-		// 		// console.log("Token ID: " + tokenId);
+			// accounts[2] toggles for sale to not for sale (false)
+			result = await nftCollection.toggleForSale(1, { from: accounts[2] });
 
-		// 		await nftCollection.checkNft(index);
+			// piece is not for sale
+			artPiece = await nftCollection.collection(1, {
+				from: accounts[0],
+			});
+			assert.equal(artPiece.forSale, false);
+		});
 
-		// 		//before
-		// 		var galleryBalanceBefore = await web3.eth.getBalance(accounts[0]);
-		// 		var buyerBalanceBefore = await web3.eth.getBalance(accounts[2]);
-		// 		console.log("Gallery Balance Before Purchase " + galleryBalanceBefore);
-		// 		console.log("Buyer Balance Before Purchase: " + buyerBalanceBefore);
-
-		// 		//during
-		// 		await nftCollection.allow(index, buyer);
-		// 		await buyerInstance.buy(index, { value: price }); // will "index" return wrong token Id?
-
-		// 		//after
-		// 		var galleryBalanceAfter = await web3.eth.getBalance(accounts[0]);
-		// 		var buyerBalanceAfter = await web3.eth.getBalance(buyer);
-		// 		console.log("Gallery Balance After Purchase: " + galleryBalanceAfter);
-		// 		console.log("Buyer Balance After Purchase: " + buyerBalanceAfter);
-
-		// 		const after = await buyerInstance.checkNft(index);
-		// 		console.log(after._currentOwner);
-		// 		// assert.equal(
-		// 		// 	after._currentOwner,
-		// 		// 	address[2],
-		// 		// 	"the piece should now be owned by the buyer"
-		// 		// );
-
-		// 		// assert.equal(
-		// 		// 	Number(galleryBalanceAfter),
-		// 		// 	Number(galleryBalanceBefore).add(price),
-		// 		// 	"gallery's balance should be increased by the price of the item"
-		// 		// );
-
-		// 		// assert.isBelow(
-		// 		// 	Number(buyerBalanceAfter),
-		// 		// 	Number(buyerBalanceBefore).sub(price),
-		// 		// 	"buyer's balance should be reduced by more than the price of the item (including gas costs)"
-		// 		// );
-		// 	});
 	});
 });
