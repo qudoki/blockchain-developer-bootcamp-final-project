@@ -1,33 +1,89 @@
 import React, { useState, useEffect } from "react";
+// import { NFTStorage, File } from "nft.storage";
 import NFT from "./contracts/NFT.json";
 import getWeb3 from "./getWeb3";
 import Popup from "./components/Popup/popup.js";
-
 import "./App.css";
 
-//This is the top of application.js
+// This is the top of application.js
 require("dotenv").config();
 
-//This is an example of process.env later in the file
-// var PrivateKey = new Buffer(process.env.["PRIVATE_KEY"], "hex"));
+// // Using NFT Storage API Key from dotenv
+// const apiKey = process.env.NFT_STORAGE_API_KEY;
+// const client = new NFTStorage({ token: apiKey });
+// // const metadata = await client.store({
+// // })
 
-//Here is another example of using process.env
-// const APIKey = process.env.API_KEY;
+// Hard coding the nft data for minting
+const url = "https://ipfs.io/ipfs/";
+let nftOne = {
+	link: url + "bafybeigmzl32jd3c7xiqtd4nphmjwkxgs4dvxqvmfqv7sk3xdhdwpublny",
+	title: "White Moon Over Blue Seascape",
+	artist: "Rebecca Johnson",
+	minter: "",
+	owner: "",
+	price: 1,
+}
+let nftTwo = {
+	link: url + "bafybeig3l6fag6fbzzxj3syzxco3ul6j2uy5ocyxx7j3m4t7hmsdqwc66i",
+	title: "White Wolf Over Red Landscape",
+	artist: "Rebecca Johnson",
+	minter: "",
+	owner: "",
+	price: 1,
+}
+let nftThree = {
+	link: url + "bafybeiflu2fdax4i7o6g2eoyu6to7qs7cdol5s3vmqsnvpc6nml4tfo5ju",
+	title: "Flower Over Purple Desert",
+	artist: "Rebecca Johnson",
+	minter: "",
+	owner: "",
+	price: 1,
+}
+let nftFour = {
+	link: url + "bafybeia23kjkkvtgxwbxqhojdbzlmxxuhi7ffuxfuerot4hzpe7umttjva",
+	title: "Red Stork Over White Gaudi Feature",
+	artist: "Rebecca Johnson",
+	minter: "",
+	owner: "",
+	price: 1,
+}
+let nftFive = {
+	link: url + "bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm",
+	title: "Disco Ball Over Red Partyscape",
+	artist: "Rebecca Johnson",
+	minter: "",
+	owner: "",
+	price: 1,
+};
+
 
 function App() {
-	// const [storageValue, setStorageValue] = useState(20);
-	const [nfts, setNfts] = useState([]);
+	// State variables
 	const [web3, setWeb3] = useState(undefined);
-	const [contract, setContract] = useState([]);
-	const [accounts, setAccounts] = useState([]);
-	const [tokenURI, setTokenURI] = useState([]);
-	const [balance, setBalance] = useState(undefined);
-	// const [artName, setArtName] = useState([]);
-	const [artPrice, setArtPrice] = useState([]);
+
+	const [accounts, setAccounts] = useState("");
+	const [balance, setAccountBalance] = useState("");
+	const [contract, setContract] = useState(null);
+	const [currentOwner, setCurrentOwner] = useState("");
+	const [collectionCount, setCollectionCount] = useState(0);
+	const [nftCollection, setNftCollection] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [metamaskConnected, setMetaMaskConnected] = useState(false);
+	const [contractDetected, setContractDetected] = useState(false);
+	const [totalTokensMinted, setTotalTokensMinted] = useState(0);
+	const [totalTokensOwnedByAccount, setTotalTokensOwnedByAccount] = useState(0);
+	const [nameIsUsed, setNameIsUsed] = useState(false);
 	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
+	const [tokenURIs, setTokenURIs] = useState([]);
+	const [artTitles, setArtTitles] = useState([]);
+	const [artPrices, setArtPrices] = useState([]);
+	const [numberOfTransfers, setNumberOfTransfers] = useState(0);
+	const [forSale, setForSale] = useState(false);
 
+	// Connecting to web 3 and getting initial balances, and sets off character
 	useEffect(() => {
 		const init = async () => {
 			try {
@@ -48,10 +104,9 @@ function App() {
 				);
 				// Set web3, accounts, and contract to the state
 				setWeb3(web3);
-				setAccounts(accounts);
+				setAccounts(accounts[0]);
 				setContract(contract);
-				setBalance(balance);
-				setTokenURI(tokenURI);
+				setAccountBalance(balance);
 
 				// character movement logic
 				var character = document.querySelector(".Character");
@@ -201,6 +256,9 @@ function App() {
 		init();
 	}, []);
 
+	// Mint all NFTs - NOT DONE!
+	// mintAllNfts = async ()
+
 	// this is where you should connect to contracts and get response back to state
 	useEffect(() => {
 		const load = async () => {
@@ -210,12 +268,12 @@ function App() {
 			// const response = await contract.methods.get().call();
 			// // Update state with the result.
 			// setStorageValue(response);
-
 			// from nd tutorial
 		};
 		if (
 			typeof web3 !== "undefined" &&
 			typeof accounts !== "undefined" &&
+			typeof balance !== "undefined" &&
 			typeof contract !== "undefined"
 		) {
 			load();
@@ -228,8 +286,12 @@ function App() {
 	return (
 		<div className="App">
 			<h1 className="Header">NFT GALLERY</h1>
-			{/* <p>The stored value is: {storageValue}</p> // stored value can be "which art?" */}
-			<p className="directions">Use the arrow keys to move and the space bar to select a piece.</p>
+
+			{/* mint button below */}
+			<button className="loadBtn">Load NFTs</button>
+			<p className="directions">
+				Use the arrow keys to move and the space bar to select a piece.
+			</p>
 			<div className="camera">
 				<div
 					className="map background-img"

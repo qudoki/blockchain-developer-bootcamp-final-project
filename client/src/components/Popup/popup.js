@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Col, Modal } from "react-bootstrap";
+import Switch from "../Switch/switch";
 import "./popup.css";
 
 const Popup = (props) => {
@@ -7,8 +8,8 @@ const Popup = (props) => {
 
 	return (
 		<Modal
-            show={show}
-            onHide={onClose}
+			show={show}
+			onHide={onClose}
 			animation={true}
 			className="modal"
 			backdrop="static"
@@ -18,23 +19,42 @@ const Popup = (props) => {
 		>
 			<Modal.Header closeButton onClick={onClose}></Modal.Header>
 			<Modal.Body className="modalBody">
-			<p className="title">Title: </p>
-			<p className="artist">Artist: </p>
-			{/* currently hardcoded - fix when info back from BC */}
+			<h6 className="header">Your Selection</h6>
+
+				<Col className="org1">
+					<p className="title">Title: </p>
+					<p className="artist">Artist: </p>
+					<p className="artist">Owner: </p>
+				</Col>
+				<Col className="org2">
+					<p className="artist"># Transfers: </p>
+					<p className="forSale">Availability
+					<Switch /></p>
+				</Col>
+				{/* currently hardcoded - fix when info back from BC */}
 				<div className="art">
-					<img className="image" src="https://ipfs.io/ipfs/bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm" />
-					</div>
+					<img
+						className="image"
+						src="https://ipfs.io/ipfs/bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm"
+					/>
+				</div>
 				{/* <div>
 					<button className="mainBtn">Mint (TBD)</button>
 				</div> */}
 				<div>
-					<button className="mainBtn">Purchase for {props.artPrice} ether</button>
+					<button className="mainBtn">
+						PURCHASE FOR Ξ{props.artPrice} ETHER
+					</button>
 				</div>
-				<div>
-					<h5 className="header">Your Account</h5>
+					<h6 className="header">Your Account</h6>
+				<Col className="org1">
+
 					<p className="balance">Balance: Ξ {props.balance} ether</p>
 					<p className="address">Address: {props.accounts}</p>
-				</div>
+				</Col>
+				<Col className="org2">
+				<p className="balance">NFT Count:</p>
+				</Col>
 			</Modal.Body>
 		</Modal>
 	);

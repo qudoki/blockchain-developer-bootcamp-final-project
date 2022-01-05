@@ -8,7 +8,6 @@ module.exports = async callback => {
     const tx2 = await nftTx.setTokenURI(2, "")
     const tx3 = await nftTx.setTokenURI(3, "")
     const tx4 = await nftTx.setTokenURI(4, "")
-    const tx5 = await nftTx.setTokenURI(5, "")
     console.log(tx)
     callback(tx.tx)
 }

@@ -120,3 +120,13 @@ body {
 .directions {
 	font-size: 10px;
 }
+
+.loadBtn {
+	font-size: 8px;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	font-weight: bold;
+	margin: 4px;
+	background-color: rgba(0, 255, 128, 0.74);
+	border-radius: 5px;
+}

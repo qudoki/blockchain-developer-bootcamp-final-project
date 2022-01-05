@@ -4,16 +4,20 @@
 }
 
 .modal {
-	margin-top: 90px;
+	margin-top: 95px;
     position: fixed;
     padding: 15px;
     background-color: rgb(255, 255, 255);
-    opacity: 90%;
+    opacity: 92%;
     border: rgb(103, 103, 103) 1px solid;
     border-radius: 4%;
     z-index: 200;
-	height: calc(var(--pixel-size) * 110);
+	height: calc(var(--pixel-size) * 125);
 	width: calc(var(--pixel-size) * 100);
+}
+
+.modal-body {
+    margin: 10px;
 }
 
 .popWrap {
@@ -22,8 +26,7 @@
 
 .art {
     height: 275px;
-    /* border: rgb(102, 184, 146) 1px dashed; */
-    margin: 7%;
+    margin: 5%;
 }
 
 .balance {
@@ -38,6 +41,13 @@
     font-size: 11px;
 }
 
+.forSale {
+    font-size: 10px;
+    font-weight: bolder;
+    color: rgb(185, 185, 185);
+    margin: 20px;
+}
+
 .title {
     font-size: 11px;
 }
@@ -48,10 +58,16 @@ button {
 }
 
 .mainBtn {
-    padding: 5px;
-    width: 98%;
-    margin: 1%;
-    height: 30px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+    font-size: 12px;
+    width: 90%;
+    margin: 5%;
+    height: 25px;
+	align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
 }
 
 .header {
@@ -60,4 +76,18 @@ button {
 
 .image {
     width: 100%
+}
+
+.org1 {
+    display: inline-block;
+    width: 75%;
+    height: 50px;
+    /* background-color: paleturquoise; */
+}
+
+.org2 {
+    display: inline-block;
+    width: 25%;
+    height: 50px;
+    /* background-color: paleturquoise; */
 }
