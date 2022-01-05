@@ -15,9 +15,6 @@ contract("NFT", async (accounts) => {
 	let nftCollection;
 	let result;
 	let collectionCount;
-
-	// let buyerInstance;
-
 	// currently gallery is address at 0
 	const gallery = "0x6cA9317e7e9416099692127Beff8Cdd006B7bdB4";
 	// currently buyer is address at 2
@@ -39,10 +36,8 @@ contract("NFT", async (accounts) => {
 		"https://ipfs.io/ipfs/bafybeigmzl32jd3c7xiqtd4nphmjwkxgs4dvxqvmfqv7sk3xdhdwpublny";
 
 	before(async () => {
-		//was instance
+		//was "instance"
 		nftCollection = await NFT.deployed();
-		// separate contract initiation (buyer)
-		// buyerInstance = await NFT.new(buyer);
 	});
 
 	describe("Deployment", async () => {
@@ -129,7 +124,7 @@ contract("NFT", async (accounts) => {
 	describe("Use Cases", () => {
 		// buyer should not have minterRole = true
 		it("Buyers should not have minterRole = true by default", async function () {
-			const minterRole = await nftCollection.getMinterRole(gallery);
+			const minterRole = await nftCollection.getMinterRole(buyer);
 			assert.equal(minterRole, false);
 		});
 		// gallery should be made into minter role
