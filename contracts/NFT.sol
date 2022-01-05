@@ -8,9 +8,6 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract NFT is ERC721URIStorage, Ownable {
-    // using Counters for Counters.Counter;
-    // Counters.Counter private _tokenCounter;
-
     // Contract's collection name
     string public collectionName;
     // Contract's token symbol
@@ -30,7 +27,6 @@ contract NFT is ERC721URIStorage, Ownable {
     }
 
     // Puts all pieces in a collection
-    // Item[] public collection;
     mapping(uint256 => Item) public collection;
 
     // Checking if token name exists
@@ -41,17 +37,10 @@ contract NFT is ERC721URIStorage, Ownable {
     // Creates role for minting only
     mapping(address => bool) public galleryOnlyMinter;
 
-    // // Mapping for tokenURIs
-    // mapping(uint256 => string) _tokenURIs;
-
     // Initialize contract while deployment with contract's collection name and token
     constructor() ERC721("NFT Gallery", "NFT") {
         collectionName = name();
         collectionNameSymbol = symbol();
-        // _owner = msg.sender;
-        // _setBaseURI("ipfs://");
-        // tokenCounter = 0;
-        // _mint(msg.sender, 1);
     }
 
     // Minting permissions
@@ -66,7 +55,7 @@ contract NFT is ERC721URIStorage, Ownable {
 
     event Mint(address owner, uint256 price, uint256 id, string uri);
 
-    //Mint all - how to get preloaded IPFS files upon connection -- only one right now
+    //Minting function
     function mint(
         string memory _name,
         string memory _title,
@@ -96,6 +85,9 @@ contract NFT is ERC721URIStorage, Ownable {
         // Set tokenURI (bind token id with the passed in token URI)
         _setTokenURI(tokenCounter, _tokenURI);
 
+        // Emit mint event
+        emit Mint(_gallery, _price, tokenCounter, _tokenURI);
+
         // Create a new NFT item struct and pass in new values
         Item memory newItem = Item(
             tokenCounter,
@@ -110,9 +102,6 @@ contract NFT is ERC721URIStorage, Ownable {
         );
 
         collection[tokenCounter] = newItem;
-
-        // Emit mint event
-        emit Mint(_gallery, _price, tokenCounter, _tokenURI);
     }
 
     // Get owner of the token
@@ -153,6 +142,8 @@ contract NFT is ERC721URIStorage, Ownable {
         return tokenExists;
     }
 
+    event Purchase(address _seller, address _buyer, uint256 _price);
+
     // Buying a token by passing in the token ID
     function buy(uint256 _tokenId) public payable {
         // Check if the function caller is not a zero account address
@@ -179,6 +170,7 @@ contract NFT is ERC721URIStorage, Ownable {
         newItem.currentOwner = payable(msg.sender);
         newItem.numberOfTransfers += 1;
         collection[_tokenId] = newItem;
+        emit Purchase(tokenOwner, msg.sender, msg.value);
     }
 
     // Toggle forSale
@@ -200,65 +192,4 @@ contract NFT is ERC721URIStorage, Ownable {
         collection[_tokenId] = newItem;
     }
 
-
-
-    //Getting the collection data
-    // function checkNft(uint _index) public view returns (uint256 _tokenId, string memory _artist, string memory _title, bool _forSale, string memory _tokenURI, address _currentOwner) {
-    //     Item storage item = collection[_index];
-    //     return (item.tokenId, item.artist, item.title, item.forSale, item.tokenURI, item.currentOwner);
-    // }
-
-    // FOR CHECKING TOTAL SUPPLY
-    // function totalSupply() public view returns (uint256) {
-    //     return tokenCounter.current();
-    // }
-
-    // function _setTokenURI(uint256 tokenId, string memory _tokenURI)
-    //     internal
-    // {
-    //     _tokenURIs[tokenId] = _tokenURI;
-    // }
-
-    // function tokenURI(uint256 tokenId)
-    //     public
-    //     view
-    //     virtual
-    //     override
-    //     returns (string memory)
-    // {
-    //     require(_exists(tokenId));
-    //     string memory _tokenURI = _tokenURIs[tokenId];
-    //     return _tokenURI;
-    // }
-
-    // event Purchase(address _seller, address _buyer, uint256 _price);
-
-    // Reference: https://stackoverflow.com/questions/67317392/how-to-transfer-a-nft-from-one-account-to-another-using-erc721
-    //How to simulate the sale:
-
-    // The contract deployer (msg.sender) gets token ID 1.
-    // Execute allowBuy(1, 2) that will allow anyone to buy token ID 1 for 2 wei.
-    // From a second address, execute buy(1) sending along 2 wei, to buy the token ID 1.
-    // Call (the parent ERC721) function ownerOf(1) to validate that the owner is now the second address.
-    // function allow(uint256 _tokenId, address payable buyer) external {
-    //     require(msg.sender == ownerOf(_tokenId), "Not the owner of this token!");
-    //     approve(buyer, _tokenId);
-    //     collection[_tokenId].forSale == true;
-    // }
-
-    // function disallow(uint256 _tokenId) external view {
-    //     require(msg.sender == ownerOf(_tokenId), "Not the owner of this token!");
-    //     collection[_tokenId].forSale == false;
-    // }
-
-    // function buy(uint256 _tokenId) external payable {
-    //     require(msg.sender != address(0));
-    //     require(collection[_tokenId].forSale == true, "This token is not for sale!");
-    //     require(msg.value >= collection[_tokenId].price, "Incorrect value!");
-    //     address seller = collection[_tokenId].currentOwner;
-    //     payable(seller).transfer(msg.value); // send to the seller
-    //     collection[_tokenId].forSale == false;
-    //     collection[_tokenId].currentOwner == msg.sender;
-    //     emit Purchase(seller, msg.sender, msg.value);
-    // }
 }

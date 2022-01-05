@@ -344,7 +344,7 @@ contract("NFT", async (accounts) => {
 				from: accounts[0],
 			});
 			// new token owner is accounts[2]
-			console.log(newTokenOwner);
+			console.log("Current Owner: " + newTokenOwner);
 
 			// accounts[2] toggles for sale to not for sale (false)
 			result = await nftCollection.toggleForSale(1, { from: accounts[2] });
