@@ -50,10 +50,10 @@ const Popup = (props) => {
 				<Col className="org1">
 
 					<p className="balance">Balance: Ξ {props.balance} ether</p>
-					<p className="address">Address: {props.accounts}</p>
+					<p className="address">Address: {props.accountAddress}</p>
 				</Col>
 				<Col className="org2">
-				<p className="balance">NFT Count:</p>
+				<p className="balance">NFT Count: {props.totalTokensOwnedByAccount || "0" } </p>
 				</Col>
 			</Modal.Body>
 		</Modal>

@@ -14,55 +14,63 @@ require("dotenv").config();
 // // const metadata = await client.store({
 // // })
 
-// Hard coding the nft data for minting
+// Hard coding the nft data for minting all at once
+// const gallery = 0x0f735DA7642F6e0dA5d36274C5E6830b8D2a3003;
+// const buyer = 0xF57501dc2A41527C0fd0c1bE91448aB41C9C78dC;
 const url = "https://ipfs.io/ipfs/";
-let nftOne = {
-	link: url + "bafybeigmzl32jd3c7xiqtd4nphmjwkxgs4dvxqvmfqv7sk3xdhdwpublny",
-	title: "White Moon Over Blue Seascape",
-	artist: "Rebecca Johnson",
-	minter: "",
-	owner: "",
-	price: 1,
-}
-let nftTwo = {
-	link: url + "bafybeig3l6fag6fbzzxj3syzxco3ul6j2uy5ocyxx7j3m4t7hmsdqwc66i",
-	title: "White Wolf Over Red Landscape",
-	artist: "Rebecca Johnson",
-	minter: "",
-	owner: "",
-	price: 1,
-}
-let nftThree = {
-	link: url + "bafybeiflu2fdax4i7o6g2eoyu6to7qs7cdol5s3vmqsnvpc6nml4tfo5ju",
-	title: "Flower Over Purple Desert",
-	artist: "Rebecca Johnson",
-	minter: "",
-	owner: "",
-	price: 1,
-}
-let nftFour = {
-	link: url + "bafybeia23kjkkvtgxwbxqhojdbzlmxxuhi7ffuxfuerot4hzpe7umttjva",
-	title: "Red Stork Over White Gaudi Feature",
-	artist: "Rebecca Johnson",
-	minter: "",
-	owner: "",
-	price: 1,
-}
-let nftFive = {
-	link: url + "bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm",
-	title: "Disco Ball Over Red Partyscape",
-	artist: "Rebecca Johnson",
-	minter: "",
-	owner: "",
-	price: 1,
-};
-
+let nftArray = [
+	{
+		name: "moon",
+		link: url + "bafybeigmzl32jd3c7xiqtd4nphmjwkxgs4dvxqvmfqv7sk3xdhdwpublny",
+		title: "White Moon Over Blue Seascape",
+		artist: "Rebecca Johnson",
+		minter: "",
+		owner: "",
+		price: 1,
+	},
+	{
+		name: "wolf",
+		link: url + "bafybeig3l6fag6fbzzxj3syzxco3ul6j2uy5ocyxx7j3m4t7hmsdqwc66i",
+		title: "White Wolf Over Red Landscape",
+		artist: "Rebecca Johnson",
+		minter: "",
+		owner: "",
+		price: 1,
+	},
+	{
+		name: "flower",
+		link: url + "bafybeiflu2fdax4i7o6g2eoyu6to7qs7cdol5s3vmqsnvpc6nml4tfo5ju",
+		title: "Flower Over Purple Desert",
+		artist: "Rebecca Johnson",
+		minter: "",
+		owner: "",
+		price: 1,
+	},
+	{
+		name: "stork",
+		link: url + "bafybeia23kjkkvtgxwbxqhojdbzlmxxuhi7ffuxfuerot4hzpe7umttjva",
+		title: "Red Stork Over White Gaudi Feature",
+		artist: "Rebecca Johnson",
+		minter: "",
+		owner: "",
+		price: 1,
+	},
+	{
+		name: "disco",
+		link: url + "bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm",
+		title: "Disco Ball Over Red Partyscape",
+		artist: "Rebecca Johnson",
+		minter: "",
+		owner: "",
+		price: 1,
+	},
+];
 
 function App() {
 	// State variables
 	const [web3, setWeb3] = useState(undefined);
 
-	const [accounts, setAccounts] = useState("");
+	const [accountAddress, setAccounts] = useState("");
 	const [balance, setAccountBalance] = useState("");
 	const [contract, setContract] = useState(null);
 	const [currentOwner, setCurrentOwner] = useState("");
@@ -83,30 +91,32 @@ function App() {
 	const [numberOfTransfers, setNumberOfTransfers] = useState(0);
 	const [forSale, setForSale] = useState(false);
 
-	// Connecting to web 3 and getting initial balances, and sets off character
+	// Connecting to web3 and getting initial balances, and sets off character
 	useEffect(() => {
 		const init = async () => {
 			try {
 				// Get network provider and web3 instance.
 				const web3 = await getWeb3();
+				// Get the contract instance.
+				const networkId = await web3.eth.net.getId();
+				const networkData = NFT.networks[networkId];
+				const contract = new web3.eth.Contract(
+					NFT.abi,
+					networkData && networkData.address
+				);
+				setContract(contract);
+
 				// Use web3 to get the user's accounts.
 				const accounts = await web3.eth.getAccounts();
+				setAccounts(accounts[0]);
+				// Get balance and set
 				const balance = await web3.eth
 					.getBalance(accounts[0])
 					.then((result) => web3.utils.fromWei(result, "ether"));
+				setAccountBalance(balance);
 
-				// Get the contract instance.
-				const networkId = await web3.eth.net.getId();
-				const deployedNetwork = NFT.networks[networkId];
-				const contract = new web3.eth.Contract(
-					NFT.abi,
-					deployedNetwork && deployedNetwork.address
-				);
 				// Set web3, accounts, and contract to the state
 				setWeb3(web3);
-				setAccounts(accounts[0]);
-				setContract(contract);
-				setAccountBalance(balance);
 
 				// character movement logic
 				var character = document.querySelector(".Character");
@@ -256,8 +266,74 @@ function App() {
 		init();
 	}, []);
 
-	// Mint all NFTs - NOT DONE!
-	// mintAllNfts = async ()
+	// // Mint all NFTs
+	// mintAllNfts = async (name, title, artist, tokenURI, price) => {
+	// 	for (let i = 0; i < nftArray.length; i++) {
+	// 		this.state.contract.methods
+	// 			.mint(i.name, i.title, i.artist, i.tokenURI, i.price)
+	// 			.send({ from: useState({ accountAddress }) })
+	// 			.on("confirmation", () => {
+	// 				console.log("Minted?");
+	// 				window.location.reload();
+	// 			});
+	// 	}
+	// };
+
+	// // Get and set total tokens minted
+	// const nftCounter = await contract.methods.tokenCounter().call();
+	// setTotalTokensMinted(nftCounter);
+
+	// // Loading data from blockchain
+	// reloadBlockchainData = async () => {
+	// 	const web3 = window.web3;
+	// 	const accounts = await web3.eth.getAccounts();
+	// 	if (accounts.length === 0) {
+	// 		this.setMetaMaskConnected({ metamaskConnected: false });
+	// 	} else {
+	// 		this.setMetaMaskConnected({ metamaskConnected: true });
+	// 		this.setAccountAddress({ accountAddress });
+	// 		// Getting new accountbalance
+	// 		let accountBalance = web3.utils.fromWei(accountBalance, "Ether");
+	// 		this.setAccountBalance({ accountBalance });
+	// 	}
+	// }
+
+	// Setting data
+	// setMetaData = async () => {
+	// 	this.state.nftCollection.map(async (piece) => {
+	// 		const result = await fetch(piece.tokenURI);
+	// 		const metaData = await result.json();
+	// 		setNftCollection({
+	// 			nftCollection.tokenId.toNumber() === Number(metaData.tokenId)
+	// 		}))
+	// 	})
+	// }
+
+	// //Buy an NFT art piece
+	// buyNft = (tokenId, price) => {
+	// 	this.state.nftCollection.methods
+	// 		.buyToken(tokenId)
+	// 		.send({ from: this.state.accountAddress, value: price })
+	// 		.on("confirmation", () => {
+	// 			console.log("Bought?");
+	// 			window.location.reload();
+	// 		});
+	// };
+
+	// //Toggle forSale
+	// toggleForSale = (tokenId) => {
+	// 	if (this.state.accountAddress == this.state.accounts[0]) {
+	// 		this.state.nftCollection.methods
+	// 			.toggleForSale(tokenId)
+	// 			.send({ from: this.state.accountAddress })
+	// 			.on("confirmation", () => {
+	// 				console.log("Toggled!");
+	// 				window.location.reload();
+	// 			});
+	// 	} else {
+	// 		alert("Only the gallery can toggle the availability!");
+	// 	}
+	// };
 
 	// this is where you should connect to contracts and get response back to state
 	useEffect(() => {
@@ -272,13 +348,13 @@ function App() {
 		};
 		if (
 			typeof web3 !== "undefined" &&
-			typeof accounts !== "undefined" &&
+			typeof accountAddress !== "undefined" &&
 			typeof balance !== "undefined" &&
 			typeof contract !== "undefined"
 		) {
 			load();
 		}
-	}, [web3, accounts, balance, contract]);
+	}, [web3, accountAddress, balance, contract]);
 
 	if (typeof web3 === "undefined") {
 		return <div>Loading Web3, accounts, and contract...</div>;
@@ -288,7 +364,13 @@ function App() {
 			<h1 className="Header">NFT GALLERY</h1>
 
 			{/* mint button below */}
-			<button className="loadBtn">Load NFTs</button>
+			<button
+				// mintAllNfts={mintAllNfts}
+				// onClick={this.mintAllNfts()}
+				className="loadBtn"
+			>
+				Load NFTs
+			</button>
 			<p className="directions">
 				Use the arrow keys to move and the space bar to select a piece.
 			</p>
@@ -311,7 +393,7 @@ function App() {
 				<Popup
 					onClose={handleClose}
 					contract={contract}
-					accounts={accounts}
+					accountAddress={accountAddress}
 					balance={balance}
 					show={show}
 				/>
