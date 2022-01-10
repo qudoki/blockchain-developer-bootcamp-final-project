@@ -16,6 +16,7 @@ contract NFT is ERC721URIStorage, Ownable {
     uint256 public tokenCounter;
     struct Item {
         uint256 tokenId;
+        string name;
         string title;
         string artist;
         string tokenURI;
@@ -48,9 +49,10 @@ contract NFT is ERC721URIStorage, Ownable {
         return galleryOnlyMinter[_account];
     }
 
-    function addMinter(address _minter) public payable {
+    function addMinter(address _minter) public payable returns (bool) {
         require(galleryOnlyMinter[_minter] == false);
         galleryOnlyMinter[_minter] = true;
+        return galleryOnlyMinter[_minter];
     }
 
     event Mint(address owner, uint256 price, uint256 id, string uri);
@@ -66,18 +68,21 @@ contract NFT is ERC721URIStorage, Ownable {
         uint256 _price
     ) public {
         // Only the gallery can mint
-        require(galleryOnlyMinter[_gallery], "Only the gallery can mint!");
+        require(
+            galleryOnlyMinter[_gallery] == true,
+            "Only the gallery can mint!"
+        );
         // Increment Counter
         tokenCounter++;
         // Check if token exists with above token id (incremented counter)
-        require(!_exists(tokenCounter));
+        require(!_exists(tokenCounter), "Token Count exists!");
         // Check if token URI exists
-        require(!tokenURIExists[_tokenURI]);
+        require(!tokenURIExists[_tokenURI], "Token URI exists!");
         // Check if token name exists
-        require(!tokenNameExists[_tokenURI]);
+        require(!tokenNameExists[_tokenURI], "Token Name exists!");
         // Make passed token URI as exists
         tokenURIExists[_tokenURI] = true;
-        // Make token name passed as exists
+        // // Make token name passed as exists
         tokenNameExists[_name] = true;
 
         // Minting
@@ -91,6 +96,7 @@ contract NFT is ERC721URIStorage, Ownable {
         // Create a new NFT item struct and pass in new values
         Item memory newItem = Item(
             tokenCounter,
+            _name,
             _title,
             _artist,
             _tokenURI,
@@ -102,6 +108,20 @@ contract NFT is ERC721URIStorage, Ownable {
         );
 
         collection[tokenCounter] = newItem;
+    }
+
+
+    function getItem(uint256 _tokenId)
+        public
+        view
+        returns (uint256 tokenId, string memory name, string memory title, string memory artist, string memory tokenURI, address gallery, address currentOwner, uint256 price, uint256 numberOfTransfers, bool forSale)
+    {
+        // copy the data into memory
+        Item memory x = collection[_tokenId];
+        
+        // break the struct's members out into a tuple
+        // in the same order that they appear in the struct
+        return (x.tokenId, x.name, x.title , x.artist , x.tokenURI , x.gallery , x.currentOwner , x.price , x.numberOfTransfers , x.forSale);
     }
 
     // Get owner of the token
@@ -118,6 +138,23 @@ contract NFT is ERC721URIStorage, Ownable {
     {
         string memory tokenMetaData = tokenURI(_tokenId);
         return tokenMetaData;
+    }
+
+    function getArtist(uint256 _tokenId) public view returns (string memory) {
+        string memory artist = collection[_tokenId].artist;
+        return artist;
+    }
+
+    function getTitle(uint256 _tokenId) public view returns (string memory) {
+        string memory title = collection[_tokenId].title;
+        return title;
+    }
+
+    function getNumberTransfers(uint256 _tokenId) public view returns (uint256)
+    {
+        uint256 num = collection[_tokenId]
+            .numberOfTransfers;
+        return num;
     }
 
     // Get total number of tokens minted
@@ -184,12 +221,11 @@ contract NFT is ERC721URIStorage, Ownable {
         // Get the token from collection mapping and create memory of it as defined from struct => newItem
         Item memory newItem = collection[_tokenId];
         // Toggle forSale
-        if(newItem.forSale = true) {
+        if (newItem.forSale = true) {
             newItem.forSale = false;
         } else {
             newItem.forSale = true;
         }
         collection[_tokenId] = newItem;
     }
-
 }

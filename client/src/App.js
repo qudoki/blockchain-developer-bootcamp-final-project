@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+// import React, { Component } from "react";
 // import { NFTStorage, File } from "nft.storage";
 import NFT from "./contracts/NFT.json";
 import getWeb3 from "./getWeb3";
 import Popup from "./components/Popup/popup.js";
 import "./App.css";
+import Web3 from "web3";
 
 // This is the top of application.js
 require("dotenv").config();
@@ -15,109 +17,179 @@ require("dotenv").config();
 // // })
 
 // Hard coding the nft data for minting all at once
-// const gallery = 0x0f735DA7642F6e0dA5d36274C5E6830b8D2a3003;
-// const buyer = 0xF57501dc2A41527C0fd0c1bE91448aB41C9C78dC;
+const gallery = "0xf96ad6d96Ff2387224F1521A3861Ed16F865f1B0";
+const buyer = "0x101a150e1cf42f806dc930ec4287f93d533a6720";
 const url = "https://ipfs.io/ipfs/";
 let nftArray = [
 	{
 		name: "moon",
-		link: url + "bafybeigmzl32jd3c7xiqtd4nphmjwkxgs4dvxqvmfqv7sk3xdhdwpublny",
 		title: "White Moon Over Blue Seascape",
 		artist: "Rebecca Johnson",
-		minter: "",
-		owner: "",
+		tokenURI:
+			url + "bafybeigmzl32jd3c7xiqtd4nphmjwkxgs4dvxqvmfqv7sk3xdhdwpublny",
+		minter: gallery,
+		owner: gallery,
 		price: 1,
 	},
 	{
 		name: "wolf",
-		link: url + "bafybeig3l6fag6fbzzxj3syzxco3ul6j2uy5ocyxx7j3m4t7hmsdqwc66i",
 		title: "White Wolf Over Red Landscape",
 		artist: "Rebecca Johnson",
-		minter: "",
-		owner: "",
+		tokenURI:
+			url + "bafybeig3l6fag6fbzzxj3syzxco3ul6j2uy5ocyxx7j3m4t7hmsdqwc66i",
+		minter: gallery,
+		owner: gallery,
 		price: 1,
 	},
 	{
 		name: "flower",
-		link: url + "bafybeiflu2fdax4i7o6g2eoyu6to7qs7cdol5s3vmqsnvpc6nml4tfo5ju",
 		title: "Flower Over Purple Desert",
 		artist: "Rebecca Johnson",
-		minter: "",
-		owner: "",
+		tokenURI:
+			url + "bafybeiflu2fdax4i7o6g2eoyu6to7qs7cdol5s3vmqsnvpc6nml4tfo5ju",
+		minter: gallery,
+		owner: gallery,
 		price: 1,
 	},
 	{
 		name: "stork",
-		link: url + "bafybeia23kjkkvtgxwbxqhojdbzlmxxuhi7ffuxfuerot4hzpe7umttjva",
 		title: "Red Stork Over White Gaudi Feature",
 		artist: "Rebecca Johnson",
-		minter: "",
-		owner: "",
+		tokenURI:
+			url + "bafybeia23kjkkvtgxwbxqhojdbzlmxxuhi7ffuxfuerot4hzpe7umttjva",
+		minter: gallery,
+		owner: gallery,
 		price: 1,
 	},
 	{
 		name: "disco",
-		link: url + "bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm",
-		title: "Disco Ball Over Red Partyscape",
 		artist: "Rebecca Johnson",
-		minter: "",
-		owner: "",
+		tokenURI:
+			url + "bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm",
+		title: "Disco Ball Over Red Partyscape",
+		minter: gallery,
+		owner: gallery,
 		price: 1,
 	},
 ];
 
+// HOOKS, FUNCTIONAL COMPONENTS AND LIFECYCLE METHOD BELOW
+
 function App() {
 	// State variables
-	const [web3, setWeb3] = useState(undefined);
-
-	const [accountAddress, setAccounts] = useState("");
+	const [web3, setWeb3] = useState(null);
+	const [accounts, setAccounts] = useState([]);
 	const [balance, setAccountBalance] = useState("");
 	const [contract, setContract] = useState(null);
+	const [tokenURIs, setTokenURIs] = useState([]);
+	const [owners, setOwners] = useState([]);
+
+	const [currentURI, setCurrentURI] = useState("");
 	const [currentOwner, setCurrentOwner] = useState("");
-	const [collectionCount, setCollectionCount] = useState(0);
+
 	const [nftCollection, setNftCollection] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [metamaskConnected, setMetaMaskConnected] = useState(false);
-	const [contractDetected, setContractDetected] = useState(false);
 	const [totalTokensMinted, setTotalTokensMinted] = useState(0);
+
 	const [totalTokensOwnedByAccount, setTotalTokensOwnedByAccount] = useState(0);
-	const [nameIsUsed, setNameIsUsed] = useState(false);
 	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
-	const [tokenURIs, setTokenURIs] = useState([]);
 	const [artTitles, setArtTitles] = useState([]);
+	const [artists, setArtists] = useState([]);
 	const [artPrices, setArtPrices] = useState([]);
 	const [numberOfTransfers, setNumberOfTransfers] = useState(0);
 	const [forSale, setForSale] = useState(false);
+	const [piece, setPiece] = useState(null);
+
+	// Load Web3
+	const loadWeb3 = async () => {
+		if (window.ethereum) {
+			window.web3 = new Web3(window.ethereum);
+		} else if (window.web3) {
+			window.web3 = new Web3(window.web3.currentProvider);
+		} else {
+			window.alert("Non-Ethereum browser detected. Please use Metamask!");
+		}
+	};
+
+	// Load Blockchain data
+	const loadBlockchainData = async () => {
+		const web3 = await getWeb3();
+		// Use web3 to get the user's accounts.
+		const accounts = await web3.eth.getAccounts();
+		if (accounts.length === 0) {
+			console.log("No accounts loaded!");
+		} else {
+			// Get the contract instance.
+			const networkId = await web3.eth.net.getId();
+			const deployedNetwork = NFT.networks[networkId];
+			const instance = new web3.eth.Contract(NFT.abi, deployedNetwork.address);
+			setContract(instance);
+			// Set account to first
+			setAccounts(accounts[0]);
+			// Get balance and set
+			const balance = await web3.eth
+				.getBalance(accounts[0])
+				.then((result) => web3.utils.fromWei(result, "ether"));
+			setAccountBalance(balance);
+			// Set web3, accounts, and contract to the state
+			setWeb3(web3);
+		}
+	};
+	// Add minter
+	const addCurrentMinter = async (x) => {
+		const res = await contract.methods.addMinter(x).send({ from: accounts });
+		console.log(res);
+	};
+
+	// Mint all NFTs - not working
+	const mintAllNfts = async () => {
+		for (let i = 0; i < nftArray.length; i++) {
+			await contract.methods
+				.mint(
+					nftArray[i].name,
+					nftArray[i].title,
+					nftArray[i].artist,
+					nftArray[i].tokenURI,
+					nftArray[i].minter,
+					nftArray[i].owner,
+					nftArray[i].price
+				)
+				.send({ from: accounts });
+		}
+		window.location.reload();
+	};
+
+	// Check quantity of total minted tokens and set to address count
+	const checkMintedTokens = async () => {
+		const minted = await contract.methods.getNumberOfTokensMinted().call();
+		console.log(minted);
+		setTotalTokensMinted(minted);
+		const ownerTokens = await contract.methods
+			.getTotalNumberOfTokensOwnedByAnAddress(accounts)
+			.call();
+		setTotalTokensOwnedByAccount(ownerTokens);
+		// Get all token info and set to state - not working
+		getAllTokenInfo();
+	};
+
+	// Get token info
+	const getAllTokenInfo = async () => {
+		for (let i = 1; i < 6; i++) {
+			const returnedItem = await contract.methods.getItem(i).call();
+			console.log(returnedItem);
+			setNftCollection(...nftCollection, returnedItem);
+		}
+	};
 
 	// Connecting to web3 and getting initial balances, and sets off character
 	useEffect(() => {
 		const init = async () => {
+			// Load web3
+			await loadWeb3();
+			// Load Blockchain data
+			await loadBlockchainData();
 			try {
-				// Get network provider and web3 instance.
-				const web3 = await getWeb3();
-				// Get the contract instance.
-				const networkId = await web3.eth.net.getId();
-				const networkData = NFT.networks[networkId];
-				const contract = new web3.eth.Contract(
-					NFT.abi,
-					networkData && networkData.address
-				);
-				setContract(contract);
-
-				// Use web3 to get the user's accounts.
-				const accounts = await web3.eth.getAccounts();
-				setAccounts(accounts[0]);
-				// Get balance and set
-				const balance = await web3.eth
-					.getBalance(accounts[0])
-					.then((result) => web3.utils.fromWei(result, "ether"));
-				setAccountBalance(balance);
-
-				// Set web3, accounts, and contract to the state
-				setWeb3(web3);
-
 				// character movement logic
 				var character = document.querySelector(".Character");
 				var map = document.querySelector(".map");
@@ -196,17 +268,22 @@ function App() {
 					// console.log(x, y);
 					if (x >= 34 && x <= 42 && y >= 50 && y <= 60) {
 						console.log("Modal opened for NFT 1");
+						setPiece(1);
 						handleShow();
 					} else if (x >= 85 && x <= 95 && y >= 72 && y <= 82) {
+						setPiece(2);
 						handleShow();
 						console.log("Modal opened for NFT 2");
 					} else if (x >= 141 && x <= 151 && y >= 89 && y <= 99) {
+						setPiece(3);
 						handleShow();
 						console.log("Modal opened for NFT 3");
 					} else if (x >= 30 && x <= 40 && y >= 100 && y <= 110) {
+						setPiece(4);
 						handleShow();
 						console.log("Modal opened for NFT 4");
 					} else if (x >= 85 && x <= 95 && y >= 22 && y <= 32) {
+						setPiece(5);
 						handleShow();
 						console.log("Modal opened for NFT 5");
 					} else if (x >= 87 && x <= 92 && y >= 132 && y <= 136) {
@@ -266,39 +343,6 @@ function App() {
 		init();
 	}, []);
 
-	// // Mint all NFTs
-	// mintAllNfts = async (name, title, artist, tokenURI, price) => {
-	// 	for (let i = 0; i < nftArray.length; i++) {
-	// 		this.state.contract.methods
-	// 			.mint(i.name, i.title, i.artist, i.tokenURI, i.price)
-	// 			.send({ from: useState({ accountAddress }) })
-	// 			.on("confirmation", () => {
-	// 				console.log("Minted?");
-	// 				window.location.reload();
-	// 			});
-	// 	}
-	// };
-
-	// // Get and set total tokens minted
-	// const nftCounter = await contract.methods.tokenCounter().call();
-	// setTotalTokensMinted(nftCounter);
-
-	// // Loading data from blockchain
-	// reloadBlockchainData = async () => {
-	// 	const web3 = window.web3;
-	// 	const accounts = await web3.eth.getAccounts();
-	// 	if (accounts.length === 0) {
-	// 		this.setMetaMaskConnected({ metamaskConnected: false });
-	// 	} else {
-	// 		this.setMetaMaskConnected({ metamaskConnected: true });
-	// 		this.setAccountAddress({ accountAddress });
-	// 		// Getting new accountbalance
-	// 		let accountBalance = web3.utils.fromWei(accountBalance, "Ether");
-	// 		this.setAccountBalance({ accountBalance });
-	// 	}
-	// }
-
-	// Setting data
 	// setMetaData = async () => {
 	// 	this.state.nftCollection.map(async (piece) => {
 	// 		const result = await fetch(piece.tokenURI);
@@ -313,7 +357,7 @@ function App() {
 	// buyNft = (tokenId, price) => {
 	// 	this.state.nftCollection.methods
 	// 		.buyToken(tokenId)
-	// 		.send({ from: this.state.accountAddress, value: price })
+	// 		.send({ from: this.state.accounts, value: price })
 	// 		.on("confirmation", () => {
 	// 			console.log("Bought?");
 	// 			window.location.reload();
@@ -321,11 +365,11 @@ function App() {
 	// };
 
 	// //Toggle forSale
-	// toggleForSale = (tokenId) => {
-	// 	if (this.state.accountAddress == this.state.accounts[0]) {
-	// 		this.state.nftCollection.methods
+	// const toggleForSale = async () => {
+	// 	if (accounts == gallery) {
+	// 		contract.methods
 	// 			.toggleForSale(tokenId)
-	// 			.send({ from: this.state.accountAddress })
+	// 			.send({ from: accounts })
 	// 			.on("confirmation", () => {
 	// 				console.log("Toggled!");
 	// 				window.location.reload();
@@ -335,41 +379,20 @@ function App() {
 	// 	}
 	// };
 
-	// this is where you should connect to contracts and get response back to state
-	useEffect(() => {
-		const load = async () => {
-			// // Stores a given value, 5 by default.
-			// await contract.methods.set(5).send({ from: accounts[0] });
-			// // Get the value from the contract to prove it worked.
-			// const response = await contract.methods.get().call();
-			// // Update state with the result.
-			// setStorageValue(response);
-			// from nd tutorial
-		};
-		if (
-			typeof web3 !== "undefined" &&
-			typeof accountAddress !== "undefined" &&
-			typeof balance !== "undefined" &&
-			typeof contract !== "undefined"
-		) {
-			load();
-		}
-	}, [web3, accountAddress, balance, contract]);
-
 	if (typeof web3 === "undefined") {
 		return <div>Loading Web3, accounts, and contract...</div>;
 	}
 	return (
 		<div className="App">
 			<h1 className="Header">NFT GALLERY</h1>
-
-			{/* mint button below */}
-			<button
-				// mintAllNfts={mintAllNfts}
-				// onClick={this.mintAllNfts()}
-				className="loadBtn"
-			>
+			<button onClick={() => addCurrentMinter(accounts)} className="loadBtn">
+				Add Minter
+			</button>
+			<button onClick={mintAllNfts} className="loadBtn">
 				Load NFTs
+			</button>
+			<button onClick={checkMintedTokens} className="loadBtn">
+				Check Qty Minted: {totalTokensMinted}
 			</button>
 			<p className="directions">
 				Use the arrow keys to move and the space bar to select a piece.
@@ -393,9 +416,15 @@ function App() {
 				<Popup
 					onClose={handleClose}
 					contract={contract}
-					accountAddress={accountAddress}
+					accounts={accounts}
 					balance={balance}
 					show={show}
+					totalTokensOwnedByAccount={totalTokensOwnedByAccount}
+					tokenURIs={tokenURIs}
+					// toggleForSale={toggleForSale}
+					piece={piece}
+					// owners={owners}
+					currentOwner={currentOwner}
 				/>
 			</div>
 		</div>
