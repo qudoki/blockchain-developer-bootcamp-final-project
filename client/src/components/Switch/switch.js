@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./switch.css";
 
-const Switch = ({ isOn, handleToggle }) => {
+const Switch = (props) => {
+	const { toggleForSale } = props;
+	const [isToggled, setIsToggled] = useState(true);
+	const onToggle = () => {
+		setIsToggled(!isToggled);
+	};
 	return (
 		<>
-			<input
-				checked={isOn}
-                onChange={handleToggle}
-				className="react-switch-checkbox"
-				id={`react-switch-new`}
-				type="checkbox"
-			/>
-			<label className="react-switch-label" htmlFor={`react-switch-new`}>
-				<span className={`react-switch-button`} />
+			<label className="toggle-switch">
+				<input type="checkbox" checked={isToggled} onChange={onToggle} />
+				<span className="switch" />
 			</label>
 		</>
 	);

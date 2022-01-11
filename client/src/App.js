@@ -73,15 +73,12 @@ let nftArray = [
 	},
 ];
 
-// HOOKS, FUNCTIONAL COMPONENTS AND LIFECYCLE METHOD BELOW
-
 function App() {
 	// State variables
 	const [web3, setWeb3] = useState(null);
 	const [accounts, setAccounts] = useState([]);
 	const [balance, setAccountBalance] = useState("");
 	const [contract, setContract] = useState(null);
-
 	const [tokenIds, setTokenIds] = useState([]);
 	const [tokenURIs, setTokenURIs] = useState([]);
 	const [owners, setOwners] = useState([]);
@@ -89,24 +86,24 @@ function App() {
 	const [artists, setArtists] = useState([]);
 	const [prices, setPrices] = useState([]);
 	const [numberOfTransfers, setNumberOfTransfers] = useState([]);
-
-	const [currentTokenId, setCurrentTokenId] = useState("");
-	const [currentURI, setCurrentURI] = useState("");
-	const [currentOwner, setCurrentOwner] = useState("");
-	const [currentTitle, setCurrentTitle] = useState("");
-	const [currentArtist, setCurrentArtist] = useState("");
-	const [currentPrice, setCurrentPrice] = useState("");
-	const [currentNumberOfTransfers, setCurrentNumberOfTransfers] = useState(0);
+	const [isToggled, setIsToggled] = useState(true);
 	// const [forSale, setForSale] = useState(false);
+
+	// // const [currentTokenId, setCurrentTokenId] = useState("");
+	// // const [currentURI, setCurrentURI] = useState("");
+	// // const [currentOwner, setCurrentOwner] = useState("");
+	// // const [currentTitle, setCurrentTitle] = useState("");
+	// // const [currentArtist, setCurrentArtist] = useState("");
+	// // const [currentPrice, setCurrentPrice] = useState("");
+	// // const [currentNumberOfTransfers, setCurrentNumberOfTransfers] = useState(0);
+	// // const [forSale, setForSale] = useState(false);
 
 	const [nftCollection, setNftCollection] = useState([]);
 	const [totalTokensMinted, setTotalTokensMinted] = useState(0);
-
 	const [totalTokensOwnedByAccount, setTotalTokensOwnedByAccount] = useState(0);
 	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
-
 	const [piece, setPiece] = useState(null);
 
 	// Load Web3
@@ -180,7 +177,7 @@ function App() {
 		try {
 			for (let i = 1; i < 6; i++) {
 				const returnedItem = await contract.methods.getItem(i).call();
-				setNftCollection(nftCollection => [...nftCollection, returnedItem]);
+				setNftCollection((nftCollection) => [...nftCollection, returnedItem]);
 			}
 		} catch (error) {
 			// Catch any errors for any of the above operations.
@@ -189,56 +186,71 @@ function App() {
 		}
 	};
 
-	// // Set all token info
-	// const getAllTokenInfo = async () => {
-	// 	console.log(nftCollection);
-	// };
-
 	const loadState = async () => {
-		for (let i = 0; i<5; i++) {
+		for (let i = 0; i < 5; i++) {
 			const returnedTokenId = await nftCollection[i].tokenId;
-			setTokenIds(tokenIds => [...tokenIds, returnedTokenId])
+			setTokenIds((tokenIds) => [...tokenIds, returnedTokenId]);
 		}
-		for (let i = 0; i<5; i++) {
+		for (let i = 0; i < 5; i++) {
 			const returnedTitle = await nftCollection[i].title;
-			setTitles(titles => [...titles, returnedTitle])
+			setTitles((titles) => [...titles, returnedTitle]);
 		}
-		for (let i = 0; i<5; i++) {
+		for (let i = 0; i < 5; i++) {
 			const returnedArtist = await nftCollection[i].artist;
-			setArtists(artists => [...artists, returnedArtist])
+			setArtists((artists) => [...artists, returnedArtist]);
 		}
-		for (let i = 0; i<5; i++) {
+		for (let i = 0; i < 5; i++) {
 			const returnedUri = await nftCollection[i].tokenURI;
-			setTokenURIs(tokenURIs => [...tokenURIs, returnedUri])
+			setTokenURIs((tokenURIs) => [...tokenURIs, returnedUri]);
 		}
-		for (let i = 0; i<5; i++) {
+		for (let i = 0; i < 5; i++) {
 			const returnedOwner = await nftCollection[i].currentOwner;
-			setOwners(owners => [...owners, returnedOwner])
+			setOwners((owners) => [...owners, returnedOwner]);
 		}
-		for (let i = 0; i<5; i++) {
+		for (let i = 0; i < 5; i++) {
 			const returnedNoTransfers = await nftCollection[i].numberOfTransfers;
-			setNumberOfTransfers(numberOfTransfers => [...numberOfTransfers, returnedNoTransfers])
+			setNumberOfTransfers((numberOfTransfers) => [
+				...numberOfTransfers,
+				returnedNoTransfers,
+			]);
 		}
-		for (let i = 0; i<5; i++) {
+		for (let i = 0; i < 5; i++) {
 			const returnedPrices = await nftCollection[i].price;
-			setPrices(prices => [...prices, returnedPrices])
+			setPrices((prices) => [...prices, returnedPrices]);
 		}
+		// for (let i = 0; i<5; i++) {
+		// 	const returnedAvailability = await nftCollection[i].forSale;
+		// 	setForSale(forSale => [...forSale, returnedAvailability])
+		// }
 	};
 
-	// Buy not working - PINEAPPLE - how to get correct tokenId
-	const buyToken = async () => {
-		// const tokenId = await contract.methods.getItem
-		if (contract.methods.getTokenOwner().call() === currentOwner) {
-			// tokenId
+	// Buy function working
+	const buyToken = async (x) => {
+		if (owners[x] === accounts) {
 			alert("You are already the owner of this piece.");
 		} else {
 			await contract.methods
-				.buy() // put token id here - how to get from openModal?
-				.send({ from: accounts })
+				.buy(x + 1)
+				.send({ from: accounts, value: prices[x] })
 				.on("confirmation", () => {
 					console.log("Bought!");
 				});
 			window.location.reload();
+		}
+	};
+
+	//Toggle forSale
+	const toggleForSale = async (x) => {
+		if (accounts === owners[x]) {
+			contract.methods
+				.toggleForSale(x)
+				.send({ from: accounts })
+				.on("confirmation", () => {
+					console.log("Toggled!");
+					window.location.reload();
+				});
+		} else {
+			alert("Only the gallery can change the availability!");
 		}
 	};
 
@@ -324,22 +336,23 @@ function App() {
 				if (x >= 34 && x <= 42 && y >= 50 && y <= 60) {
 					setPiece(0);
 					handleShow();
+					// console.log("Modal opened for NFT 1");
 				} else if (x >= 85 && x <= 95 && y >= 72 && y <= 82) {
 					setPiece(1);
 					handleShow();
-					console.log("Modal opened for NFT 2");
+					// console.log("Modal opened for NFT 2");
 				} else if (x >= 141 && x <= 151 && y >= 89 && y <= 99) {
 					setPiece(2);
 					handleShow();
-					console.log("Modal opened for NFT 3");
+					// console.log("Modal opened for NFT 3");
 				} else if (x >= 30 && x <= 40 && y >= 100 && y <= 110) {
 					setPiece(3);
 					handleShow();
-					console.log("Modal opened for NFT 4");
+					// console.log("Modal opened for NFT 4");
 				} else if (x >= 85 && x <= 95 && y >= 22 && y <= 32) {
 					setPiece(4);
 					handleShow();
-					console.log("Modal opened for NFT 5");
+					// console.log("Modal opened for NFT 5");
 				} else if (x >= 87 && x <= 92 && y >= 132 && y <= 136) {
 					alert(`Please don't go!`);
 					return;
@@ -403,21 +416,6 @@ function App() {
 		init();
 	}, [nftCollection, accounts, balance]);
 
-	// //Toggle forSale
-	// const toggleForSale = async () => {
-	// 	if (accounts == gallery) {
-	// 		contract.methods
-	// 			.toggleForSale(tokenId)
-	// 			.send({ from: accounts })
-	// 			.on("confirmation", () => {
-	// 				console.log("Toggled!");
-	// 				window.location.reload();
-	// 			});
-	// 	} else {
-	// 		alert("Only the gallery can change the availability!");
-	// 	}
-	// };
-
 	if (typeof web3 === "undefined") {
 		return <div>Loading Web3, accounts, and contract...</div>;
 	}
@@ -464,13 +462,13 @@ function App() {
 					totalTokensOwnedByAccount={totalTokensOwnedByAccount}
 					piece={piece}
 					nftCollection={nftCollection}
-					currentTokenId={currentTokenId}
-					currentOwner={currentOwner}
-					currentURI={currentURI}
-					currentTitle={currentTitle}
-					currentArtist={currentArtist}
-					currentPrice={currentPrice}
-					currentNumberOfTransfers={currentNumberOfTransfers}
+					// currentTokenId={currentTokenId}
+					// currentOwner={currentOwner}
+					// currentURI={currentURI}
+					// currentTitle={currentTitle}
+					// currentArtist={currentArtist}
+					// currentPrice={currentPrice}
+					// currentNumberOfTransfers={currentNumberOfTransfers}
 					buyToken={buyToken}
 					tokenIds={tokenIds}
 					tokenURIs={tokenURIs}
@@ -479,9 +477,8 @@ function App() {
 					artists={artists}
 					prices={prices}
 					numberOfTransfers={numberOfTransfers}
-
-
-					// toggleForSale={toggleForSale}
+					isToggled={isToggled}
+					toggleForSale={toggleForSale}
 				/>
 			</div>
 		</div>

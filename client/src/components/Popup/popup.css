@@ -4,15 +4,15 @@
 }
 
 .modal {
-	margin-top: 95px;
+	margin-top: 3%;
     position: fixed;
     padding: 15px;
     background-color: rgb(255, 255, 255);
-    opacity: 92%;
-    border: rgb(103, 103, 103) 1px solid;
+    opacity: 95%;
+    border: rgb(103, 103, 103) 0.5px solid;
     border-radius: 4%;
     z-index: 200;
-	height: calc(var(--pixel-size) * 125);
+	height: calc(var(--pixel-size) * 122);
 	width: calc(var(--pixel-size) * 100);
 }
 

@@ -1,40 +1,38 @@
-.react-switch-checkbox {
-	height: 5;
-	width: 0;
-	visibility: hidden;
-}
-
-.react-switch-label {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	cursor: pointer;
-	width: 30px;
-	height: 15px;
-	background: rgb(185, 185, 185);
-	border-radius: 30px;
+.toggle-switch {
 	position: relative;
-	transition: background-color 0.2s;
+	display: inline-block;
+	width: 30px;
+	height: 18px;
 }
-
-.react-switch-label .react-switch-button {
-	content: "";
+.toggle-switch input[type="checkbox"] {
+	display: none;
+}
+.toggle-switch .switch {
 	position: absolute;
-	top: 1px;
-	left: 1px;
-	width: 13px;
-	height: 13px;
-	border-radius: 12px;
-	transition: 0.1s;
-	background: #fff;
-	box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+	cursor: pointer;
+	background-color: rgb(226, 226, 226);
+	border-radius: 15px;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	transition: background-color 0.2s ease;
 }
-
-.react-switch-checkbox:checked + .react-switch-label .react-switch-button {
-	left: calc(100% - 2px);
-	transform: translateX(-100%);
+.toggle-switch .switch::before {
+	position: absolute;
+	content: "";
+	left: 2px;
+	top: 2px;
+	width: 14px;
+	height: 14px;
+	background-color: rgb(187, 187, 187);
+	border-radius: 50%;
+	transition: transform 0.3s ease;
 }
-
-.react-switch-label:active .react-switch-button {
-	width: 20px;
+.toggle-switch input[type="checkbox"]:checked + .switch::before {
+	transform: translateX(12px);
+	background-color: #66cca5;
+}
+.toggle-switch input[type="checkbox"]:checked + .switch {
+	background-color: #33997f;
 }
