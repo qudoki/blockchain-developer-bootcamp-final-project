@@ -89,15 +89,6 @@ function App() {
 	const [isToggled, setIsToggled] = useState(true);
 	// const [forSale, setForSale] = useState(false);
 
-	// // const [currentTokenId, setCurrentTokenId] = useState("");
-	// // const [currentURI, setCurrentURI] = useState("");
-	// // const [currentOwner, setCurrentOwner] = useState("");
-	// // const [currentTitle, setCurrentTitle] = useState("");
-	// // const [currentArtist, setCurrentArtist] = useState("");
-	// // const [currentPrice, setCurrentPrice] = useState("");
-	// // const [currentNumberOfTransfers, setCurrentNumberOfTransfers] = useState(0);
-	// // const [forSale, setForSale] = useState(false);
-
 	const [nftCollection, setNftCollection] = useState([]);
 	const [totalTokensMinted, setTotalTokensMinted] = useState(0);
 	const [totalTokensOwnedByAccount, setTotalTokensOwnedByAccount] = useState(0);
@@ -218,10 +209,6 @@ function App() {
 			const returnedPrices = await nftCollection[i].price;
 			setPrices((prices) => [...prices, returnedPrices]);
 		}
-		// for (let i = 0; i<5; i++) {
-		// 	const returnedAvailability = await nftCollection[i].forSale;
-		// 	setForSale(forSale => [...forSale, returnedAvailability])
-		// }
 	};
 
 	// Buy function working
@@ -462,13 +449,6 @@ function App() {
 					totalTokensOwnedByAccount={totalTokensOwnedByAccount}
 					piece={piece}
 					nftCollection={nftCollection}
-					// currentTokenId={currentTokenId}
-					// currentOwner={currentOwner}
-					// currentURI={currentURI}
-					// currentTitle={currentTitle}
-					// currentArtist={currentArtist}
-					// currentPrice={currentPrice}
-					// currentNumberOfTransfers={currentNumberOfTransfers}
 					buyToken={buyToken}
 					tokenIds={tokenIds}
 					tokenURIs={tokenURIs}

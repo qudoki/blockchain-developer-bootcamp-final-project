@@ -1,62 +1,49 @@
 # Blockchain Developer Bootcamp Final Project
 ### Certification to: qudoki.eth
 ## NFT Gallery
+### Description:
+A gamified education platform allowing users to move around a single-player perspective space, connect to their Metamask wallets, mint and purchase NFT's in a visual front-end gallery setting through an ERC-721 token. This encourages traditionalist artists that work with physical mediums and artforms to tie directly into NFT space, with no prerequesite understanding of the blockchain.
+#### Usage:
+1. User (gallery) will load (mint) all NFTs, check minting, and load to state.
+2. User (gallery or buyer) will move around gallery space (arrow keys) and select artwork by pressing space bar.
+3. User will view artwork and elect to purchase an NFT.
+4. User (buyer) will connect Metamask wallet.
+5. User (buyer) will show confirmed ownership of NFT.
 
-A gamified education platform allowing users to move around a single-player perspective space, connect to their Metamask wallets, and purchase NFT's in a visual front-end gallery setting through an ERC-721 token. This encourages traditionalist artists that work with physical mediums and artforms to tie directly into NFT space, with no prerequesite understanding of the blockchain.
-#### Logic:
-1. User will move around gallery space (arrow keys) and select artwork by pressing space bar.
-2. User will view artwork and elect to purchase an NFT.
-3. User will connect Metamask wallet.
-4. User will show confirmed ownership of NFT.
-
-## Below is under :construction:!
-
-### Deployment & Repository
+## Deployment & Repository
 :construction:
 - [Github Repository Link](https://github.com/qudoki/blockchain-developer-bootcamp-final-project)
 
-### Technical Requirements
-:construction:
-<!-- * Javascript
-* React.js
-* JSX
-* Express/Node.js
-* MongoDB/Mongoose
-* Node.js/Express
-* Bootstrap
-* Various NPM packages
-* HTML5/CSS -->
-  
-### Description: 
-:construction:
+## Tech
+* Solidity >=0.5.16 <0.9.0;
+* Truffle v5.4.19 (core: 5.4.19)
+* Node v10.24.1
+* Web3.js v1.5.3
+* Javascript ES6
+* React
 
-# Table of Contents
-- [Installation](https://github.com/qudoki/blockchain-developer-bootcamp-final-project/blob/main/README.md#installation)
-- [Usage](https://github.com/qudoki/qudoki/blockchain-developer-bootcamp-final-project/blob/main/README.md#usage)
-- [Screenshots](https://github.com/qudoki/blockchain-developer-bootcamp-final-project/blob/main/README.md#screenshots)
-- [Tests](https://github.com/qudoki/blockchain-developer-bootcamp-final-project/blob/main/README.md#usage)
-- [Contributing](https://github.com/qudoki/blockchain-developer-bootcamp-final-project/blob/main/README.md#contributions)
-- [Questions](https://github.com/qudoki/blockchain-developer-bootcamp-final-project/blob/main/README.md#questions)
-- [License](https://github.com/qudoki/blockchain-developer-bootcamp-final-project/blob/main/README.md#license)
+## Installing
+1. Git clone the repo in a new folder: `git clone https://github.com/qudoki/blockchain-developer-bootcamp-final-project.git`
+2. cd into the blockchain-developer-bootcamp-final-project folder
+3. run `npm install` for all dependencies
 
-## Installation:
-:construction:
-
-## Usage:
-:construction:
+## Testing
+Tests were developed to check deployment and functionality. You can run tests by:
+1. run `ganache-cli` in separate terminal
+2. run `truffle migrate`
+3. run `truffle test` (all 17 tests will pass)
 
 ## Screenshots:
 :construction:
-<!-- ![ScreenShot](./client/public/new.png) -->
+![ScreenShot](./client/public/overall.png)
+![ScreenShot](./client/public/detail.png)
 
 ## Contributing:
-- In most cases, please refer to this document: [Contributor Covenant](https://www.contributor-covenant.org/) 
 - Please contact Quinn Dong-Kilkenny (qudoki) for collaboration.
-- Please contact the owner.
 
 ## Questions:
 - [Github Profile](https://github.com/qudoki)
-- [Email Me](mailto:qdong327@gmail.com)
+- [Email Me](mailto:qudoki.dev@gmail.com)
 
 ## License: 
 MIT
