@@ -1905,10 +1905,16 @@
       "links": {},
       "address": "0x9F94Ce2E7DB862EEEaEdba0c14Ea6273492f9979",
       "transactionHash": "0x8972be447ef9f1dd1da65d03f69acc66bfb72f62dfea706544a6d26fd80a5a19"
+    },
+    "1641909882287": {
+      "events": {},
+      "links": {},
+      "address": "0x5b231C1580a48337C34600DA45F3fcD66d680d73",
+      "transactionHash": "0x468891f56299f312f7b3c4726804c71e339469034d7bcb8ceae6a35e41318b72"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-10T20:12:34.750Z",
+  "updatedAt": "2022-01-11T14:10:54.586Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

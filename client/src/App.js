@@ -17,8 +17,8 @@ require("dotenv").config();
 // // })
 
 // Hard coding the nft data for minting all at once
-const gallery = "0xf96ad6d96Ff2387224F1521A3861Ed16F865f1B0";
-const buyer = "0x101a150e1cf42f806dc930ec4287f93d533a6720";
+const gallery = "0xa02310F875EE4a42EFb905394078e0F8e9F74F33";
+const buyer = "0x85eb88a77F20E0cF426b52C71dA026f9059AFDb2";
 const url = "https://ipfs.io/ipfs/";
 let nftArray = [
 	{
@@ -81,18 +81,25 @@ function App() {
 	const [accounts, setAccounts] = useState([]);
 	const [balance, setAccountBalance] = useState("");
 	const [contract, setContract] = useState(null);
-	const [tokenURIs, setTokenURIs] = useState([]);
 
+	const [tokenIds, setTokenIds] = useState([]);
+	const [tokenURIs, setTokenURIs] = useState([]);
 	const [owners, setOwners] = useState([]);
+	const [titles, setTitles] = useState([]);
+	const [artists, setArtists] = useState([]);
+	const [prices, setPrices] = useState([]);
+	const [numberOfTransfers, setNumberOfTransfers] = useState([]);
+
+	const [currentTokenId, setCurrentTokenId] = useState("");
 	const [currentURI, setCurrentURI] = useState("");
 	const [currentOwner, setCurrentOwner] = useState("");
 	const [currentTitle, setCurrentTitle] = useState("");
 	const [currentArtist, setCurrentArtist] = useState("");
 	const [currentPrice, setCurrentPrice] = useState("");
-	const [numberOfTransfers, setNumberOfTransfers] = useState(0);
-	const [forSale, setForSale] = useState(false);
+	const [currentNumberOfTransfers, setCurrentNumberOfTransfers] = useState(0);
+	// const [forSale, setForSale] = useState(false);
 
-	const [nftCollection, setNftCollection] = useState(null);
+	const [nftCollection, setNftCollection] = useState([]);
 	const [totalTokensMinted, setTotalTokensMinted] = useState(0);
 
 	const [totalTokensOwnedByAccount, setTotalTokensOwnedByAccount] = useState(0);
@@ -164,42 +171,64 @@ function App() {
 	// Check quantity of total minted tokens and set to address count
 	const checkMintedTokens = async () => {
 		const minted = await contract.methods.getNumberOfTokensMinted().call();
-		console.log(minted);
 		setTotalTokensMinted(minted);
 		const ownerTokens = await contract.methods
 			.getTotalNumberOfTokensOwnedByAnAddress(accounts)
 			.call();
 		setTotalTokensOwnedByAccount(ownerTokens);
-		// Get all token info and set to state - PINEAPPLE - STATE PART NOT WORKING
-		getAllTokenInfo();
+		// Get all token info and set to state
+		try {
+			for (let i = 1; i < 6; i++) {
+				const returnedItem = await contract.methods.getItem(i).call();
+				setNftCollection(nftCollection => [...nftCollection, returnedItem]);
+			}
+		} catch (error) {
+			// Catch any errors for any of the above operations.
+			alert(`Failed to set to nftCollection in state.`);
+			console.error(error);
+		}
 	};
 
-	// Get all token info
-	const getAllTokenInfo = async () => {
-		let arr = [];
-		for (let i = 1; i < 6; i++) {
-			const returnedItem = await contract.methods.getItem(i).call();
-			arr.push(returnedItem);
-		}
-		console.log(arr);
-		// PINEAPPLE - UNSURE IF STATE IS WORKING - DON'T THINK SO
-		setNftCollection(arr);
+	// // Set all token info
+	// const getAllTokenInfo = async () => {
+	// 	console.log(nftCollection);
+	// };
 
-		//workaround below
-		setCurrentURI(arr[0].tokenURI);
-		setCurrentOwner(arr[0].currentOwner);
-		setCurrentTitle(arr[0].title);
-		setCurrentArtist(arr[0].artist);
-		setCurrentPrice(arr[0].price);
-		setNumberOfTransfers(arr[0].numberOfTransfers);
-		// PINEAPPLE - below not getting "piece" from state, otherwise could pass in function
-		// console.log(piece);
+	const loadState = async () => {
+		for (let i = 0; i<5; i++) {
+			const returnedTokenId = await nftCollection[i].tokenId;
+			setTokenIds(tokenIds => [...tokenIds, returnedTokenId])
+		}
+		for (let i = 0; i<5; i++) {
+			const returnedTitle = await nftCollection[i].title;
+			setTitles(titles => [...titles, returnedTitle])
+		}
+		for (let i = 0; i<5; i++) {
+			const returnedArtist = await nftCollection[i].artist;
+			setArtists(artists => [...artists, returnedArtist])
+		}
+		for (let i = 0; i<5; i++) {
+			const returnedUri = await nftCollection[i].tokenURI;
+			setTokenURIs(tokenURIs => [...tokenURIs, returnedUri])
+		}
+		for (let i = 0; i<5; i++) {
+			const returnedOwner = await nftCollection[i].currentOwner;
+			setOwners(owners => [...owners, returnedOwner])
+		}
+		for (let i = 0; i<5; i++) {
+			const returnedNoTransfers = await nftCollection[i].numberOfTransfers;
+			setNumberOfTransfers(numberOfTransfers => [...numberOfTransfers, returnedNoTransfers])
+		}
+		for (let i = 0; i<5; i++) {
+			const returnedPrices = await nftCollection[i].price;
+			setPrices(prices => [...prices, returnedPrices])
+		}
 	};
 
 	// Buy not working - PINEAPPLE - how to get correct tokenId
 	const buyToken = async () => {
 		// const tokenId = await contract.methods.getItem
-		if (contract.methods.getTokenOwner().call() == currentOwner) {
+		if (contract.methods.getTokenOwner().call() === currentOwner) {
 			// tokenId
 			alert("You are already the owner of this piece.");
 		} else {
@@ -290,12 +319,10 @@ function App() {
 			step();
 
 			// open modal on space bar
-			const openModal = () => {
+			const openModal = async () => {
 				// console.log(x, y);
 				if (x >= 34 && x <= 42 && y >= 50 && y <= 60) {
-					console.log("Modal opened for NFT 1");
 					setPiece(0);
-					// setCurrentOwner(nftCollection[0].currentOwner);
 					handleShow();
 				} else if (x >= 85 && x <= 95 && y >= 72 && y <= 82) {
 					setPiece(1);
@@ -374,7 +401,7 @@ function App() {
 			}
 		};
 		init();
-	}, []);
+	}, [nftCollection, accounts, balance]);
 
 	// //Toggle forSale
 	// const toggleForSale = async () => {
@@ -387,7 +414,7 @@ function App() {
 	// 				window.location.reload();
 	// 			});
 	// 	} else {
-	// 		alert("Only the gallery can toggle the availability!");
+	// 		alert("Only the gallery can change the availability!");
 	// 	}
 	// };
 
@@ -405,6 +432,9 @@ function App() {
 			</button>
 			<button onClick={checkMintedTokens} className="loadBtn">
 				Check Qty Minted: {totalTokensMinted}
+			</button>
+			<button onClick={loadState} className="loadBtn">
+				Load State
 			</button>
 			<p className="directions">
 				Use the arrow keys to move and the space bar to select a piece.
@@ -432,16 +462,25 @@ function App() {
 					balance={balance}
 					show={show}
 					totalTokensOwnedByAccount={totalTokensOwnedByAccount}
-					tokenURIs={tokenURIs}
 					piece={piece}
 					nftCollection={nftCollection}
+					currentTokenId={currentTokenId}
 					currentOwner={currentOwner}
 					currentURI={currentURI}
 					currentTitle={currentTitle}
 					currentArtist={currentArtist}
 					currentPrice={currentPrice}
-					numberOfTransfers={numberOfTransfers}
+					currentNumberOfTransfers={currentNumberOfTransfers}
 					buyToken={buyToken}
+					tokenIds={tokenIds}
+					tokenURIs={tokenURIs}
+					owners={owners}
+					titles={titles}
+					artists={artists}
+					prices={prices}
+					numberOfTransfers={numberOfTransfers}
+
+
 					// toggleForSale={toggleForSale}
 				/>
 			</div>

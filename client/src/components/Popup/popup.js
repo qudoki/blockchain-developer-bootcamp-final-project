@@ -4,7 +4,7 @@ import Switch from "../Switch/switch";
 import "./popup.css";
 
 const Popup = (props) => {
-	const { show, onClose, toggleForSale, tokenURIs, currentOwner, currentURI, currentTitle, currentArtist, currentPrice, numberOfTransfers, buyToken } = props;
+	const { show, onClose, toggleForSale, tokenURIs, numberOfTransfers, buyToken, tokenIds, titles, piece, prices, artists, owners } = props;
 
 	return (
 		<Modal
@@ -20,13 +20,14 @@ const Popup = (props) => {
 			<h6 className="header">Your Selection</h6>
 
 				<Col className="org1">
-					<p className="title">Title: {currentTitle}</p>
-					<p className="artist">Artist: {currentArtist}</p>
-					<p className="artist">Owner: {currentOwner}</p>
+					{/* <p className="title">Title: {currentTitle}</p> */}
+					<p className="title">Title: {titles[piece]}</p>
+					<p className="artist">Artist: {artists[piece]}</p>
+					<p className="artist">Owner: {owners[piece]}</p>
 				</Col>
 				<Col className="org2">
-					<p className="artist"># Transfers: {numberOfTransfers}</p>
-					<p className="forSale">Availability
+					<p className="artist"># Transfers: {numberOfTransfers[piece]}</p>
+					<p className="forSale">Token {tokenIds[piece]} Availability
 					<Switch onClick={toggleForSale} /></p>
 				</Col>
 				<div className="art">
@@ -35,13 +36,13 @@ const Popup = (props) => {
 						alt="sampleimg"
 						src=
 						// below is workaround
-						{currentURI}
+						{tokenURIs[piece]}
 						// "https://ipfs.io/ipfs/bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm"
 					/>
 				</div>
 				<div>
 					<button className="mainBtn" onClick={buyToken}>
-						PURCHASE FOR Ξ {currentPrice} ETHER
+						PURCHASE FOR Ξ {prices[piece]} ETHER
 					</button>
 				</div>
 					<h6 className="header">Your Account</h6>
