@@ -82,23 +82,24 @@ function App() {
 	const [balance, setAccountBalance] = useState("");
 	const [contract, setContract] = useState(null);
 	const [tokenURIs, setTokenURIs] = useState([]);
-	const [owners, setOwners] = useState([]);
 
+	const [owners, setOwners] = useState([]);
 	const [currentURI, setCurrentURI] = useState("");
 	const [currentOwner, setCurrentOwner] = useState("");
+	const [currentTitle, setCurrentTitle] = useState("");
+	const [currentArtist, setCurrentArtist] = useState("");
+	const [currentPrice, setCurrentPrice] = useState("");
+	const [numberOfTransfers, setNumberOfTransfers] = useState(0);
+	const [forSale, setForSale] = useState(false);
 
-	const [nftCollection, setNftCollection] = useState([]);
+	const [nftCollection, setNftCollection] = useState(null);
 	const [totalTokensMinted, setTotalTokensMinted] = useState(0);
 
 	const [totalTokensOwnedByAccount, setTotalTokensOwnedByAccount] = useState(0);
 	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
-	const [artTitles, setArtTitles] = useState([]);
-	const [artists, setArtists] = useState([]);
-	const [artPrices, setArtPrices] = useState([]);
-	const [numberOfTransfers, setNumberOfTransfers] = useState(0);
-	const [forSale, setForSale] = useState(false);
+
 	const [piece, setPiece] = useState(null);
 
 	// Load Web3
@@ -142,7 +143,7 @@ function App() {
 		console.log(res);
 	};
 
-	// Mint all NFTs - not working
+	// Mint all NFTs
 	const mintAllNfts = async () => {
 		for (let i = 0; i < nftArray.length; i++) {
 			await contract.methods
@@ -169,169 +170,201 @@ function App() {
 			.getTotalNumberOfTokensOwnedByAnAddress(accounts)
 			.call();
 		setTotalTokensOwnedByAccount(ownerTokens);
-		// Get all token info and set to state - not working
+		// Get all token info and set to state - PINEAPPLE - STATE PART NOT WORKING
 		getAllTokenInfo();
 	};
 
-	// Get token info
+	// Get all token info
 	const getAllTokenInfo = async () => {
+		let arr = [];
 		for (let i = 1; i < 6; i++) {
 			const returnedItem = await contract.methods.getItem(i).call();
-			console.log(returnedItem);
-			setNftCollection(...nftCollection, returnedItem);
+			arr.push(returnedItem);
+		}
+		console.log(arr);
+		// PINEAPPLE - UNSURE IF STATE IS WORKING - DON'T THINK SO
+		setNftCollection(arr);
+
+		//workaround below
+		setCurrentURI(arr[0].tokenURI);
+		setCurrentOwner(arr[0].currentOwner);
+		setCurrentTitle(arr[0].title);
+		setCurrentArtist(arr[0].artist);
+		setCurrentPrice(arr[0].price);
+		setNumberOfTransfers(arr[0].numberOfTransfers);
+		// PINEAPPLE - below not getting "piece" from state, otherwise could pass in function
+		// console.log(piece);
+	};
+
+	// Buy not working - PINEAPPLE - how to get correct tokenId
+	const buyToken = async () => {
+		// const tokenId = await contract.methods.getItem
+		if (contract.methods.getTokenOwner().call() == currentOwner) {
+			// tokenId
+			alert("You are already the owner of this piece.");
+		} else {
+			await contract.methods
+				.buy() // put token id here - how to get from openModal?
+				.send({ from: accounts })
+				.on("confirmation", () => {
+					console.log("Bought!");
+				});
+			window.location.reload();
 		}
 	};
 
 	// Connecting to web3 and getting initial balances, and sets off character
 	useEffect(() => {
 		const init = async () => {
-			// Load web3
-			await loadWeb3();
-			// Load Blockchain data
-			await loadBlockchainData();
-			try {
-				// character movement logic
-				var character = document.querySelector(".Character");
-				var map = document.querySelector(".map");
+			// character movement logic
+			var character = document.querySelector(".Character");
+			var map = document.querySelector(".map");
 
-				// state of character
-				var x = 40;
-				var y = 35;
-				var heldDirections = [];
-				var speed = 0.75;
+			// state of character
+			var x = 40;
+			var y = 35;
+			var heldDirections = [];
+			var speed = 0.75;
 
-				const placeCharacter = () => {
-					var pixelSize = parseInt(
-						getComputedStyle(document.documentElement).getPropertyValue(
-							"--pixel-size"
-						)
-					);
+			const placeCharacter = () => {
+				var pixelSize = parseInt(
+					getComputedStyle(document.documentElement).getPropertyValue(
+						"--pixel-size"
+					)
+				);
 
-					const heldDirection = heldDirections[0];
-					if (heldDirection) {
-						if (heldDirection === directions.right) {
-							x += speed;
-						}
-						if (heldDirection === directions.left) {
-							x -= speed;
-						}
-						if (heldDirection === directions.down) {
-							y += speed;
-						}
-						if (heldDirection === directions.up) {
-							y -= speed;
-						}
-						character.setAttribute("facing", heldDirection);
+				const heldDirection = heldDirections[0];
+				if (heldDirection) {
+					if (heldDirection === directions.right) {
+						x += speed;
 					}
-					character.setAttribute("walking", heldDirection ? "true" : "false");
-
-					// wall boundaries
-					var leftLimit = 35;
-					var rightLimit = 16 * 9 + 2;
-					var topLimit = -8 + 35;
-					var bottomLimit = 16 * 7 + 24;
-					if (x < leftLimit) {
-						x = leftLimit;
+					if (heldDirection === directions.left) {
+						x -= speed;
 					}
-					if (x > rightLimit) {
-						x = rightLimit;
+					if (heldDirection === directions.down) {
+						y += speed;
 					}
-					if (y < topLimit) {
-						y = topLimit;
+					if (heldDirection === directions.up) {
+						y -= speed;
 					}
-					if (y > bottomLimit) {
-						y = bottomLimit;
-					}
+					character.setAttribute("facing", heldDirection);
+				}
+				character.setAttribute("walking", heldDirection ? "true" : "false");
 
-					var camera_left = pixelSize * 75;
-					var camera_top = pixelSize * 41;
+				// wall boundaries
+				var leftLimit = 35;
+				var rightLimit = 16 * 9 + 2;
+				var topLimit = -8 + 35;
+				var bottomLimit = 16 * 7 + 24;
+				if (x < leftLimit) {
+					x = leftLimit;
+				}
+				if (x > rightLimit) {
+					x = rightLimit;
+				}
+				if (y < topLimit) {
+					y = topLimit;
+				}
+				if (y > bottomLimit) {
+					y = bottomLimit;
+				}
 
-					map.style.transform = `translate3d( ${
-						-x * pixelSize + camera_left
-					}px, ${-y * pixelSize + camera_top}px, 0 )`;
-					character.style.transform = `translate3d( ${x * pixelSize}px, ${
-						y * pixelSize
-					}px, 0 )`;
-				};
+				var camera_left = pixelSize * 75;
+				var camera_top = pixelSize * 41;
 
-				// set up the game loop
-				const step = () => {
-					placeCharacter();
-					window.requestAnimationFrame(() => {
-						step();
-					});
-				};
-				step();
+				map.style.transform = `translate3d( ${
+					-x * pixelSize + camera_left
+				}px, ${-y * pixelSize + camera_top}px, 0 )`;
+				character.style.transform = `translate3d( ${x * pixelSize}px, ${
+					y * pixelSize
+				}px, 0 )`;
+			};
 
-				// open modal on space bar
-				const openModal = () => {
+			// set up the game loop
+			const step = () => {
+				placeCharacter();
+				window.requestAnimationFrame(() => {
+					step();
+				});
+			};
+			step();
+
+			// open modal on space bar
+			const openModal = () => {
+				// console.log(x, y);
+				if (x >= 34 && x <= 42 && y >= 50 && y <= 60) {
+					console.log("Modal opened for NFT 1");
+					setPiece(0);
+					// setCurrentOwner(nftCollection[0].currentOwner);
+					handleShow();
+				} else if (x >= 85 && x <= 95 && y >= 72 && y <= 82) {
+					setPiece(1);
+					handleShow();
+					console.log("Modal opened for NFT 2");
+				} else if (x >= 141 && x <= 151 && y >= 89 && y <= 99) {
+					setPiece(2);
+					handleShow();
+					console.log("Modal opened for NFT 3");
+				} else if (x >= 30 && x <= 40 && y >= 100 && y <= 110) {
+					setPiece(3);
+					handleShow();
+					console.log("Modal opened for NFT 4");
+				} else if (x >= 85 && x <= 95 && y >= 22 && y <= 32) {
+					setPiece(4);
+					handleShow();
+					console.log("Modal opened for NFT 5");
+				} else if (x >= 87 && x <= 92 && y >= 132 && y <= 136) {
+					alert(`Please don't go!`);
+					return;
+				} else {
+					alert(`Try landing on a green dot for art!`);
+					return;
+				}
+			};
+
+			// key listener for space
+			document.addEventListener("keydown", (event) => {
+				if (event.keyCode === 32) {
+					openModal();
 					// console.log(x, y);
-					if (x >= 34 && x <= 42 && y >= 50 && y <= 60) {
-						console.log("Modal opened for NFT 1");
-						setPiece(1);
-						handleShow();
-					} else if (x >= 85 && x <= 95 && y >= 72 && y <= 82) {
-						setPiece(2);
-						handleShow();
-						console.log("Modal opened for NFT 2");
-					} else if (x >= 141 && x <= 151 && y >= 89 && y <= 99) {
-						setPiece(3);
-						handleShow();
-						console.log("Modal opened for NFT 3");
-					} else if (x >= 30 && x <= 40 && y >= 100 && y <= 110) {
-						setPiece(4);
-						handleShow();
-						console.log("Modal opened for NFT 4");
-					} else if (x >= 85 && x <= 95 && y >= 22 && y <= 32) {
-						setPiece(5);
-						handleShow();
-						console.log("Modal opened for NFT 5");
-					} else if (x >= 87 && x <= 92 && y >= 132 && y <= 136) {
-						alert(`Please don't go!`);
-						return;
-					} else {
-						alert(`Try landing on a green dot for art!`);
-						return;
-					}
-				};
+				} else {
+					return;
+				}
+			});
 
-				// key listener for space
-				document.addEventListener("keydown", (event) => {
-					if (event.keyCode === 32) {
-						openModal();
-						// console.log(x, y);
-					} else {
-						return;
-					}
-				});
+			//direction key state
+			const directions = {
+				up: "up",
+				down: "down",
+				left: "left",
+				right: "right",
+			};
+			const keys = {
+				38: directions.up,
+				37: directions.left,
+				39: directions.right,
+				40: directions.down,
+			};
+			document.addEventListener("keydown", (e) => {
+				var dir = keys[e.which];
+				if (dir && heldDirections.indexOf(dir) === -1) {
+					heldDirections.unshift(dir);
+				}
+			});
+			document.addEventListener("keyup", (e) => {
+				var dir = keys[e.which];
+				var index = heldDirections.indexOf(dir);
+				if (index > -1) {
+					heldDirections.splice(index, 1);
+				}
+			});
+			// end of player movement logic
 
-				//direction key state
-				const directions = {
-					up: "up",
-					down: "down",
-					left: "left",
-					right: "right",
-				};
-				const keys = {
-					38: directions.up,
-					37: directions.left,
-					39: directions.right,
-					40: directions.down,
-				};
-				document.addEventListener("keydown", (e) => {
-					var dir = keys[e.which];
-					if (dir && heldDirections.indexOf(dir) === -1) {
-						heldDirections.unshift(dir);
-					}
-				});
-				document.addEventListener("keyup", (e) => {
-					var dir = keys[e.which];
-					var index = heldDirections.indexOf(dir);
-					if (index > -1) {
-						heldDirections.splice(index, 1);
-					}
-				});
-				// end of player movement logic
+			try {
+				// Load web3
+				await loadWeb3();
+				// Load Blockchain data
+				await loadBlockchainData();
 			} catch (error) {
 				// Catch any errors for any of the above operations.
 				alert(
@@ -342,27 +375,6 @@ function App() {
 		};
 		init();
 	}, []);
-
-	// setMetaData = async () => {
-	// 	this.state.nftCollection.map(async (piece) => {
-	// 		const result = await fetch(piece.tokenURI);
-	// 		const metaData = await result.json();
-	// 		setNftCollection({
-	// 			nftCollection.tokenId.toNumber() === Number(metaData.tokenId)
-	// 		}))
-	// 	})
-	// }
-
-	// //Buy an NFT art piece
-	// buyNft = (tokenId, price) => {
-	// 	this.state.nftCollection.methods
-	// 		.buyToken(tokenId)
-	// 		.send({ from: this.state.accounts, value: price })
-	// 		.on("confirmation", () => {
-	// 			console.log("Bought?");
-	// 			window.location.reload();
-	// 		});
-	// };
 
 	// //Toggle forSale
 	// const toggleForSale = async () => {
@@ -421,10 +433,16 @@ function App() {
 					show={show}
 					totalTokensOwnedByAccount={totalTokensOwnedByAccount}
 					tokenURIs={tokenURIs}
-					// toggleForSale={toggleForSale}
 					piece={piece}
-					// owners={owners}
+					nftCollection={nftCollection}
 					currentOwner={currentOwner}
+					currentURI={currentURI}
+					currentTitle={currentTitle}
+					currentArtist={currentArtist}
+					currentPrice={currentPrice}
+					numberOfTransfers={numberOfTransfers}
+					buyToken={buyToken}
+					// toggleForSale={toggleForSale}
 				/>
 			</div>
 		</div>

@@ -4,7 +4,7 @@ import Switch from "../Switch/switch";
 import "./popup.css";
 
 const Popup = (props) => {
-	const { show, onClose, toggleForSale, tokenURIs, currentOwner } = props;
+	const { show, onClose, toggleForSale, tokenURIs, currentOwner, currentURI, currentTitle, currentArtist, currentPrice, numberOfTransfers, buyToken } = props;
 
 	return (
 		<Modal
@@ -14,39 +14,34 @@ const Popup = (props) => {
 			className="modal"
 			backdrop="static"
 			size="lg"
-			balance={props.balance}
-			accounts={props.accounts}
 		>
 			<Modal.Header closeButton onClick={onClose}></Modal.Header>
 			<Modal.Body className="modalBody">
 			<h6 className="header">Your Selection</h6>
 
 				<Col className="org1">
-					<p className="title">Title: </p>
-					<p className="artist">Artist: </p>
-					<p className="artist">Owner: {currentOwner} </p>
+					<p className="title">Title: {currentTitle}</p>
+					<p className="artist">Artist: {currentArtist}</p>
+					<p className="artist">Owner: {currentOwner}</p>
 				</Col>
 				<Col className="org2">
-					<p className="artist"># Transfers: </p>
+					<p className="artist"># Transfers: {numberOfTransfers}</p>
 					<p className="forSale">Availability
 					<Switch onClick={toggleForSale} /></p>
 				</Col>
-				{/* currently hardcoded - fix when info back from BC */}
 				<div className="art">
 					<img
 						className="image"
 						alt="sampleimg"
 						src=
-						{tokenURIs}
+						// below is workaround
+						{currentURI}
 						// "https://ipfs.io/ipfs/bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm"
 					/>
 				</div>
-				{/* <div>
-					<button className="mainBtn">Mint (TBD)</button>
-				</div> */}
 				<div>
-					<button className="mainBtn">
-						PURCHASE FOR Ξ{props.artPrice} ETHER
+					<button className="mainBtn" onClick={buyToken}>
+						PURCHASE FOR Ξ {currentPrice} ETHER
 					</button>
 				</div>
 					<h6 className="header">Your Account</h6>

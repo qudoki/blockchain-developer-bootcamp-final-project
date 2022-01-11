@@ -121,7 +121,7 @@ contract NFT is ERC721URIStorage, Ownable {
         
         // break the struct's members out into a tuple
         // in the same order that they appear in the struct
-        return (x.tokenId, x.name, x.title , x.artist , x.tokenURI , x.gallery , x.currentOwner , x.price , x.numberOfTransfers , x.forSale);
+        return (x.tokenId, x.name, x.title , x.artist , x.tokenURI, x.gallery, x.currentOwner, x.price, x.numberOfTransfers, x.forSale);
     }
 
     // Get owner of the token
