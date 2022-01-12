@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/blockchain-developer-bootcamp-final-project/static/css/main.3573c9c6.chunk.css",
-    "main.js": "/blockchain-developer-bootcamp-final-project/static/js/main.d4c2651c.chunk.js",
-    "main.js.map": "/blockchain-developer-bootcamp-final-project/static/js/main.d4c2651c.chunk.js.map",
+    "main.css": "/blockchain-developer-bootcamp-final-project/static/css/main.de2c5786.chunk.css",
+    "main.js": "/blockchain-developer-bootcamp-final-project/static/js/main.92c07948.chunk.js",
+    "main.js.map": "/blockchain-developer-bootcamp-final-project/static/js/main.92c07948.chunk.js.map",
     "runtime-main.js": "/blockchain-developer-bootcamp-final-project/static/js/runtime-main.b93e3183.js",
     "runtime-main.js.map": "/blockchain-developer-bootcamp-final-project/static/js/runtime-main.b93e3183.js.map",
     "static/js/2.ca336c14.chunk.js": "/blockchain-developer-bootcamp-final-project/static/js/2.ca336c14.chunk.js",
     "static/js/2.ca336c14.chunk.js.map": "/blockchain-developer-bootcamp-final-project/static/js/2.ca336c14.chunk.js.map",
     "index.html": "/blockchain-developer-bootcamp-final-project/index.html",
-    "precache-manifest.9891d0973d93cd1c8c396ead9a1e4741.js": "/blockchain-developer-bootcamp-final-project/precache-manifest.9891d0973d93cd1c8c396ead9a1e4741.js",
+    "precache-manifest.c3025bb84a53182f810fd4d9d6fe9003.js": "/blockchain-developer-bootcamp-final-project/precache-manifest.c3025bb84a53182f810fd4d9d6fe9003.js",
     "service-worker.js": "/blockchain-developer-bootcamp-final-project/service-worker.js",
-    "static/css/main.3573c9c6.chunk.css.map": "/blockchain-developer-bootcamp-final-project/static/css/main.3573c9c6.chunk.css.map",
-    "static/media/App.css": "/blockchain-developer-bootcamp-final-project/static/media/Gallery-Base.161c79c6.png"
+    "static/css/main.de2c5786.chunk.css.map": "/blockchain-developer-bootcamp-final-project/static/css/main.de2c5786.chunk.css.map",
+    "static/media/App.css": "/blockchain-developer-bootcamp-final-project/static/media/Sprite-BG.d8955a49.png"
   },
   "entrypoints": [
     "static/js/runtime-main.b93e3183.js",
     "static/js/2.ca336c14.chunk.js",
-    "static/css/main.3573c9c6.chunk.css",
-    "static/js/main.d4c2651c.chunk.js"
+    "static/css/main.de2c5786.chunk.css",
+    "static/js/main.92c07948.chunk.js"
   ]
 }
