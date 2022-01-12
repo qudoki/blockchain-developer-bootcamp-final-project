@@ -5,15 +5,18 @@
 	},
 	"dependencies": {
 		"-": "0.0.1",
+		"@openzeppelin/contracts": "^4.3.2",
 		"@truffle/hdwallet-provider": "^1.6.0",
 		"axios": "^0.24.0",
-		"dotenv": "^10.0.0",
 		"form-data": "^4.0.0",
 		"ganache-cli": "^6.12.2",
+		"gh-pages": "^3.2.3",
 		"ipfs-http-client": "^50.1.2",
+		"nft.storage": "^5.2.0",
 		"node": "^17.1.0",
 		"react": "^17.0.2",
 		"react-bootstrap": "^2.0.2",
+		"react-dom": "16.14.0",
 		"react-scripts": "^5.0.0",
 		"save-dev": "0.0.1-security",
 		"solc": "^0.8.10",
@@ -21,11 +24,7 @@
 		"truffle-hdwallet-provider": "^1.0.17",
 		"web3": "^1.6.1",
 		"web3-react": "^5.0.5",
-		"webpack": "4.41.0",
-		"@openzeppelin/contracts": "^4.3.2",
-		"gh-pages": "^3.2.3",
-		"nft.storage": "^5.2.0",
-		"react-dom": "16.14.0"
+		"webpack": "^5.64.0"
 	},
 	"devDependencies": {
 		"@nomiclabs/hardhat-ethers": "^2.0.2",
@@ -39,7 +38,7 @@
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build"
+		"deploy": "gh-pages -b main -d build"
 	},
 	"browserslist": {
 		"production": [
