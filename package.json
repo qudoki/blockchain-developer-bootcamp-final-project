@@ -12,6 +12,7 @@
 		"node": "^17.1.0",
 		"react": "^17.0.2",
 		"react-bootstrap": "^2.0.2",
+		"react-scripts": "^5.0.0",
 		"save-dev": "0.0.1-security",
 		"solc": "^0.8.10",
 		"truffle": "^5.4.19",
