@@ -429,13 +429,13 @@ function App() {
 				<div
 					className="map background-img"
 					alt="mapping"
-					src="../../assets/Gallery-Base.png"
+					src="../assets/Gallery-Base.png"
 				>
 					<div className="Character">
 						<img
 							className="Character_spritesheet pixelart"
 							alt="characer"
-							src="../../assets/Sprite-BG.png"
+							src="../assets/Sprite-BG.png"
 						/>
 					</div>
 				</div>
