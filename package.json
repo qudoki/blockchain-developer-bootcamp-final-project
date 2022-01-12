@@ -1,5 +1,8 @@
 {
 	"homepage": "http://qudoki.github.io/blockchain-developer-bootcamp-final-project",
+	"browser": {
+		"fs": false
+	},
 	"dependencies": {
 		"-": "0.0.1",
 		"@truffle/hdwallet-provider": "^1.6.0",
