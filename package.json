@@ -1,12 +1,16 @@
 {
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build"
-	},
+  "name": "client",
+  "homepage": "http://qudoki.github.io/blockchain-developer-bootcamp-final-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
 	"dependencies": {
 		"-": "0.0.1",
 		"@truffle/hdwallet-provider": "^1.6.0",
