@@ -1,5 +1,6 @@
 {
 	"homepage": "http://qudoki.github.io/blockchain-developer-bootcamp-final-project",
+	"main": "server.js",
 	"browser": {
 		"fs": false
 	},
