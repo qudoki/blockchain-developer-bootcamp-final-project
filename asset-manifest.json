@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/blockchain-developer-bootcamp-final-project/static/css/main.de2c5786.chunk.css",
-    "main.js": "/blockchain-developer-bootcamp-final-project/static/js/main.7c5e3658.chunk.js",
-    "main.js.map": "/blockchain-developer-bootcamp-final-project/static/js/main.7c5e3658.chunk.js.map",
+    "main.css": "/blockchain-developer-bootcamp-final-project/static/css/main.21e07175.chunk.css",
+    "main.js": "/blockchain-developer-bootcamp-final-project/static/js/main.67671daf.chunk.js",
+    "main.js.map": "/blockchain-developer-bootcamp-final-project/static/js/main.67671daf.chunk.js.map",
     "runtime-main.js": "/blockchain-developer-bootcamp-final-project/static/js/runtime-main.b93e3183.js",
     "runtime-main.js.map": "/blockchain-developer-bootcamp-final-project/static/js/runtime-main.b93e3183.js.map",
     "static/js/2.ca336c14.chunk.js": "/blockchain-developer-bootcamp-final-project/static/js/2.ca336c14.chunk.js",
     "static/js/2.ca336c14.chunk.js.map": "/blockchain-developer-bootcamp-final-project/static/js/2.ca336c14.chunk.js.map",
     "index.html": "/blockchain-developer-bootcamp-final-project/index.html",
-    "precache-manifest.5e4308eedb6d84ef63f5872b1dcad653.js": "/blockchain-developer-bootcamp-final-project/precache-manifest.5e4308eedb6d84ef63f5872b1dcad653.js",
+    "precache-manifest.a32ac053e3ca064f87bdd076e545ca07.js": "/blockchain-developer-bootcamp-final-project/precache-manifest.a32ac053e3ca064f87bdd076e545ca07.js",
     "service-worker.js": "/blockchain-developer-bootcamp-final-project/service-worker.js",
-    "static/css/main.de2c5786.chunk.css.map": "/blockchain-developer-bootcamp-final-project/static/css/main.de2c5786.chunk.css.map",
-    "static/media/App.css": "/blockchain-developer-bootcamp-final-project/static/media/Sprite-BG.d8955a49.png"
+    "static/css/main.21e07175.chunk.css.map": "/blockchain-developer-bootcamp-final-project/static/css/main.21e07175.chunk.css.map",
+    "static/media/App.css": "/blockchain-developer-bootcamp-final-project/static/media/Gallery-Base.161c79c6.png"
   },
   "entrypoints": [
     "static/js/runtime-main.b93e3183.js",
     "static/js/2.ca336c14.chunk.js",
-    "static/css/main.de2c5786.chunk.css",
-    "static/js/main.7c5e3658.chunk.js"
+    "static/css/main.21e07175.chunk.css",
+    "static/js/main.67671daf.chunk.js"
   ]
 }
