@@ -1,2 +1,2 @@
-Testnet Address:
-Network: Rinkeby?
+Testnet Address: 0xeccBfb848bB2f9Bd8a04F6bFDe7201ee7e90Be42
+Network: Rinkeby

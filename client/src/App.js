@@ -320,7 +320,7 @@ function App() {
 
 			// open modal on space bar
 			const openModal = async () => {
-				// console.log(x, y);
+				console.log(x, y);
 				if (x >= 34 && x <= 42 && y >= 50 && y <= 60) {
 					setPiece(0);
 					handleShow();
