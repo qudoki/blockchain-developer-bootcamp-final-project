@@ -1,8 +1,8 @@
 require("dotenv").config();
 const path = require("path");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
-const mnemonic = process.env["MNEMONIC"];
-const tokenKey = process.env["ENDPOINT_KEY"];
+const mnemonic = process.env["INFURA_MNEMONIC"];
+const tokenKey = process.env["INFURA_ENDPOINT_KEY"];
 
 module.exports = {
 	// See <http://truffleframework.com/docs/advanced/configuration>
@@ -19,10 +19,9 @@ module.exports = {
 			port: 8545,
 			network_id: "*",
 			websockets: true,
-			// gasPrice: 0x1,
-			// gas: 0x1fffffffffffff
 		},
 		rinkeby: {
+			host: "localhost",
 			provider: function () {
 				return new HDWalletProvider(
 					mnemonic,
