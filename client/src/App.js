@@ -435,7 +435,7 @@ function App() {
 						<img
 							className="Character_spritesheet pixelart"
 							alt="characer"
-							src="./Sprite-BG.png"
+							// src="./Sprite-BG.png"
 						/>
 					</div>
 				</div>
