@@ -57,6 +57,7 @@ body {
 }
 
 .Character_spritesheet {
+	background-image: url(Sprite-BG.png);
 	animation: moveSpritesheet 1s steps(4) infinite;
 	width: calc(128px * var(--pixel-size));
 	height: calc(128px * var(--pixel-size));
