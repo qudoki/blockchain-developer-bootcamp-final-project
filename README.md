@@ -11,8 +11,8 @@ A gamified education platform allowing users to move around a single-player pers
 5. User (buyer) will show confirmed ownership of NFT.
 
 ## Deployment & Repository
-:construction:
 - [Github Repository Link](https://github.com/qudoki/blockchain-developer-bootcamp-final-project)
+- [Deployment to Github Pages](https://qudoki.github.io/blockchain-developer-bootcamp-final-project/)
 
 ## Tech
 * Solidity >=0.5.16 <0.9.0;
@@ -20,7 +20,8 @@ A gamified education platform allowing users to move around a single-player pers
 * Node v10.24.1
 * Web3.js v1.5.3
 * Javascript ES6
-* React
+* React 17.0.2
+* Express 4.17.2
 
 ## Installing
 1. Git clone the repo in a new folder: `git clone https://github.com/qudoki/blockchain-developer-bootcamp-final-project.git`
