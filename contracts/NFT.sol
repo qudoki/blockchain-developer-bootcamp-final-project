@@ -224,4 +224,9 @@ contract NFT is ERC721URIStorage, Ownable {
         }
         collection[_tokenId] = newItem;
     }
+
+    function getForSale(uint256 _tokenId) public view returns (bool) {
+        bool forSale = collection[_tokenId].forSale;
+        return forSale;
+    }
 }

@@ -16,9 +16,9 @@ contract("NFT", async (accounts) => {
 	let result;
 	let collectionCount;
 	// currently gallery is address at 0
-	const gallery = "0xf96ad6d96Ff2387224F1521A3861Ed16F865f1B0";
+	const gallery = "0x78f45c83963E2388e3ef994784c3Ca8C83bDb6A1";
 	// currently buyer is address at 2
-	const buyer = "0x101a150e1cf42f806dc930ec4287f93d533a6720";
+	const buyer = "0x0643C89ed06c61A65A98Ae40D635458F9f1a7b9a";
 	const price = 1;
 	const fakePrice = 100;
 	const artist = "Rebecca Johnson";

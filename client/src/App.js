@@ -17,61 +17,9 @@ require("dotenv").config();
 // // })
 
 // Hard coding the nft data for minting all at once
-const gallery = "0xa02310F875EE4a42EFb905394078e0F8e9F74F33";
-const buyer = "0x85eb88a77F20E0cF426b52C71dA026f9059AFDb2";
+// const gallery = "0x78f45c83963E2388e3ef994784c3Ca8C83bDb6A1";
+// const buyer = "0x0643C89ed06c61A65A98Ae40D635458F9f1a7b9a";
 const url = "https://ipfs.io/ipfs/";
-let nftArray = [
-	{
-		name: "moon",
-		title: "White Moon Over Blue Seascape",
-		artist: "Rebecca Johnson",
-		tokenURI:
-			url + "bafybeigmzl32jd3c7xiqtd4nphmjwkxgs4dvxqvmfqv7sk3xdhdwpublny",
-		minter: gallery,
-		owner: gallery,
-		price: 1,
-	},
-	{
-		name: "wolf",
-		title: "White Wolf Over Red Landscape",
-		artist: "Rebecca Johnson",
-		tokenURI:
-			url + "bafybeig3l6fag6fbzzxj3syzxco3ul6j2uy5ocyxx7j3m4t7hmsdqwc66i",
-		minter: gallery,
-		owner: gallery,
-		price: 1,
-	},
-	{
-		name: "flower",
-		title: "Flower Over Purple Desert",
-		artist: "Rebecca Johnson",
-		tokenURI:
-			url + "bafybeiflu2fdax4i7o6g2eoyu6to7qs7cdol5s3vmqsnvpc6nml4tfo5ju",
-		minter: gallery,
-		owner: gallery,
-		price: 1,
-	},
-	{
-		name: "stork",
-		title: "Red Stork Over White Gaudi Feature",
-		artist: "Rebecca Johnson",
-		tokenURI:
-			url + "bafybeia23kjkkvtgxwbxqhojdbzlmxxuhi7ffuxfuerot4hzpe7umttjva",
-		minter: gallery,
-		owner: gallery,
-		price: 1,
-	},
-	{
-		name: "disco",
-		artist: "Rebecca Johnson",
-		tokenURI:
-			url + "bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm",
-		title: "Disco Ball Over Red Partyscape",
-		minter: gallery,
-		owner: gallery,
-		price: 1,
-	},
-];
 
 function App() {
 	// State variables
@@ -86,8 +34,9 @@ function App() {
 	const [artists, setArtists] = useState([]);
 	const [prices, setPrices] = useState([]);
 	const [numberOfTransfers, setNumberOfTransfers] = useState([]);
-	const [isToggled, setIsToggled] = useState(true);
+	// const [isToggled, setIsToggled] = useState(true);
 	// const [forSale, setForSale] = useState(false);
+	const [toggleStates, setToggleStates] = useState([]);
 
 	const [nftCollection, setNftCollection] = useState([]);
 	const [totalTokensMinted, setTotalTokensMinted] = useState(0);
@@ -96,6 +45,59 @@ function App() {
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
 	const [piece, setPiece] = useState(null);
+
+	let nftArray = [
+		{
+			name: "moon",
+			title: "White Moon Over Blue Seascape",
+			artist: "Rebecca Johnson",
+			tokenURI:
+				url + "bafybeigmzl32jd3c7xiqtd4nphmjwkxgs4dvxqvmfqv7sk3xdhdwpublny",
+			minter: accounts,
+			owner: accounts,
+			price: 1,
+		},
+		{
+			name: "wolf",
+			title: "White Wolf Over Red Landscape",
+			artist: "Rebecca Johnson",
+			tokenURI:
+				url + "bafybeig3l6fag6fbzzxj3syzxco3ul6j2uy5ocyxx7j3m4t7hmsdqwc66i",
+				minter: accounts,
+				owner: accounts,
+			price: 1,
+		},
+		{
+			name: "flower",
+			title: "Flower Over Purple Desert",
+			artist: "Rebecca Johnson",
+			tokenURI:
+				url + "bafybeiflu2fdax4i7o6g2eoyu6to7qs7cdol5s3vmqsnvpc6nml4tfo5ju",
+				minter: accounts,
+				owner: accounts,
+			price: 1,
+		},
+		{
+			name: "stork",
+			title: "Red Stork Over White Gaudi Feature",
+			artist: "Rebecca Johnson",
+			tokenURI:
+				url + "bafybeia23kjkkvtgxwbxqhojdbzlmxxuhi7ffuxfuerot4hzpe7umttjva",
+				minter: accounts,
+				owner: accounts,
+			price: 1,
+		},
+		{
+			name: "disco",
+			artist: "Rebecca Johnson",
+			tokenURI:
+				url + "bafybeido4wnjbmthgpygr5wubsiodnavmdbmlf7hbp262leaptffls2qdm",
+			title: "Disco Ball Over Red Partyscape",
+			minter: accounts,
+			owner: accounts,
+			price: 1,
+		},
+	];
 
 	// Load Web3
 	const loadWeb3 = async () => {
@@ -181,33 +183,23 @@ function App() {
 		for (let i = 0; i < 5; i++) {
 			const returnedTokenId = await nftCollection[i].tokenId;
 			setTokenIds((tokenIds) => [...tokenIds, returnedTokenId]);
-		}
-		for (let i = 0; i < 5; i++) {
 			const returnedTitle = await nftCollection[i].title;
 			setTitles((titles) => [...titles, returnedTitle]);
-		}
-		for (let i = 0; i < 5; i++) {
 			const returnedArtist = await nftCollection[i].artist;
 			setArtists((artists) => [...artists, returnedArtist]);
-		}
-		for (let i = 0; i < 5; i++) {
 			const returnedUri = await nftCollection[i].tokenURI;
 			setTokenURIs((tokenURIs) => [...tokenURIs, returnedUri]);
-		}
-		for (let i = 0; i < 5; i++) {
 			const returnedOwner = await nftCollection[i].currentOwner;
 			setOwners((owners) => [...owners, returnedOwner]);
-		}
-		for (let i = 0; i < 5; i++) {
 			const returnedNoTransfers = await nftCollection[i].numberOfTransfers;
 			setNumberOfTransfers((numberOfTransfers) => [
 				...numberOfTransfers,
 				returnedNoTransfers,
 			]);
-		}
-		for (let i = 0; i < 5; i++) {
 			const returnedPrices = await nftCollection[i].price;
 			setPrices((prices) => [...prices, returnedPrices]);
+			const returnedToggleStates = await nftCollection[i].forSale;
+			setToggleStates((toggleStates) => [...toggleStates, returnedToggleStates]);
 		}
 	};
 
@@ -216,9 +208,10 @@ function App() {
 		if (owners[x] === accounts) {
 			alert("You are already the owner of this piece.");
 		} else {
+			const wei = web3.utils.toWei(prices[x], "ether")
 			await contract.methods
 				.buy(x + 1)
-				.send({ from: accounts, value: prices[x] })
+				.send({ from: accounts, value: wei })
 				.on("confirmation", () => {
 					console.log("Bought!");
 				});
@@ -226,7 +219,7 @@ function App() {
 		}
 	};
 
-	//Toggle forSale
+	// Toggle forSale
 	const toggleForSale = async (x) => {
 		if (accounts === owners[x]) {
 			contract.methods
@@ -234,12 +227,20 @@ function App() {
 				.send({ from: accounts })
 				.on("confirmation", () => {
 					console.log("Toggled!");
-					window.location.reload();
 				});
+				await checkMintedTokens();
+				loadState();
 		} else {
-			alert("Only the gallery can change the availability!");
+			alert("Only the owner can change the availability!");
+			return;
 		}
 	};
+
+	// const getForSale = async (x) => {
+	// 	const forSaleStatus = await contract.methods.getForSale(x)
+	// 		.call();
+	// 	console.log(forSaleStatus);
+	// }
 
 	// Connecting to web3 and getting initial balances, and sets off character
 	useEffect(() => {
@@ -457,8 +458,10 @@ function App() {
 					artists={artists}
 					prices={prices}
 					numberOfTransfers={numberOfTransfers}
-					isToggled={isToggled}
+					// isToggled={isToggled}
 					toggleForSale={toggleForSale}
+					toggleStates={toggleStates}
+					// getForSale={getForSale}
 				/>
 			</div>
 		</div>

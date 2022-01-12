@@ -35,6 +35,7 @@ module.exports = {
 			gasPrice: 5000000000, // 5 gwei
 			network_id: 4,
 			skipDryRun: true,
+			// truffle migrate --reset --network rinkeby
 		},
 	},
 	test: {

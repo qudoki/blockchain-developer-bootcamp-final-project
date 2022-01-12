@@ -4,7 +4,7 @@ import Switch from "../Switch/switch";
 import "./popup.css";
 
 const Popup = (props) => {
-	const { show, onClose, toggleForSale, tokenURIs, numberOfTransfers, buyToken, tokenIds, titles, piece, prices, artists, owners, isToggled } = props;
+	const { show, onClose, toggleForSale, tokenURIs, numberOfTransfers, buyToken, tokenIds, titles, piece, prices, artists, owners, toggleStates, accounts, getForSale } = props;
 
 	return (
 		<Modal
@@ -27,7 +27,14 @@ const Popup = (props) => {
 				<Col className="org2">
 					<p className="artist"># Transfers: {numberOfTransfers[piece]}</p>
 					<p className="forSale">Availability
-					<Switch piece={piece} isToggled={isToggled} onClick={toggleForSale} />
+					<Switch
+						piece={piece}
+						toggleStates={toggleStates}
+						toggleForSale={toggleForSale}
+						getForSale={getForSale}
+						owners={owners}
+						accounts={accounts}
+					/>
 					</p>
 				</Col>
 				<div className="art">
