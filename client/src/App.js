@@ -403,9 +403,10 @@ function App() {
 		};
 		init();
 	}, [
-		// nftCollection,
-		accounts,
-		balance]);
+		nftCollection,
+		// accounts,
+		// balance
+	]);
 
 	if (typeof web3 === "undefined") {
 		return <div>Loading Web3, accounts, and contract...</div>;
