@@ -6,10 +6,10 @@ const PORT = process.env.PORT || 3000;
 // Serve static assets from react build
 app.use("/", express.static(path.join(__dirname, "public")));
 // app.use(express.static(path.join(__dirname, 'build')));
-// app.get("/", function (req, res) {
-// 	console.log(path.join(__dirname, "build"));
-// 	res.sendFile(path.join(__dirname, "/public/index.html"));
-// });
+app.get("/src", function (req, res) {
+	console.log(path.join(__dirname, "src"));
+	res.sendFile(path.join(__dirname, "/src"));
+});
 
 app.use(function (err, req, res, next) {
 	console.error(err.stack);
