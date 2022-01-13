@@ -25,7 +25,7 @@ A gamified education platform allowing users to move around a single-player pers
 * Express 4.17.2
 
 ## Note to Consensys Graders When Interacting with App
-Note that files are preloaded onto IPFS, and addresses are hard-coded to write to the blockchain. In future development, uploading would be made possible for minting, but for now - the NFT's may have been pre-minted. If the check button populates with 0, try minting. If not, continue below:
+Note that files are preloaded onto IPFS, and addresses are hard-coded to write to the blockchain. In future development, uploading would be made possible for minting, but for now - the NFT's will have been pre-minted. Tokens 3 and 5 will have been purchased by the Rinkeby "Buyer" Account as seen in the walkthrough video, linked above.
 1. Please click Check NFT button.
 2. Wait a second.
 3. Click Load State.
