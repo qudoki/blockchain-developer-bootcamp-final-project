@@ -4,7 +4,7 @@ const app = express();
 // const PORT = process.env.PORT || 3000;
 
 // Serve static assets from react build
-// app.use("/", express.static(path.join(__dirname, "client/public")));
+app.use("/", express.static(path.join(__dirname, "client/public")));
 app.use("/static", express.static(path.join(__dirname, 'client/build/static')));
 app.use("/src", function (req, res) {
 	console.log(path.join(__dirname, "src"));
