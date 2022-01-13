@@ -5,5 +5,8 @@ module.exports = {
 
 		return config;
 	},
-    target: 'node'
+	target: "node",
+	node: {
+		fs: "empty",
+	},
 };
