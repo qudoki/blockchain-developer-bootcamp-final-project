@@ -7,10 +7,10 @@
 		"os": false
 	},
 	"dependencies": {
-		"-": "0.0.1",
 		"@openzeppelin/contracts": "^4.3.2",
 		"@truffle/hdwallet-provider": "^1.6.0",
 		"axios": "^0.24.0",
+		"dotenv": "^11.0.0",
 		"dotenv-webpack": "^7.0.3",
 		"express": "^4.17.2",
 		"form-data": "^4.0.0",
@@ -25,7 +25,6 @@
 		"react-dom": "16.14.0",
 		"react-router-dom": "^6.2.1",
 		"react-scripts": "^5.0.0",
-		"save-dev": "0.0.1-security",
 		"solc": "^0.8.10",
 		"truffle": "^5.4.19",
 		"truffle-hdwallet-provider": "^1.0.17",
@@ -44,8 +43,8 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -b main -d build"
+		"predeploy": "cd client && npm run build",
+		"deploy": "cd client && gh-pages -b main -d build"
 	},
 	"browserslist": {
 		"production": [
