@@ -5,6 +5,8 @@
   "private": true,
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.2",
+    "dotenv": "^11.0.0",
+    "dotenv-webpack": "^7.0.3",
     "gh-pages": "^3.2.3",
     "nft.storage": "^5.2.0",
     "node": "v10.24.1",
@@ -12,7 +14,8 @@
     "react-bootstrap": "^2.0.2",
     "react-dom": "16.14.0",
     "react-scripts": "^5.0.0",
-    "web3": "1.2.2"
+    "web3": "1.2.2",
+    "webpack": "^5.66.0"
   },
   "scripts": {
     "start": "react-scripts start",
