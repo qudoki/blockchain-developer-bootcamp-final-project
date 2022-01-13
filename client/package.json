@@ -3,6 +3,11 @@
   "homepage": "http://qudoki.github.io/blockchain-developer-bootcamp-final-project",
   "version": "0.1.0",
   "private": true,
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },  
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.2",
     "dotenv": "^11.0.0",

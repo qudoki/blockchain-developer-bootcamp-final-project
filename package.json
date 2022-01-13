@@ -2,7 +2,9 @@
 	"homepage": "http://qudoki.github.io/blockchain-developer-bootcamp-final-project",
 	"main": "server.js",
 	"browser": {
-		"fs": false
+		"fs": false,
+		"path": false,
+		"os": false
 	},
 	"dependencies": {
 		"-": "0.0.1",
