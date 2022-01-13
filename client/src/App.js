@@ -8,7 +8,7 @@ import "./App.css";
 import Web3 from "web3";
 
 // This is the top of application.js
-require("dotenv").config();
+// require("dotenv").config();
 
 // // Using NFT Storage API Key from dotenv
 // const apiKey = process.env.NFT_STORAGE_API_KEY;
