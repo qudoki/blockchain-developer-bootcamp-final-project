@@ -8,7 +8,7 @@ app.use("/", express.static(path.join(__dirname, "public")));
 app.use("/static", express.static(path.join(__dirname, '/static')));
 app.get("/src", function (req, res) {
 	console.log(path.join(__dirname, "src"));
-	res.sendFile(path.join(__dirname, "/src"));
+	res.sendFile(path.join(__dirname, "../src"));
 });
 
 app.use(function (err, req, res, next) {
