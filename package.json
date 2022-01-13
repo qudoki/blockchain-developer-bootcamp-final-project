@@ -9,7 +9,7 @@
 		"@openzeppelin/contracts": "^4.3.2",
 		"@truffle/hdwallet-provider": "^1.6.0",
 		"axios": "^0.24.0",
-		"dotenv": "^11.0.0",
+		"dotenv-webpack": "^7.0.3",
 		"express": "^4.17.2",
 		"form-data": "^4.0.0",
 		"ganache-cli": "^6.12.2",
