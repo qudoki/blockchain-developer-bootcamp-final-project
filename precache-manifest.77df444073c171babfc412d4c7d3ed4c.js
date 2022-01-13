@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d564ca8400be0fa18e53fc27dec9bf0c",
+    "revision": "ec0fcead0b35424f8b7aac4bf569439b",
     "url": "/blockchain-developer-bootcamp-final-project/index.html"
   },
   {
-    "revision": "1b4773d9d42d8efc2807",
+    "revision": "12ce1a28d9f85ea585b6",
     "url": "/blockchain-developer-bootcamp-final-project/static/css/main.21e07175.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/blockchain-developer-bootcamp-final-project/static/js/2.ca336c14.chunk.js"
   },
   {
-    "revision": "1b4773d9d42d8efc2807",
-    "url": "/blockchain-developer-bootcamp-final-project/static/js/main.88e1b5c7.chunk.js"
+    "revision": "12ce1a28d9f85ea585b6",
+    "url": "/blockchain-developer-bootcamp-final-project/static/js/main.8c884de8.chunk.js"
   },
   {
     "revision": "b745693c2b46a4b93131",
