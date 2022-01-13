@@ -23,13 +23,20 @@ A gamified education platform allowing users to move around a single-player pers
 * React 17.0.2
 * Express 4.17.2
 
+## Note to Consensys Graders When Interacting with App
+Note that files are preloaded onto IPFS, and addresses are hard-coded to write to the blockchain. In future development, uploading would be made possible for minting, but for now - the NFT's may have been pre-minted. If the check button populates with 0, try minting. If not, continue below:
+1. Please click Check NFT button.
+2. Wait a second.
+3. Click Load State.
+4. Continue to navigation and purchase logic.
+
 ## Installing
 1. Git clone the repo in a new folder: `git clone https://github.com/qudoki/blockchain-developer-bootcamp-final-project.git`
 2. cd into the blockchain-developer-bootcamp-final-project folder
 3. run `npm install` for all dependencies
 
 ## Testing
-Tests were developed to check deployment and functionality. You can run tests by:
+Tests were developed to check deployment and functionality. Check that port is set to 8545. You can run tests by:
 1. run `ganache-cli` in separate terminal
 2. run `truffle migrate`
 3. run `truffle test` (all 17 tests will pass)

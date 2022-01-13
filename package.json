@@ -15,7 +15,7 @@
 		"ganache-cli": "^6.12.2",
 		"ipfs-http-client": "^50.1.2",
 		"nft.storage": "^5.2.0",
-		"node": "10.24.1",
+		"node": "14.0.0",
 		"path": "^0.12.7",
 		"react": "^17.0.2",
 		"react-bootstrap": "^2.0.2",
@@ -35,15 +35,15 @@
 		"ethers": "^5.5.1",
 		"gh-pages": "^3.2.3",
 		"os-browserify": "^0.3.0",
-		"webpack": "^5.66.0"
+		"webpack": "^4.46.0"
 	},
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"predeploy": "cd client && npm run build",
-		"deploy": "cd client && gh-pages -b main -d build"
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -b main -d build"
 	},
 	"browserslist": {
 		"production": [
