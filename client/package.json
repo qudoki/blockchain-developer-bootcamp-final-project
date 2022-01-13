@@ -4,7 +4,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"browser": {
-		"fs": false
+		"fs": false,
+		"os": false
 	},
 	"dependencies": {
 		"react": "^17.0.2",
