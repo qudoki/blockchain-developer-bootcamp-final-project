@@ -1,5 +1,6 @@
 # Blockchain Developer Bootcamp Final Project
 ### Certification to: qudoki.eth
+(0xb3123e6078e474620DfB1EF3655FA0E6550A5775)
 ## NFT Gallery
 ### Description:
 A gamified education platform allowing users to move around a single-player perspective space, connect to their Metamask wallets, mint and purchase NFT's in a visual front-end gallery setting through an ERC-721 token. This encourages traditional artists that may work in digital artforms to tie into the NFT space, with no prerequesite understanding of the blockchain.
