@@ -13,11 +13,12 @@ A gamified education platform allowing users to move around a single-player pers
 ## Deployment & Repository
 - [Github Repository Link](https://github.com/qudoki/blockchain-developer-bootcamp-final-project)
 - [Deployment to Github Pages](https://qudoki.github.io/blockchain-developer-bootcamp-final-project/)
+- [Video Walkthrough](https://www.loom.com/share/cd55fc55fb1648b09d6e9918176af1e6)
 
 ## Tech
 * Solidity >=0.5.16 <0.9.0;
 * Truffle v5.4.19 (core: 5.4.19)
-* Node v10.24.1
+* Node v17.3.1
 * Web3.js v1.5.3
 * Javascript ES6
 * React 17.0.2
