@@ -10,12 +10,9 @@
 		"@openzeppelin/contracts": "^4.3.2",
 		"@truffle/hdwallet-provider": "^1.6.0",
 		"axios": "^0.24.0",
-		"dotenv": "^11.0.0",
-		"dotenv-webpack": "^7.0.3",
 		"express": "^4.17.2",
 		"form-data": "^4.0.0",
 		"ganache-cli": "^6.12.2",
-		"gh-pages": "^3.2.3",
 		"ipfs-http-client": "^50.1.2",
 		"nft.storage": "^5.2.0",
 		"node": "10.24.1",
@@ -29,14 +26,15 @@
 		"truffle": "^5.4.19",
 		"truffle-hdwallet-provider": "^1.0.17",
 		"web3": "^1.6.1",
-		"web3-react": "^5.0.5",
-		"webpack": "^5.66.0"
+		"web3-react": "^5.0.5"
 	},
 	"devDependencies": {
 		"@nomiclabs/hardhat-ethers": "^2.0.2",
 		"@openzeppelin/contracts": "^4.4.2",
 		"ethers": "^5.5.1",
-		"gh-pages": "^3.2.3"
+		"gh-pages": "^3.2.3",
+		"dotenv": "^11.0.0",
+		"webpack": "^5.66.0"
 	},
 	"scripts": {
 		"start": "react-scripts start",
