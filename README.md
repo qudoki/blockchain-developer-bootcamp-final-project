@@ -26,11 +26,12 @@ A gamified education platform allowing users to move around a single-player pers
 * Express 4.17.2
 
 ## Note to Consensys Graders When Interacting with App
-Note that files are preloaded onto IPFS, and addresses are hard-coded to write to the blockchain. In future development, uploading would be made possible for minting, but for now - the NFT's will have been pre-minted. Tokens 3 and 5 will have been purchased by the Rinkeby "Buyer" Account as seen in the walkthrough video, linked above.
+Note that files are preloaded onto IPFS, and addresses are hard-coded to write to the blockchain. In future development, uploading would be made possible for minting, but for now - the NFT's will have been pre-minted (see video). Tokens 3 and 5 will have been purchased by the Rinkeby "Buyer" Account as seen in the walkthrough video, linked above. Note also that though the contract logic for the "for sale" toggle is passing its tests, the front end is not connected correctly.
 1. Please click Check NFT button.
 2. Wait a second.
 3. Click Load State.
 4. Continue to navigation and purchase logic.
+5. Refresh and hit repeat steps 1-3, then view the NFT purchased.
 
 ## Installing
 1. Git clone the repo in a new folder: `git clone https://github.com/qudoki/blockchain-developer-bootcamp-final-project.git`
